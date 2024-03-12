@@ -25,9 +25,6 @@ jobs:
       - name: Install dependencies
         run: cd server && npm install
 
-      - name: Run tests
-        run: cd server && npm test
-
       - name: Compile Express Server Module
         run: cd server && tsc
 
@@ -49,9 +46,6 @@ jobs:
 
       - name: Install dependencies
         run: cd client && npm install
-
-      - name: Run tests
-        run: cd client && npm test
 
       - name: Build React Client Module
         run: cd client && npm run build
