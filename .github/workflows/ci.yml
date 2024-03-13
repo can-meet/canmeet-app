@@ -1,8 +1,8 @@
 name: NodeJS CI Job
 
 on:
-  push:
-    branches: [feature/yu-ci-cd-setup]
+  pull_request:
+    branches: [main]
   pull_request:
     branches: [dev]
 
