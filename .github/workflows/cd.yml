@@ -1,16 +1,17 @@
-name: Continuous Deployment
+name: Deploy to EC2
 
 on:
   push:
     branches: [feature/yu-ci-cd-setup]
 
 jobs:
-  server-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     permissions:
       id-token: write
       contents: read
+
     steps:
       - name: Public IP
         id: ip
@@ -21,7 +22,6 @@ jobs:
         with:
           aws-region: ap-northeast-1
           role-to-assume: ${{ secrets.EC2_ROLE_ARN }}
-          role-session-name: github-actions-deploy-${{ github.event.repository.name }}-${{ github.run_number }}
 
       - name: Deploy to EC2
 
