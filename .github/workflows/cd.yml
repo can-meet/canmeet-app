@@ -2,7 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches: [feature/yu-ci-cd-setup]
+    branches: [main]
 
 jobs:
   deploy:
