@@ -2,9 +2,9 @@ name: MERN APP CI
 
 on:
   push:
-    branches: [feature/yu-ci-cd-setup]
+    branches: [main]
   pull_request:
-    branches: [dev]
+    branches: [main]
 
 jobs:
   server-build:
