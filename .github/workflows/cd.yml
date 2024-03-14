@@ -19,15 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download Server Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: server-artifact
+      # - name: Download Server Artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: server-artifact
 
-      - name: Download Client Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: client-artifact
+      # - name: Download Client Artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: client-artifact
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
