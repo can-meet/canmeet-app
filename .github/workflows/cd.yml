@@ -19,16 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # - name: Download Server Artifacts
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: server-artifact
-
-      # - name: Download Client Artifacts
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: client-artifact
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -42,10 +32,11 @@ jobs:
         run: |
           echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-          # serverアーティファクトの転送
-          scp -o StrictHostKeyChecking=no -i private_key -r ./server/dist/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/server/dist
-          # clientアーティファクトの転送
-          scp -o StrictHostKeyChecking=no -i private_key -r ./client/dist/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/client/dist
-          # デプロイ後のコマンド実行（例: アプリケーションの再起動）
-          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/server && npm install && sudo systemctl restart canmeet-app"
-          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/client && npm install && sudo systemctl restart canmeet-app"
+
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.EC2_SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+          echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd /home/ec2-user/var/www/canmeet-app && git pull origin main && sudo systemctl restart canmeet-app"
+          # 処理を実行
+
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.EC2_SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
