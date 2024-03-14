@@ -28,11 +28,16 @@ jobs:
           npm install
           npm run build
 
-      - name: Archive Server Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: server-artifact
-          path: server/dist/
+      # - name: Archive Server Artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: server-artifact
+      #     path: server/dist/
+
+      - name: Push Build Files
+        run: |
+          cd server
+          git push
 
   client-build:
     runs-on: ubuntu-latest
@@ -55,8 +60,13 @@ jobs:
           npm install
           npm run build
 
-      - name: Archive Client Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: client-artifact
-          path: client/dist/
+      # - name: Archive Client Artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: client-artifact
+      #     path: client/dist/
+
+      - name: Push Build Files
+        run: |
+          cd client
+          git push
