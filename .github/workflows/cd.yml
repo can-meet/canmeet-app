@@ -1,8 +1,11 @@
 name: Deploy to AWS EC2
 
 on:
-  push:
+  workflow_run:
+    workflows: ["MERN APP CI"]
     branches: [main]
+    types:
+      - completed
 
 jobs:
   deploy:
