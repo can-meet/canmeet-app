@@ -32,4 +32,4 @@ jobs:
         run: |
           echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-          ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd /home/ec2-user/var/www/canmeet-app && git pull origin main && sudo systemctl restart canmeet-app"
+          ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd /home/ec2-user/var/www/canmeet-app && git pull origin main && sudo systemctl restart nginx"
