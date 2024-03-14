@@ -1,11 +1,8 @@
 name: Deploy to AWS EC2
 
 on:
-  workflow_run:
-    workflows: ["MERN APP CI"]  # CIワークフローの名前を指定
+  push:
     branches: [main]
-    types:
-      - completed
 
 jobs:
   deploy:
