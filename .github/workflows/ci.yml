@@ -5,40 +5,10 @@ on:
     branches: 
       - feature/yu-ci-cd-setup
       - dev
-  pull_request:
-    branches:
       - main
 
 jobs:
-  server-build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies and build (Server)
-        run: |
-          cd server
-          npm install
-          npm run build
-
-      - name: Commit Build Files (Server)
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add server/dist
-          git commit -m "Build Files" || echo "No changes to commit"
-
-  client-build:
+  build-push:
     runs-on: ubuntu-latest
 
     strategy:
@@ -59,10 +29,16 @@ jobs:
           npm install
           npm run build
 
-      - name: Commit Build Files (Client) and Push Repository (Client & Server)
+      - name: Install dependencies and build (Server)
+        run: |
+          cd server
+          npm install
+          npm run build
+
+      - name: Commit Build Files
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
-          git add client/dist
+          git add .
           git commit -m "Build Files" || echo "No changes to commit"
-          git push 
+          git push
