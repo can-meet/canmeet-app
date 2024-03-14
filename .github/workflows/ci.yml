@@ -34,10 +34,12 @@ jobs:
       #     name: server-artifact
       #     path: server/dist/
 
-      - name: Push Build Files
+      - name: Commit Build Files (Server)
         run: |
           cd server
-          git push
+          git add dist/*
+          git commit -m "Build Files" || echo "No changes to commit"
+          git push 
 
   client-build:
     runs-on: ubuntu-latest
@@ -66,7 +68,9 @@ jobs:
       #     name: client-artifact
       #     path: client/dist/
 
-      - name: Push Build Files
+      - name: Commit Build Files (Client)
         run: |
           cd client
-          git push
+          git add dist/*
+          git commit -m "Build Files" || echo "No changes to commit"
+          git push 
