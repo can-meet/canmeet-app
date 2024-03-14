@@ -5,6 +5,9 @@ on:
     branches: 
       - feature/yu-ci-cd-setup
       - dev
+  pull_request:
+    branches:
+      - main
 
 jobs:
   server-build:
