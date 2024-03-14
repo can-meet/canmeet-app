@@ -23,13 +23,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: server-artifact
-          path: server/dist/
+          path: deploy/server/dist
 
       - name: Download Client Artifacts
         uses: actions/download-artifact@v2
         with:
           name: client-artifact
-          path: client/dist/
+          path: deploy/client/dist
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
