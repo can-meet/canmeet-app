@@ -43,9 +43,9 @@ jobs:
           echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           # serverアーティファクトの転送
-          scp -o StrictHostKeyChecking=no -i private_key -r ./server-artifact/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/server
+          scp -o StrictHostKeyChecking=no -i private_key -r ./server/dist/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/server/dist
           # clientアーティファクトの転送
-          scp -o StrictHostKeyChecking=no -i private_key -r ./client-artifact/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/client
+          scp -o StrictHostKeyChecking=no -i private_key -r ./client/dist/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/client/dist
           # デプロイ後のコマンド実行（例: アプリケーションの再起動）
-          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/server && sudo systemctl restart canmeet-app"
-          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/client && sudo systemctl restart canmeet-app"
+          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/server && npm install && sudo systemctl restart canmeet-app"
+          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/client && npm install && sudo systemctl restart canmeet-app"
