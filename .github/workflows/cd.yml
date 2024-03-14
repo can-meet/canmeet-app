@@ -1,8 +1,11 @@
 name: Deploy to AWS EC2
 
 on:
-  push:
+  workflow_run:
+    workflows: ["MERN APP CI"]  # CIワークフローの名前を指定
     branches: [main]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -16,9 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Public IP
-        id: ip
-        uses: haythem/public-ip@v1.2
+      - name: Download Server Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: server-artifact
+
+      - name: Download Client Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: client-artifact
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -27,13 +36,16 @@ jobs:
           role-to-assume: ${{ secrets.EC2_ROLE_ARN }}
           role-session-name: github-actions-deploy-${{ github.event.repository.name }}-${{ github.run_number }}
 
-      - name: Deploy to EC2
-
+      - name: Deploy Artifacts to EC2
         env:
           PRIVATE_KEY: ${{ secrets.GIT_PRIVATE_KEY }}
-
         run: |
-          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.EC2_SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
           echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-          ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd /home/ec2-user/var/www/canmeet-app && git pull origin main"
+          # serverアーティファクトの転送
+          scp -o StrictHostKeyChecking=no -i private_key -r ./server-artifact/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/server
+          # clientアーティファクトの転送
+          scp -o StrictHostKeyChecking=no -i private_key -r ./client-artifact/* ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:/home/ec2-user/var/www/canmeet-app/client
+          # デプロイ後のコマンド実行（例: アプリケーションの再起動）
+          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/server && sudo systemctl restart canmeet-app"
+          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/var/www/canmeet-app/client && sudo systemctl restart canmeet-app"

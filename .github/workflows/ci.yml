@@ -1,4 +1,4 @@
-name: NodeJS CI Job
+name: MERN APP CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [dev]
 
 jobs:
-  server-test:
+  server-build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,19 +22,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: cd server && npm install
-
-      - name: Compile Express Server Module
-        run: cd server && npm run build
-
-      - name: Commit Build File
+      - name: Install dependencies and build (Server)
         run: |
-          git add server/dist
-          git commit -m "Build Files" || echo "No changes to commit"
-          git push
+          cd server
+          npm install
+          npm run build
 
-  client-test:
+      - name: Archive Server Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: server-artifact
+          path: server/dist/
+
+  client-build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -49,14 +49,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: cd client && npm install
-
-      - name: Build React Client Module
-        run: cd client && npm run build
-
-      - name: Commit Build File
+      - name: Install dependencies and build (Client)
         run: |
-          git add client/dist
-          git commit -m "Build Files" || echo "No changes to commit"
-          git push
+          cd client
+          npm install
+          npm run build
+
+      - name: Archive Client Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: client-artifact
+          path: client/dist/
