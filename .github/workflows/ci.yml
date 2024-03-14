@@ -28,6 +28,12 @@ jobs:
       - name: Compile Express Server Module
         run: cd server && npm run build
 
+      - name: Commit Build File
+        run:
+          git add server/dist
+          git commit -m "Build Files" || echo "No changes to commit"
+          git push
+
   client-test:
     runs-on: ubuntu-latest
 
@@ -48,3 +54,9 @@ jobs:
 
       - name: Build React Client Module
         run: cd client && npm run build
+
+      - name: Commit Build File
+        run:
+          git add client/dist
+          git commit -m "Build Files" || echo "No changes to commit"
+          git push
