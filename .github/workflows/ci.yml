@@ -1,0 +1,44 @@
+name: MERN APP CI
+
+on:
+  push:
+    branches: 
+      - feature/yu-ci-cd-setup
+      - dev
+      - main
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies and build (Client)
+        run: |
+          cd client
+          npm install
+          npm run build
+
+      - name: Install dependencies and build (Server)
+        run: |
+          cd server
+          npm install
+          npm run build
+
+      - name: Commit Build Files
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          git commit -m "Build Files" || echo "No changes to commit"
+          git push
