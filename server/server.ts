@@ -1,6 +1,8 @@
-import express from "express";
-import mongoose from "mongoose";
+import express from 'express';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import authRoutes from './routes/authRoute';
 
 dotenv.config();
 
@@ -18,8 +20,18 @@ mongoose
   });
 
 
-app.get("/", (req: express.Request, res: express.Response) => {
-  res.send("Hello, world!");
+// middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
+app.use('/api/auth', authRoutes);
+
+
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.send('Hello, world!');
 });
 
 app.listen(port, () => {
