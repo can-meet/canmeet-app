@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 export const signup =  async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, profilePicture } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
@@ -18,7 +18,8 @@ export const signup =  async (req: Request, res: Response) => {
     const user = new User({
       username,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      profilePicture
     });
 
     const result = await user.save();
