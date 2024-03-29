@@ -1,6 +1,6 @@
 export type SignUpValues = {
   email: string,
   password: string,
-  name: string,
-  image: string | null,
+  username: string,
+  profilePicture: string | null,
 }

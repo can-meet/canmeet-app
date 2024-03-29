@@ -12,12 +12,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SignUpValues } from '@/types/signup';
+import { SignUpSchema } from '@/schema/signup';
 
 
 type SignUpStepThreeProps = {
-  form: UseFormReturn<SignUpValues>;
-  onSubmit: SubmitHandler<SignUpValues>;
+  form: UseFormReturn<SignUpSchema>;
+  onSubmit: SubmitHandler<SignUpSchema>;
   onBack: () => void;
 }
 
@@ -59,13 +59,13 @@ export const SignUpStepThree = ({ form, onSubmit, onBack }: SignUpStepThreeProps
         />
         <FormField
           control={form.control}
-          name="name"
+          name="username"
           render={() => (
             <FormItem>
               <FormLabel>名前</FormLabel>
               <span className="text-red-500 mr-2">*</span>
               <div>
-                {form.watch("name")}
+                {form.watch("username")}
               </div>
               <FormMessage className="w-[300px] text-xs"/>
             </FormItem>
@@ -73,13 +73,13 @@ export const SignUpStepThree = ({ form, onSubmit, onBack }: SignUpStepThreeProps
         />
         <FormField
           control={form.control}
-          name="image"
+          name="profilePicture"
           render={() => (
             <FormItem>
               <FormLabel>画像</FormLabel>
               <div className="flex flex-col items-center">
                 <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-                  <AvatarImage src={form.watch("image") || "./alex-unsplash.jpg"}/>
+                  <AvatarImage src={form.watch("profilePicture") || "./alex-unsplash.jpg"}/>
                   <AvatarFallback>PROFILE</AvatarFallback>
                 </Avatar>
               </div>

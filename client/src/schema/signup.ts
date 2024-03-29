@@ -15,7 +15,7 @@ export const signUpStepOneSchema = z.object({
 })
 
 export const signUpStepTwoSchema = z.object({
-  name: z
+  username: z
     .string({
       invalid_type_error: '名前を入力してください。',
     })
@@ -35,13 +35,13 @@ export const signUpSchema = z.object({
       invalid_type_error: 'パスワードを入力してください。',
     })
     .min(8, { message: '文字数が不足しています。8文字以上でパスワードを作成してください。' }),
-  name: z
+  username: z
     .string({
       invalid_type_error: '名前を入力してください。',
     })
     .min(1, { message: '名前を入力してください。' })
     .max(15, { message: '30文字以内で名前を入力してください。' }),
-  image: z.string().nullable()
+  profilePicture: z.string().nullable()
 })
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;

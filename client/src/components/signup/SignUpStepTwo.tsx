@@ -36,7 +36,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack }: SignUpStepTwoProps) => {
     const fileObject = e.target.files[0];
     const fileURL = window.URL.createObjectURL(fileObject)
 
-    form.setValue('image', fileURL);
+    form.setValue('profilePicture', fileURL);
   };
 
   return (
@@ -45,7 +45,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack }: SignUpStepTwoProps) => {
 
         <FormField
           control={form.control}
-          name="name"
+          name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>名前</FormLabel>
@@ -68,7 +68,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack }: SignUpStepTwoProps) => {
           <div className='flex flex-col items-center gap-4'>
 
             <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-              <AvatarImage src={form.watch("image") || "./alex-unsplash.jpg"}/>
+              <AvatarImage src={form.watch("profilePicture") || "./alex-unsplash.jpg"}/>
               <AvatarFallback>PROFILE</AvatarFallback>
             </Avatar>
 
