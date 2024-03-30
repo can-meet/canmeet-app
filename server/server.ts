@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/authRoute';
+import productRoutes from './routes/productRoute';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use(cors({
 
 app.use('/api/auth', authRoutes);
 
+app.use('/api/products', productRoutes);
 
 app.get('/', (req: express.Request, res: express.Response) => {
   res.send('Hello, world!');
