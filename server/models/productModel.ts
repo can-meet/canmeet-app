@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-type Product = {
+export type Product = {
   _id: string;
   user: string;
   product_name: string;
