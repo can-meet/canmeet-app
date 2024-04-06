@@ -55,7 +55,7 @@ export const SignUp = () => {
   const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
     setIsLoading(true);
 
-    axios.post('http://localhost:8000/api/auth/signup', data)
+    axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, data)
     .then(() => {
       toast.success('Successfully registered!');
       setStep(STEPS.FORM)
