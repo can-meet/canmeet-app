@@ -32,7 +32,7 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
     dispatch(loginStart());
 
-    axios.post('http://localhost:8000/api/auth/login', data)
+    axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, data)
     .then((res) => {
       dispatch(loginSuccess(res.data));
       toast.success('Successfully login!');
