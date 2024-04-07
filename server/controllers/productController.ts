@@ -67,7 +67,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({}).sort({ createdAt: -1 });;
 
 		if (!products) {
 			return res.status(404).json({ error: "product not found" });
