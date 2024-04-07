@@ -5,7 +5,7 @@ import { Home } from './pages/Home'
 import { SignUp } from './pages/SignUp'
 import { Login } from './pages/Login'
 import { NotFound } from './pages/NotFound'
-
+import DetailProduct from './pages/product/DetailProduct'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
+            <Route path="product/:pid" element={<DetailProduct />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
