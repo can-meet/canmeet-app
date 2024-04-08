@@ -26,21 +26,23 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   }
 
   return (
-    <div className='relative'>
-      <Input
-        placeholder="商品を検索..."
-        className='w-[375px] rounded-xl border-slate-300 px-4'
-        value={query}
-        onChange={handleInputChange}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-      />
-      <button
-        type='submit' 
-        className="absolute bottom-0 right-2 flex items-center justify-center p-2"
-        onClick={handleSearch}
-      >
-        <IoMdSearch className="h-6 w-6 text-black" />
-      </button>
+    <div className='relative w-[300px]'>
+      <div className='flex items-center'>
+        <Input
+          placeholder="商品を検索..."
+          className='w-[375px] rounded-xl border-slate-300 px-4'
+          value={query}
+          onChange={handleInputChange}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+        />
+        <button
+          type='submit' 
+          className="absolute bottom-0 right-2 flex items-center justify-center p-2"
+          onClick={handleSearch}
+        >
+          <IoMdSearch className="h-6 w-6 text-black" />
+        </button>
+      </div>
     </div>
 
 
