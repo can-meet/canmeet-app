@@ -6,7 +6,6 @@ import CommentIcon from "/comment.svg"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -58,14 +57,14 @@ const DetailProduct = () => {
 
   return (
     <div className="my-20">
-      <div className="w-full">
-        <div className="absolute top-24 left-10">
+      <div className="max-w-96 relative my-0 mx-auto">
+        <div className="absolute top-2 left-3">
           <Link to='/'><IoIosArrowBack /></Link>
         </div>
         <img src={product.image} alt="product image" />
       </div>
 
-      <div className="w-11/12 my-0 mx-auto">
+      <div className="w-11/12 max-w-96 mt-3 mx-auto">
         <div>
           <p className="text-lg font-semibold">{product.product_name}</p>
         </div>
@@ -81,7 +80,7 @@ const DetailProduct = () => {
             </div>
           </DrawerTrigger>
 
-          <DrawerContent>
+          <DrawerContent className="bg-white" >
             <DrawerHeader>
               <DrawerTitle><p className="text-xl text-center">コメント</p></DrawerTitle>
             </DrawerHeader>
@@ -124,39 +123,29 @@ const DetailProduct = () => {
                     <AvatarImage src={user1Pic} />
                   </Avatar>
                   <div className="relative w-full">
-                    <Input placeholder="コメントする" type="text" />
+                    <Input placeholder="コメントする" type="text" className="rounded-xl border-secondary-gray text-secondary-gray" />
                     <button className="absolute top-2 right-4 cursor-pointer"><VscSend className="text-2xl" /></button>
                   </div>
                 </div>
-              <DrawerClose>
-                {/* <Button variant="outline">Cancel</Button> */}
-              </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
 
-
         <div>
           <p className="text-sm">{product.description}</p>
         </div>
-
-        <table className="my-8">
-          <tr>
-            <th><p className="text-left font-normal text-sm mr-8 mb-4">商品の状態</p></th>
-            <tr><div className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.product_status}</div></tr>
-          </tr>
-          <tr>
-            <th><p className="text-left font-normal text-sm mb-4">受け渡し</p></th>
-            <tr><div className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.location}</div></tr>
-          </tr>
-          <tr>
-            <th><p className="text-left font-normal text-sm">支払い方法</p></th>
-            <tr><div className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.payment_method}</div></tr>
-          </tr>
-        </table>
+          
+        <div className="flex flex-wrap justify-between gap-y-2 my-8 max-w-60">
+          <p className="text-sm">商品の状態</p>
+          <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.product_status}</p>
+          <p className="text-sm">受け渡し</p>
+          <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.location}</p>
+          <p className="text-sm">支払い方法</p>
+          <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.payment_method}</p>
+        </div>
 
         <div className="my-2 mx-auto w-fit">
-          <Button variant="red" className="text-white font-medium px-20">購入手続きに進む</Button>
+          <Button variant="red" className="text-white font-medium px-20 rounded">購入手続きに進む</Button>
         </div>
       </div>
     </div>
