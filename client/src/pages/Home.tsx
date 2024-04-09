@@ -24,7 +24,7 @@ export const Home = () => {
 
   const getFilteredProducts = (searchQuery: string) => {
     const results = products.filter(product =>
-      product.product_name.toLowerCase().includes(searchQuery)
+      product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredProducts(results);
   }
