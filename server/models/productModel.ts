@@ -1,8 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
+import { Comment } from './commentModel';
+import { User } from './userModel';
+
 
 export type Product = {
   _id: string;
-  user: string;
   product_name: string;
   price: number;
   image: string;
@@ -11,11 +13,13 @@ export type Product = {
   payment_method: string;
   location: string;
   sale_status: string;
+  user: User;
+  comments: Comment[];
 }
 
 const productSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
@@ -58,6 +62,7 @@ const productSchema = new mongoose.Schema(
       default: "売り出し中",
       required: true,
     },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true }
 );

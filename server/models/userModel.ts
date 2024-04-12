@@ -1,12 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
+import { Product } from './productModel';
+import { Reply } from './replyModel';
 
-type User = {
+
+export type User = {
   _id: string;
   username: string;
   email: string;
   password: string;
   profilePicture: string;
   isAdmin: boolean;
+  // products: Product[];
+  // comments: Comment[];
+  // replies: Reply[];
 }
 
 const userSchema = new mongoose.Schema(
@@ -34,6 +40,18 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    products: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Product'
+    }],
+    comments: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Comment'
+    }],
+    replies: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Reply'
+    }],
   },
   { timestamps: true }
 );
