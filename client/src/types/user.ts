@@ -1,6 +1,11 @@
 export type User = {
-  email: string,
-  password: string,
-  username: string,
-  profilePicture: string | null,
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  profilePicture: string;
+  isAdmin: boolean;
+  // products: Product[];
+  // comments: Comment[];
+  // replies: Reply[];
 }

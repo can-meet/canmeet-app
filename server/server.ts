@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/authRoute';
 import productRoutes from './routes/productRoute';
+import commentRoutes from './routes/commentRoute';
+import replyRoutes from './routes/replyRoute';
+
 
 dotenv.config();
 
@@ -29,8 +32,9 @@ app.use(cors({
 }));
 
 app.use('/api/auth', authRoutes);
-
 app.use('/api/products', productRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/replies', replyRoutes);
 
 app.get('/', (req: express.Request, res: express.Response) => {
   res.send('Hello, world!');
