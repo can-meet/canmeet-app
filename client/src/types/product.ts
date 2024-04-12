@@ -1,6 +1,8 @@
+import { Comment } from "./comment";
+import { User } from "./user";
+
 export type Product = {
   _id: string;
-  user: string;
   product_name: string;
   price: number;
   image: string;
@@ -9,4 +11,6 @@ export type Product = {
   payment_method: string;
   location: string;
   sale_status: string;
+  user: User;
+  comments: Comment[];
 }
