@@ -32,6 +32,7 @@ module.exports = {
         'secondary-gray': '#9B9B9B',
         'label-gray': "#EBEBEB",
         'stepbar-gray': "#A7A7A7",
+        'reply-gray': '#666666',
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

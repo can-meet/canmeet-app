@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { IoIosArrowBack } from "react-icons/io";
-import { ProductCommentList } from "@/components/product/ProductCommentList";
+import { CommentList } from "@/components/product/CommentList";
 import { Loading } from "@/components/layout/Loading";
 import { Comment } from "@/types/comment";
 
@@ -80,7 +80,7 @@ const DetailProduct = () => {
           <p className=" text-lg font-semibold">${product.price}</p>
         </div>
 
-        <ProductCommentList
+        <CommentList
           product={product}
         />
 

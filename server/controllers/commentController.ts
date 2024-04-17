@@ -20,6 +20,7 @@ export const createComment = async (req: Request, res: Response) => {
       user: user._id, 
       product: product._id 
     });
+
     await comment.save();
 
     product.comments.push(comment);

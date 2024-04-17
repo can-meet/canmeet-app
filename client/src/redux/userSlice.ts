@@ -1,10 +1,14 @@
-import { User } from "@/types/user";
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 
+type currentUserType = {
+  userId: string
+}
+
+
 type UserState = {
-  currentUser: User | null;
+  currentUser: currentUserType | null;
   error: string | null;
   loading: boolean;
 }
@@ -22,7 +26,7 @@ export const userSlice = createSlice({
     loginStart: (state) => {
       state.loading = true;
     },
-    loginSuccess: (state, action: PayloadAction<User>) => {
+    loginSuccess: (state, action: PayloadAction<currentUserType>) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = null;
