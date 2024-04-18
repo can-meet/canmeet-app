@@ -33,6 +33,11 @@ module.exports = {
         'label-gray': "#EBEBEB",
         'stepbar-gray': "#A7A7A7",
         'reply-gray': '#666666',
+        'price-gray': '#EDEEF1',
+        'search-history-gray': '#D7E0E3',
+        'sale': '#DEF9FF',
+        'in-trade': '#FFF0DE',
+        'sold-out': '#FFDEDE',
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -64,11 +69,6 @@ module.exports = {
       },
       fontSize: {
         'ms': '8px',
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
