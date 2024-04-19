@@ -23,7 +23,15 @@ export const signup =  async (req: Request, res: Response) => {
     });
 
     const result = await user.save();
-    res.status(201).send({ message: 'User created', userId: result._id });
+
+    // create jwt token
+    const token = jwt.sign(
+      { userId: result._id, email: result.email },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    res.status(201).send({ message: 'User created', token, userId: result._id });
   } catch (error) {
     res.status(500).send(error);
   }
