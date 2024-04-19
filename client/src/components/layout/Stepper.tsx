@@ -22,7 +22,7 @@ export const Stepper = ({ currentStep, complete }: StepperProps) => {
             <div className="step">
               {i < currentStep || complete ? <FaCheck size={18} /> : i + 1}
             </div>
-            <p className="text-gray-500 text-xs mt-2">{step}</p>
+            <p className="text-stepbar-black text-xs mt-2">{step}</p>
           </div>
         ))}
       </div>
