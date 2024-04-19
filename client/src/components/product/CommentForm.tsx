@@ -15,9 +15,11 @@ import { useSelector } from 'react-redux';
 
 type CommentFormProps = {
   productId: string;
+  commentsUpdated: boolean;
+  setCommentsUpdated: (commentsUpdated: boolean) => void;
 }
  
-export const CommentForm = ({ productId }: CommentFormProps) => {
+export const CommentForm = ({ productId, commentsUpdated, setCommentsUpdated }: CommentFormProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { currentUser } = useSelector((state: RootState) => state.user);
 
@@ -41,6 +43,7 @@ export const CommentForm = ({ productId }: CommentFormProps) => {
     axios.post(`${import.meta.env.VITE_API_URL}/comments`, data)
       .then(() => {
         toast.success('Successfully put comment!');
+        setCommentsUpdated(!commentsUpdated)
       }).catch(() => {
         toast.error('Something went wrong.');
       })
