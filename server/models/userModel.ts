@@ -1,6 +1,4 @@
-import mongoose, { Schema, Types } from 'mongoose';
-import { Product } from './productModel';
-import { Reply } from './replyModel';
+import mongoose from 'mongoose';
 
 
 export type User = {
@@ -10,9 +8,6 @@ export type User = {
   password: string;
   profilePicture: string;
   isAdmin: boolean;
-  // products: Product[];
-  // comments: Comment[];
-  // replies: Reply[];
 }
 
 const userSchema = new mongoose.Schema(
@@ -39,19 +34,7 @@ const userSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
-    },
-    products: [{ 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Product'
-    }],
-    comments: [{ 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Comment'
-    }],
-    replies: [{ 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Reply'
-    }],
+    }
   },
   { timestamps: true }
 );
