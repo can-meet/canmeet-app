@@ -25,7 +25,7 @@ export const Login = () => {
       email: '',
       password: '',
     },
-    mode: "onChange",
+    mode: "onBlur",
     resolver: loginResolver,
   });
 

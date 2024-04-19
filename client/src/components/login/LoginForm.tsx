@@ -27,7 +27,7 @@ export const LoginForm = ({ form, onSubmit}: LoginFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>メールアドレス</FormLabel>
-              <span className="text-red-500 ">*</span>
+              <span className="text-red-500">*</span>
               <FormControl>
                 <Input 
                   placeholder="abc@gmail.com"
@@ -36,7 +36,7 @@ export const LoginForm = ({ form, onSubmit}: LoginFormProps) => {
                 />
               </FormControl>
               
-              <FormMessage className="w-[300px] text-xs"/>
+              <FormMessage className="w-[300px] text-xs text-red-500"/>
             </FormItem>
           )}
         />
@@ -56,7 +56,7 @@ export const LoginForm = ({ form, onSubmit}: LoginFormProps) => {
                 />
               </FormControl>
               
-              <FormMessage className="w-[300px] text-xs"/>
+              <FormMessage className="w-[300px] text-xs text-red-500"/>
             </FormItem>
           )}
         />

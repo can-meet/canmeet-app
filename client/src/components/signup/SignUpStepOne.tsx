@@ -38,7 +38,7 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
                 />
               </FormControl>
               
-              <FormMessage className="w-[300px] text-xs"/>
+              <FormMessage className="w-[300px] text-xs text-red-500"/>
             </FormItem>
           )}
         />
@@ -58,7 +58,7 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
                 />
               </FormControl>
               
-              <FormMessage className="w-[300px] text-xs"/>
+              <FormMessage className="w-[300px] text-xs text-red-500"/>
             </FormItem>
           )}
         />

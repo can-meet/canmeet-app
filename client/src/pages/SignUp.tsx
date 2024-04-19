@@ -1,10 +1,16 @@
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {  
   SubmitHandler, 
   useForm
 } from 'react-hook-form';
+import {
+  loginStart,
+  loginSuccess,
+  loginError,
+} from '../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { SignUpStepOne } from '@/components/signup/SignUpStepOne';
 import { SignUpStepTwo } from '@/components/signup/SignUpStepTwo';
@@ -23,10 +29,10 @@ export enum STEPS {
 }
 
 export const SignUp = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [step, setStep] = useState(STEPS.FORM);
   const [complete, setComplete] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const form = useForm<SignUpSchema>({
     defaultValues: {
@@ -35,7 +41,7 @@ export const SignUp = () => {
       username: '',
       profilePicture: '',
     },
-    mode: "onChange",
+    mode: "onBlur",
     resolver: signUpResolver,
   });
 
@@ -53,19 +59,18 @@ export const SignUp = () => {
   }
 
   const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
-    setIsLoading(true);
+    dispatch(loginStart());
 
     axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, data)
-    .then(() => {
+    .then((res) => {
+      dispatch(loginSuccess(res.data));
       toast.success('Successfully registered!');
       setStep(STEPS.FORM)
-      navigate('/login');
+      navigate('/');
     })
-    .catch(() => {
+    .catch((err) => {
+      dispatch(loginError(err.response.data.error));
       toast.error('Something went wrong.');
-    })
-    .finally(() => {
-      setIsLoading(false);
     })
   }
 
@@ -87,7 +92,7 @@ export const SignUp = () => {
   return (
     <>
       <div className='my-24 flex flex-col items-center gap-y-4'>
-      <div className="flex justify-between items-center py-2 w-[300px]">
+        <div className="flex justify-between items-center py-2 w-[300px]">
           <Link to="/">
             <AiOutlineLeft className="text-lg" />
           </Link>

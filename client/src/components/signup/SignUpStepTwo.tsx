@@ -58,7 +58,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack }: SignUpStepTwoProps) => {
                 />
               </FormControl>
               
-              <FormMessage />
+              <FormMessage className="w-[300px] text-xs text-red-500"/>
             </FormItem>
           )}
         />

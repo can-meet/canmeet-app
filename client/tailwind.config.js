@@ -28,6 +28,7 @@ module.exports = {
         'primary-blue': '#2674C3',
         'secondary-blue': '#0A58A3',
         'stepbar-blue': "#BBDEFF",
+        'stepbar-black': '#464646',
         'primary-gray': '#C1C1C1',
         'secondary-gray': '#9B9B9B',
         'label-gray': "#EBEBEB",
