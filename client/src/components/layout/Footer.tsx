@@ -12,7 +12,9 @@ export const Footer = () => {
         </Link>
         <FaCamera className="text-xl" />
         <PiPaperPlaneRight className="text-xl" />
-        <FaUser className="text-lg" />
+        <Link to="/profile">
+          <FaUser className="text-lg" />
+        </Link>
       </div>
     </footer>
   )
