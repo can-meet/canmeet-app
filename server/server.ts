@@ -7,6 +7,7 @@ import productRoutes from './routes/productRoute';
 import commentRoutes from './routes/commentRoute';
 import replyRoutes from './routes/replyRoute';
 import messageRoutes from './routes/messageRoute';
+import userRoutes from './routes/userRoute';
 
 
 dotenv.config();
@@ -37,6 +38,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/replies', replyRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req: express.Request, res: express.Response) => {
   res.send('Hello, world!');
