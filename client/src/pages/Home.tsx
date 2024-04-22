@@ -48,9 +48,12 @@ export const Home = () => {
           <SearchBar
             onSearch={getFilteredProducts}
           />
-          <ProductList
-            products={filteredProducts}
-          />
+          <div>
+            <h2 className='my-4 font-semibold'>最近投稿された商品</h2>
+            <ProductList
+              products={filteredProducts}
+            />
+          </div>
         </div>
       </div>
     </>

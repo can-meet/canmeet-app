@@ -1,3 +1,5 @@
+import { Product } from "./product";
+
 export type User = {
   _id: string;
   username: string;
@@ -5,7 +7,8 @@ export type User = {
   password: string;
   profilePicture: string;
   isAdmin: boolean;
-  // products: Product[];
+  postedProducts: Product[];
+  purchasedProducts: Product[];
   // comments: Comment[];
   // replies: Reply[];
 }

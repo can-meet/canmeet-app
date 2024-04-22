@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { IoIosArrowBack } from "react-icons/io";
 import { CommentList } from "@/components/product/CommentList";
@@ -22,8 +22,8 @@ export type DetailProduct = {
   comments: Comment[],
 }
 
-
 const DetailProduct = () => {
+  const navigate = useNavigate();
   const { pid } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<DetailProduct>({
@@ -67,7 +67,7 @@ const DetailProduct = () => {
     <div className="my-20">
       <div className="max-w-96 relative my-0 mx-auto">
         <div className="absolute top-2 left-3">
-          <Link to='/'><IoIosArrowBack /></Link>
+          <button onClick={() => navigate(-1)}><IoIosArrowBack /></button>
         </div>
         <img src={product.image} alt="product image" />
       </div>

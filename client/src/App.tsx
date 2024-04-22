@@ -6,6 +6,9 @@ import { SignUp } from './pages/SignUp'
 import { Login } from './pages/Login'
 import { NotFound } from './pages/NotFound'
 import DetailProduct from './pages/product/DetailProduct'
+import { Profile } from './pages/Profile'
+import { ProtectedRoute } from './components/ProtectedRoute'
+
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="product/:pid" element={<DetailProduct />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path='/profile' element={<Profile />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

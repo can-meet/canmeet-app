@@ -40,7 +40,6 @@ export const CommentList = ({ product }: CommentListProps) => {
               setIsInitialMount(false);  // 初回マウント時のみtrue,2回目以降false
             })
         }
-        console.log(comments)
       } catch (error) {
         console.log(error);
       }
