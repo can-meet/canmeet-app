@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Product } from './productModel';
 
 
 export type User = {
@@ -8,6 +9,8 @@ export type User = {
   password: string;
   profilePicture: string;
   isAdmin: boolean;
+  postedProducts: Product[];
+  purchasedProducts: Product[];
 }
 
 const userSchema = new mongoose.Schema(
@@ -34,7 +37,15 @@ const userSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
-    }
+    },
+    postedProducts: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Product'
+    }],
+    purchasedProducts: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Product'
+    }],
   },
   { timestamps: true }
 );
