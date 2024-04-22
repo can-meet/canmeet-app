@@ -7,7 +7,7 @@ export type Product = {
   _id: string;
   product_name: string;
   price: number;
-  image: string;
+  images: string[];
   product_status: string;
   description: string;
   payment_method: string;
@@ -32,12 +32,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: {
+    images: [{
       type: String,
-      default:
-        'https://cdn.pixabay.com/photo/2023/09/18/22/07/ai-generated-8261525_960_720.png',
       required: true,
-    },
+    }],
     product_status: {
       type: String,
       enum: ["新品、未使用", "未使用に近い", "目立った傷や汚れなし", "やや傷や汚れあり", "傷や汚れあり", "全体的に状態が悪い"],

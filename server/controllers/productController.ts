@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Product from "../models/productModel";
 import User from "../models/userModel";
+import { v2 as cloudinary } from "cloudinary";
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
@@ -8,33 +9,32 @@ export const createProduct = async (req: Request, res: Response) => {
       userId,
       product_name,
       price,
-      image,
       product_status,
       description,
       payment_method,
       location,
       sale_status
     } = req.body;
-
-    if(!product_name || !price || !image || !product_status || !description || !payment_method || !location || !sale_status) {
-      return res.status(400).json({ message: 'Still some blanks left' })
-    }
+    let { images } = req.body;
 
     const userExists = await User.findById(userId)
     if(!userExists) {
       return res.status(404).json({ message: 'User not found' }) 
     }
-  
-    const maxLength = 500;
-    if (description.length > maxLength) {
-      return res.status(400).json({ error: `Text must be less than ${maxLength} characters` });
+
+    if(images) {
+      const imagesToUpload = images.map(async (image: string) => {
+        const result = (await cloudinary.uploader.upload(image)).secure_url;
+        return result;
+      })
+      images = await Promise.all(imagesToUpload);
     }
   
     const newProduct = new Product({
       user: userId,
       product_name,
       price,
-      image,
+      images,
       product_status,
       description,
       payment_method,
