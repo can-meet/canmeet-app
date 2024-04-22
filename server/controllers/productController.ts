@@ -20,8 +20,8 @@ export const createProduct = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Still some blanks left' })
     }
 
-    const userExists = await User.findById(userId)
-    if(!userExists) {
+    const user = await User.findById(userId)
+    if(!user) {
       return res.status(404).json({ message: 'User not found' }) 
     }
   
@@ -43,6 +43,10 @@ export const createProduct = async (req: Request, res: Response) => {
     })
   
     await newProduct.save()
+
+    user.postedProducts.push(newProduct)
+    await user.save()
+
     res.status(201).json(newProduct)
   } catch (error) {
     console.log("Error in product controller")
