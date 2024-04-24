@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { User } from "./userModel";
+import type { User } from "./userModel";
 
 export type Message = {
-  _id: string;
-  senderId: User;
-  receiverId: User;
-  message: string;
-}
+	_id: string;
+	senderId: User;
+	receiverId: User;
+	message: string;
+};
 
 const messageSchema = new mongoose.Schema(
 	{
@@ -24,12 +24,12 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		createdAt: { 
-      type: Date, 
-      default: Date.now,
-    },
+		createdAt: {
+			type: Date,
+			default: Date.now,
+		},
 	},
-	{ timestamps: true }
+	{ timestamps: true },
 );
 
 const Message = mongoose.model<Message>("Message", messageSchema);

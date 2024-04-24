@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
-import { User } from "./userModel";
-import { Message } from "./messageModel";
-
+import type { Message } from "./messageModel";
+import type { User } from "./userModel";
 
 export type Conversation = {
-  _id: string;
-  participants: User[];
-  messages: Message[];
-}
+	_id: string;
+	participants: User[];
+	messages: Message[];
+};
 
 const conversationSchema = new mongoose.Schema(
 	{
@@ -25,9 +24,12 @@ const conversationSchema = new mongoose.Schema(
 			},
 		],
 	},
-	{ timestamps: true }
+	{ timestamps: true },
 );
 
-const Conversation = mongoose.model<Conversation>("Conversation", conversationSchema);
+const Conversation = mongoose.model<Conversation>(
+	"Conversation",
+	conversationSchema,
+);
 
 export default Conversation;
