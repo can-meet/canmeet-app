@@ -56,7 +56,10 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const getProduct = async (req: Request, res: Response) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.productId).populate({
+      path: 'user',
+      select: '_id, username profilePicture'
+    });
 
 		if (!product) {
 			return res.status(404).json({ error: "product not found" });
@@ -80,5 +83,29 @@ export const getProducts = async (req: Request, res: Response) => {
 		res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
+  }
+}
+
+
+export const purchaseProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const { userId } = req.body;
+    const product = await Product.findByIdAndUpdate(productId, {
+      sale_status: '取引中'
+    }, { new: true });
+
+    if (product) {
+      const user = await User.findByIdAndUpdate(userId, {
+        $push: { purchasedProducts: productId }
+      }, { new: true });
+    
+      res.json({ product, user });
+
+    } else {
+      res.status(404).send('Product not found');
+    }
+  } catch (error) {
+    res.status(500).send('Server error');
   }
 }

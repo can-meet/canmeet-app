@@ -64,7 +64,7 @@ export const CommentList = ({ product }: CommentListProps) => {
       <DrawerTrigger>
         <div className="flex gap-1 my-2 text-[#5F5F5F]">
           <img src={CommentIcon} alt="icon" />
-          <span className="text-xs hover:underline">
+          <span className="text-xs hover:underline hover:underline-offset-1">
             {isInitialMount ? `${product.comments.length}件のコメント` : `${comments.length}件のコメント`}
           </span>
         </div>
@@ -89,7 +89,6 @@ export const CommentList = ({ product }: CommentListProps) => {
             productId={productId}
             commentsUpdated={commentsUpdated}
             setCommentsUpdated={setCommentsUpdated}
-
           />
         </DrawerFooter>
       </DrawerContent>
