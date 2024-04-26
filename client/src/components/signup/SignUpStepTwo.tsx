@@ -15,29 +15,45 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SignUpSchema } from '@/schema/signup';
 import { useRef } from 'react';
 import { Label } from '../ui/label';
+import { imageUpload } from '@/lib/imageUpload';
+
+// import cloudinary from '@/lib/cloudinary'
+
 
 
 type SignUpStepTwoProps = {
   form: UseFormReturn<SignUpSchema>;
   onNext: () => void;
   onBack: () => void;
+  imagePreview: string;
+  setImagePreview: (imagePreview: string) => void;
 }
 
-export const SignUpStepTwo = ({ form, onNext, onBack }: SignUpStepTwoProps) => {
+
+export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePreview }: SignUpStepTwoProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const fileObject = e.target.files[0];
     const fileURL = window.URL.createObjectURL(fileObject)
+    setImagePreview(fileURL);
 
-    form.setValue('profilePicture', fileURL);
+    try {
+      const uploadFileURL = await imageUpload(fileObject)
+
+      form.setValue('profilePicture', uploadFileURL);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+
   };
+
 
   return (
     <Form {...form}>
@@ -68,7 +84,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack }: SignUpStepTwoProps) => {
           <div className='flex flex-col items-center gap-4'>
 
             <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-              <AvatarImage src={form.watch("profilePicture") || "./alex-unsplash.jpg"}/>
+              <AvatarImage src={imagePreview || "./alex-unsplash.jpg"}/>
               <AvatarFallback>PROFILE</AvatarFallback>
             </Avatar>
 

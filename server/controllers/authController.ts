@@ -3,10 +3,12 @@ import User from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 export const signup =  async (req: Request, res: Response) => {
   const { username, email, password, profilePicture } = req.body;
+
 
   try {
     const userExists = await User.findOne({ email });
@@ -15,11 +17,12 @@ export const signup =  async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = new User({
       username,
       email,
       password: hashedPassword,
-      profilePicture
+      profilePicture: profilePicture
     });
 
     const result = await user.save();

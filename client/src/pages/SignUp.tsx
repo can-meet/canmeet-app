@@ -31,6 +31,7 @@ export enum STEPS {
 export const SignUp = () => {
   const [step, setStep] = useState(STEPS.FORM);
   const [complete, setComplete] = useState<boolean>(false);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,9 +81,9 @@ export const SignUp = () => {
       case STEPS.FORM:
         return <SignUpStepOne form={form} onNext={onNext} /> ;
       case STEPS.PROFILE:
-        return <SignUpStepTwo form={form} onNext={onNext} onBack={onBack} /> ;
+        return <SignUpStepTwo form={form} onNext={onNext} onBack={onBack} imagePreview={imagePreview} setImagePreview={setImagePreview} /> ;
       case STEPS.CONFIRM:
-        return <SignUpStepThree form={form} onSubmit={onSubmit} onBack={onBack}/> ;
+        return <SignUpStepThree form={form} onSubmit={onSubmit} onBack={onBack} imagePreview={imagePreview} setImagePreview={setImagePreview} /> ;
       default:
         return <div>Unknown step</div>;
     }

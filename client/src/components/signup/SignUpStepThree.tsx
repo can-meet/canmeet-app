@@ -19,9 +19,11 @@ type SignUpStepThreeProps = {
   form: UseFormReturn<SignUpSchema>;
   onSubmit: SubmitHandler<SignUpSchema>;
   onBack: () => void;
+  imagePreview: string;
+  setImagePreview: (imagePreview: string) => void;
 }
 
-export const SignUpStepThree = ({ form, onSubmit, onBack }: SignUpStepThreeProps) => {
+export const SignUpStepThree = ({ form, onSubmit, onBack, imagePreview, setImagePreview }: SignUpStepThreeProps) => {
 
   return (
     <Form {...form}>
@@ -79,7 +81,7 @@ export const SignUpStepThree = ({ form, onSubmit, onBack }: SignUpStepThreeProps
               <FormLabel>画像</FormLabel>
               <div className="flex flex-col items-center">
                 <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-                  <AvatarImage src={form.watch("profilePicture") || "./alex-unsplash.jpg"}/>
+                  <AvatarImage src={imagePreview || "./alex-unsplash.jpg"}/>
                   <AvatarFallback>PROFILE</AvatarFallback>
                 </Avatar>
               </div>
