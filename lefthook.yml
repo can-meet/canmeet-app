@@ -1,0 +1,14 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+#
+  pre-commit:
+    parallel: true
+    commands:
+      server:
+        root: server
+        run: npm run format
+#      client:
+#        root: client/src
+#        run: npm run format
