@@ -8,6 +8,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group"
+import {
   Form,
   FormControl,
   FormField,
@@ -17,14 +21,19 @@ import {
 } from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ProductSchema, productResolver } from "@/schema/product";
-import { Label } from "@radix-ui/react-label";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { productImagesUpload } from "@/lib/productImagesUpload"
 
 const CreateProduct = () => {
   const form = useForm<ProductSchema>({
     defaultValues: {
-      image: undefined,
+      userId: '6624580904e052d3586f145b',
+      images: [],
       product_name: '',
-      price: 0,
+      price: '',
       description: '',
       product_status: '',
       location: '',
@@ -32,21 +41,44 @@ const CreateProduct = () => {
     },
     resolver: productResolver,
   })
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const onSubmit: SubmitHandler<ProductSchema> = (values) => {
-    console.log(values)
+  const onSubmit: SubmitHandler<ProductSchema> = async (value) => {
+    console.log('value:',  value)
+    const cloudinaryUrls = await productImagesUpload(value.images)
+    form.setValue('images', cloudinaryUrls)
+    setLoading(true)
+    axios.post(`${import.meta.env.VITE_API_URL}/products`, value)
+      .then(() => {
+        toast.success('Successfully posted your product')
+        navigate('/')
+      })
+      .catch(() => {
+        toast.error("Failed to post your product. Try again.")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="container my-20 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} encType='multipart/form-data' className="container my-20 space-y-6 text-[#464646]">
       <FormField
         control={form.control}
-        name="image"
+        name="images"
         render={() => (
           <FormItem>
+            <FormLabel>Image</FormLabel>
             <FormControl>
-              <Input type="file" className="" />
+              <Input 
+                type="file"
+                multiple
+                accept=".png, .jpg"
+                className="rounded bg-zinc-50"
+                {...form.register("images")}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -55,11 +87,15 @@ const CreateProduct = () => {
       <FormField
           control={form.control}
           name="product_name"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
-              <FormLabel>商品名</FormLabel>
+              <FormLabel className="font-normal my-2">タイトル</FormLabel>
               <FormControl>
-                <Input type="text" />
+                <Input 
+                  type="text" 
+                  className="rounded bg-zinc-50 md:visible" 
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,11 +104,15 @@ const CreateProduct = () => {
         <FormField
           control={form.control}
           name="price"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
-              <FormLabel>価格</FormLabel>
+              <FormLabel className="font-normal my-2">値段</FormLabel>
               <FormControl>
-                <Input type="number" />
+                <Input
+                  type="number" 
+                  className="rounded bg-zinc-50"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,11 +121,14 @@ const CreateProduct = () => {
         <FormField
           control={form.control}
           name="description"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
-              <FormLabel>説明</FormLabel>
+              <FormLabel className="font-normal my-2">説明</FormLabel>
               <FormControl>
-                <Textarea />
+                <Textarea 
+                  className="rounded bg-zinc-50" 
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,19 +137,37 @@ const CreateProduct = () => {
         <FormField
           control={form.control}
           name="product_status"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="px-2 rounded bg-[#f4f4f4]">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger><FormLabel>商品の状態</FormLabel></AccordionTrigger>
+                  <AccordionTrigger><FormLabel className="font-normal my-2">商品の状態</FormLabel></AccordionTrigger>
                     <FormControl>
-                      <AccordionContent className="flex gap-2 overflow-scroll">
-                        <Button>新品、未使用</Button>
-                        <Button>未使用に近い</Button>
-                        <Button>目立った傷や汚れなし</Button>
-                        <Button>やや傷や汚れあり</Button>
-                        <Button>傷や汚れあり</Button>
-                        <Button>全体的に状態が悪い</Button>
+                      <AccordionContent>
+                        <ToggleGroup
+                          type="single"
+                          className="flex flex-wrap justify-start"
+                          // {...form.register("product_status")}
+                          // {...field}
+                          onValueChange={field.onChange}
+                          
+                        >
+                          <ToggleGroupItem value="新品、未使用" aria-label="Toggle 新品、未使用">
+                            新品、未使用
+                          </ToggleGroupItem>
+                          <ToggleGroupItem value="未使用に近い" aria-label="Toggle 未使用に近い">
+                            未使用に近い
+                          </ToggleGroupItem>
+                          <ToggleGroupItem value="目立った傷や汚れなし" aria-label="Toggle 目立った傷や汚れなし">
+                            目立った傷や汚れなし
+                          </ToggleGroupItem>
+                          <ToggleGroupItem value="やや傷や汚れあり" aria-label="Toggle やや傷や汚れあり">
+                            やや傷や汚れあり
+                          </ToggleGroupItem>
+                          <ToggleGroupItem value="全体的に状態が悪い" aria-label="Toggle 全体的に状態が悪い">
+                            全体的に状態が悪い
+                          </ToggleGroupItem>
+                        </ToggleGroup>
                       </AccordionContent>
                     </FormControl>
                 </AccordionItem>
@@ -116,17 +177,70 @@ const CreateProduct = () => {
         />
         <FormField
           control={form.control}
-          name="description"
-          render={() => (
+          name="location"
+          render={({ field }) => (
             <FormItem>
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="bg-[#f4f4f4] px-2 rounded">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger><FormLabel>受け渡し場所</FormLabel></AccordionTrigger>
+                  <AccordionTrigger><FormLabel className="font-normal my-2">受け渡し場所</FormLabel></AccordionTrigger>
                       <FormControl>
-                        <AccordionContent className="flex gap-2 overflow-scroll">
-                          <Button>Vancouver</Button>
-                          <Button>Burnaby</Button>
-                          <Button>North Vancouver</Button>
+                        <AccordionContent className="flex gap-2 flex-wrap">
+                          <ToggleGroup
+                            type="single"
+                            className="flex flex-wrap justify-start"
+                            onValueChange={field.onChange}
+                          >
+                            <ToggleGroupItem value="Vancouver" aria-label="Toggle vancouver">
+                              Vancouver
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Burnaby" aria-label="Toggle burnaby">
+                              Burnaby
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="North Vancouver" aria-label="Toggle north-vancouver">
+                              North Vancouver
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="West Vancouver" aria-label="Toggle west-vancouver">
+                              West Vancouver
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Richmond" aria-label="Toggle richmond">
+                              Richmond
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Surrey" aria-label="Toggle surrey">
+                              Surrey
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Coquitlam" aria-label="Toggle coquitlam">
+                              Coquitlam
+                            </ToggleGroupItem>
+                          </ToggleGroup>
+                        </AccordionContent>
+                      </FormControl>
+                </AccordionItem>
+              </Accordion>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="payment_method"
+          render={({ field }) => (
+            <FormItem>
+              <Accordion type="single" collapsible className="bg-[#f4f4f4] px-2 rounded">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger><FormLabel className="font-normal my-2">支払い方法</FormLabel></AccordionTrigger>
+                      <FormControl>
+                        <AccordionContent className="flex gap-2 flex-wrap">
+                          <ToggleGroup
+                            type="single"
+                            className="flex flex-wrap justify-start"
+                            onValueChange={field.onChange}
+                          >
+                            <ToggleGroupItem value="e-transfer" aria-label="Toggle e-transfer">
+                              e-transfer
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="現金" aria-label="Toggle cash">
+                              現金
+                            </ToggleGroupItem>
+                          </ToggleGroup>
                         </AccordionContent>
                       </FormControl>
                 </AccordionItem>
@@ -135,7 +249,13 @@ const CreateProduct = () => {
           )}
         />
 
-        <Button variant='blue' type="submit" className="w-full text-white">投稿する</Button>
+        <Button
+          variant='blue'
+          type="submit"
+          className="w-full text-white"
+        >
+          投稿する
+        </Button>
       </form>
     </Form>
   )
