@@ -83,6 +83,14 @@ export const Profile = () => {
 				<AvatarFallback>PROFILE IMAGE</AvatarFallback>
 			</Avatar>
 
+  return (
+    <div className='my-20 flex flex-col items-center justify-center'>
+      
+      <Avatar className="rounded-full h-20 w-20 object-cover cursor-pointer self-center">
+        <AvatarImage src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
+        <AvatarFallback>PROFILE IMAGE</AvatarFallback>
+      </Avatar>
+      
 			<h2 className="my-3 text-lg">{user.username}</h2>
 
 			<Tabs defaultValue="post" className="px-4 w-[400px]">

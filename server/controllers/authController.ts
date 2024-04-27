@@ -3,24 +3,26 @@ import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel";
 
-const JWT_SECRET = process.env.JWT_SECRET || "secret";
+
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 export const signup = async (req: Request, res: Response) => {
 	const { username, email, password, profilePicture } = req.body;
 
-	try {
-		const userExists = await User.findOne({ email });
-		if (userExists) {
-			return res.status(400).json({ message: "User already exists" });
-		}
+  try {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
-		const hashedPassword = await bcrypt.hash(password, 10);
-		const user = new User({
-			username,
-			email,
-			password: hashedPassword,
-			profilePicture,
-		});
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,
+      profilePicture: profilePicture
+    });
 
 		const result = await user.save();
 

@@ -134,7 +134,7 @@ const DetailProduct = () => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-x-2'>
             <Avatar className="my-2 rounded-full object-cover cursor-pointer self-center">
-              <AvatarImage src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
+              <AvatarImage src={product.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
               <AvatarFallback>USER IMAGE</AvatarFallback>
             </Avatar>
             <div>{product.user.username}</div>

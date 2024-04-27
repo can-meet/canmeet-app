@@ -26,25 +26,27 @@ export enum STEPS {
 }
 
 export const SignUp = () => {
-	const [step, setStep] = useState(STEPS.FORM);
-	const [complete, setComplete] = useState<boolean>(false);
+  const [step, setStep] = useState(STEPS.FORM);
+  const [complete, setComplete] = useState<boolean>(false);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const form = useForm<SignUpSchema>({
-		defaultValues: {
-			email: "",
-			password: "",
-			username: "",
-			profilePicture: "",
-		},
-		mode: "onBlur",
-		resolver: signUpResolver,
-	});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const form = useForm<SignUpSchema>({
+    defaultValues: {
+      email: '',
+      password: '',
+      username: '',
+      profilePicture: '',
+    },
+    mode: "onBlur",
+    resolver: signUpResolver,
+  });
 
-	const onBack = () => {
-		setStep((value) => value - 1);
-	};
+
+  const onBack = () => {
+    setStep((value) => value - 1);
+  }
 
 	const onNext = () => {
 		const currentSchema =
@@ -72,20 +74,19 @@ export const SignUp = () => {
 			});
 	};
 
+
 	const getSectionComponent = () => {
-		switch (step) {
-			case STEPS.FORM:
-				return <SignUpStepOne form={form} onNext={onNext} />;
-			case STEPS.PROFILE:
-				return <SignUpStepTwo form={form} onNext={onNext} onBack={onBack} />;
-			case STEPS.CONFIRM:
-				return (
-					<SignUpStepThree form={form} onSubmit={onSubmit} onBack={onBack} />
-				);
-			default:
-				return <div>Unknown step</div>;
-		}
-	};
+    switch (step) {
+      case STEPS.FORM:
+        return <SignUpStepOne form={form} onNext={onNext} /> ;
+      case STEPS.PROFILE:
+        return <SignUpStepTwo form={form} onNext={onNext} onBack={onBack} imagePreview={imagePreview} setImagePreview={setImagePreview} /> ;
+      case STEPS.CONFIRM:
+        return <SignUpStepThree form={form} onSubmit={onSubmit} onBack={onBack} imagePreview={imagePreview} setImagePreview={setImagePreview} /> ;
+      default:
+        return <div>Unknown step</div>;
+    }
+  };
 
 	return (
 		<>
