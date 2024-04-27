@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import Conversation from "../models/conversationModel";
 import Message from "../models/messageModel";
 // import { getReceiverSocketId, io } from "../socket/socket";
@@ -41,7 +41,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 
 export const getMessages = async (req: Request, res: Response) => {
 	try {
-    const { userId: senderId } = req.body;
+		const { userId: senderId } = req.body;
 		const { id: userToChatId } = req.params;
 
 		const conversation = await Conversation.findOne({

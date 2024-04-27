@@ -1,13 +1,14 @@
-import { UseFormReturn } from 'react-hook-form';
+import type { UseFormReturn } from "react-hook-form";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -17,9 +18,10 @@ import { useRef } from 'react';
 import { Label } from '../ui/label';
 import { imageUpload } from '@/lib/imageUpload';
 
-// import cloudinary from '@/lib/cloudinary'
 
-
+import type { SignUpSchema } from "@/schema/signup";
+import { useRef } from "react";
+import { Label } from "../ui/label";
 
 type SignUpStepTwoProps = {
   form: UseFormReturn<SignUpSchema>;

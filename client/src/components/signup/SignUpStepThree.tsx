@@ -1,19 +1,16 @@
-import { UseFormReturn } from 'react-hook-form';
-import { 
-  SubmitHandler, 
-} from 'react-hook-form';
+import type { UseFormReturn } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+	Form,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SignUpSchema } from '@/schema/signup';
-
+import type { SignUpSchema } from "@/schema/signup";
 
 type SignUpStepThreeProps = {
   form: UseFormReturn<SignUpSchema>;
@@ -24,10 +21,27 @@ type SignUpStepThreeProps = {
 }
 
 export const SignUpStepThree = ({ form, onSubmit, onBack, imagePreview, setImagePreview }: SignUpStepThreeProps) => {
+	form: UseFormReturn<SignUpSchema>;
+	onSubmit: SubmitHandler<SignUpSchema>;
+	onBack: () => void;
+};
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+export const SignUpStepThree = ({
+	form,
+	onSubmit,
+	onBack,
+}: SignUpStepThreeProps) => {
+	return (
+		<Form {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+				<FormField
+					control={form.control}
+					name="email"
+					render={() => (
+						<FormItem>
+							<FormLabel>メールアドレス</FormLabel>
+							<span className="text-red-500 ">*</span>
+							<div>{form.watch("email")}</div>
 
         <FormField
           control={form.control}
