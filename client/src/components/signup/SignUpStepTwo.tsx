@@ -11,17 +11,12 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { SignUpSchema } from '@/schema/signup';
 import { useRef } from 'react';
 import { Label } from '../ui/label';
 import { imageUpload } from '@/lib/imageUpload';
 
-
-import type { SignUpSchema } from "@/schema/signup";
-import { useRef } from "react";
-import { Label } from "../ui/label";
 
 type SignUpStepTwoProps = {
   form: UseFormReturn<SignUpSchema>;
@@ -71,7 +66,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
               <FormControl>
                 <Input 
                   placeholder="矢野 太郎"
-                  className="w-[300px] h-[30px]"
+                  className="w-[300px] h-[40px]"
                   {...field} 
                 />
               </FormControl>
@@ -86,7 +81,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
           <div className='flex flex-col items-center gap-4'>
 
             <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-              <AvatarImage src={imagePreview || "./alex-unsplash.jpg"}/>
+              <AvatarImage src={imagePreview || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}/>
               <AvatarFallback>PROFILE</AvatarFallback>
             </Avatar>
 
@@ -94,7 +89,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              className="w-[150px] h-[30px] mt-0 hidden"
+              className="mt-0 hidden"
               onChange={handleFileChange}
             />
 
@@ -115,14 +110,14 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
         <div className="flex flex-col items-center gap-2">
           <Button 
             type="button"
-            className="w-[300px] h-[30px] bg-blue-500 hover:bg-blue-600"
+            className="w-[300px] h-[40px] bg-blue-500 text-white hover:bg-blue-600"
             onClick={() => onNext()}
           >
             次へ
           </Button>
           <Button 
             type="button"
-            className="w-[300px] h-[30px] bg-stone-300 text-black hover:bg-stone-400 hover:text-black"
+            className="w-[300px] h-[40px] bg-stone-300 text-black hover:bg-stone-400 hover:text-black"
             onClick={() => onBack()}
           >
             戻る

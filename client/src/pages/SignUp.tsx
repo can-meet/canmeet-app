@@ -101,7 +101,7 @@ export const SignUp = () => {
 					<div style={{ width: 24 }} />
 				</div>
 				<Stepper currentStep={step} complete={complete} />
-				<Separator className="my-4 w-[300px]" />
+				<Separator className="my-4 w-[300px] bg-secondary-gray" />
 				{getSectionComponent()}
 				<Button
 					variant="link"

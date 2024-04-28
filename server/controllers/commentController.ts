@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import mongoose from "mongoose";
 import Comment from "../models/commentModel";
 import Product from "../models/productModel";
 import User from "../models/userModel";
@@ -28,7 +27,7 @@ export const createComment = async (req: Request, res: Response) => {
 
 		res.status(200).json(comment);
 	} catch (error) {
-		res.status(500).json({ error: (error as Error).message });
+		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
 
@@ -53,6 +52,6 @@ export const getComments = async (req: Request, res: Response) => {
 
 		res.status(200).json(product.comments);
 	} catch (error) {
-		res.status(500).json({ error: (error as Error).message });
+		res.status(500).json({ error: "Internal Server Error" });
 	}
 };

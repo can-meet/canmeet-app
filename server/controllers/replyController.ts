@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import mongoose from "mongoose";
 import Comment from "../models/commentModel";
 import Reply from "../models/replyModel";
 import User from "../models/userModel";
@@ -7,8 +6,10 @@ import User from "../models/userModel";
 export const createReply = async (req: Request, res: Response) => {
 	try {
 		const { text, userId, commentId } = req.body;
-		const user = await User.findById(userId);
-		const comment = await Comment.findById(commentId);
+		const [user, comment] = await Promise.all([
+			User.findById(userId),
+			Comment.findById(commentId)
+	]);
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });
 		}
@@ -28,7 +29,7 @@ export const createReply = async (req: Request, res: Response) => {
 
 		res.status(201).json(reply);
 	} catch (error) {
-		res.status(500).json({ error: (error as Error).message });
+		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
 
@@ -53,6 +54,6 @@ export const getReplies = async (req: Request, res: Response) => {
 
 		res.status(200).json(comment.replies);
 	} catch (error) {
-		res.status(500).json({ error: (error as Error).message });
+		res.status(500).json({ error: "Internal Server Error" });
 	}
 };

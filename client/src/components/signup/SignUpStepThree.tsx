@@ -1,16 +1,19 @@
-import type { UseFormReturn } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
+import { UseFormReturn } from 'react-hook-form';
+import { 
+  SubmitHandler, 
+} from 'react-hook-form';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
-	Form,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
-import type { SignUpSchema } from "@/schema/signup";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SignUpSchema } from '@/schema/signup';
+
 
 type SignUpStepThreeProps = {
   form: UseFormReturn<SignUpSchema>;
@@ -21,27 +24,10 @@ type SignUpStepThreeProps = {
 }
 
 export const SignUpStepThree = ({ form, onSubmit, onBack, imagePreview, setImagePreview }: SignUpStepThreeProps) => {
-	form: UseFormReturn<SignUpSchema>;
-	onSubmit: SubmitHandler<SignUpSchema>;
-	onBack: () => void;
-};
 
-export const SignUpStepThree = ({
-	form,
-	onSubmit,
-	onBack,
-}: SignUpStepThreeProps) => {
-	return (
-		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				<FormField
-					control={form.control}
-					name="email"
-					render={() => (
-						<FormItem>
-							<FormLabel>メールアドレス</FormLabel>
-							<span className="text-red-500 ">*</span>
-							<div>{form.watch("email")}</div>
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
         <FormField
           control={form.control}
@@ -109,13 +95,13 @@ export const SignUpStepThree = ({
         <div className="flex flex-col items-center gap-2">
           <Button 
             type="submit"
-            className="w-[300px] h-[30px] bg-red-500 hover:bg-red-600"
+            className="w-[300px] h-[40px] bg-red-500 hover:bg-red-600"
           >
             送信
           </Button>
           <Button 
             type="button"
-            className="w-[300px] h-[30px] bg-stone-300 text-black hover:bg-stone-400 hover:text-black"
+            className="w-[300px] h-[40px] bg-stone-300 text-black hover:bg-stone-400 hover:text-black"
             onClick={() => onBack()}
           >
             戻る

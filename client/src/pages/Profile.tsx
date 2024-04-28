@@ -76,12 +76,6 @@ export const Profile = () => {
 		selectedFilterPurchases,
 	);
 
-	return (
-		<div className="my-20 flex flex-col items-center justify-center">
-			<Avatar className="rounded-full h-20 w-20 object-cover cursor-pointer self-center">
-				<AvatarImage src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
-				<AvatarFallback>PROFILE IMAGE</AvatarFallback>
-			</Avatar>
 
   return (
     <div className='my-20 flex flex-col items-center justify-center'>

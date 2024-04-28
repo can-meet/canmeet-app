@@ -30,7 +30,7 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 							<FormControl>
 								<Input
 									placeholder="abc@gmail.com"
-									className="w-[300px] h-[30px]"
+									className="w-[300px] h-[40px]"
 									{...field}
 								/>
 							</FormControl>
@@ -50,7 +50,7 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 							<FormControl>
 								<Input
 									placeholder="123456"
-									className="w-[300px] h-[30px]"
+									className="w-[300px] h-[40px]"
 									{...field}
 								/>
 							</FormControl>
@@ -61,7 +61,7 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 				/>
 				<Button
 					type="submit"
-					className="w-[300px] h-[30px] bg-red-500 hover:bg-red-600"
+					className="w-[300px] h-[40px] bg-red-500 hover:bg-red-600"
 				>
 					送信
 				</Button>

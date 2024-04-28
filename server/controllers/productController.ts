@@ -50,7 +50,7 @@ export const createProduct = async (req: Request, res: Response) => {
     res.status(201).json(newProduct)
   } catch (error) {
     console.log("Error in product controller")
-    res.status(500).json({ error: (error as Error).message })
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -67,7 +67,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
 		res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -82,7 +82,7 @@ export const getProducts = async (req: Request, res: Response) => {
 
 		res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -100,12 +100,12 @@ export const purchaseProduct = async (req: Request, res: Response) => {
         $push: { purchasedProducts: productId }
       }, { new: true });
     
-      res.json({ product, user });
+      res.json(product);
 
     } else {
       res.status(404).send('Product not found');
     }
   } catch (error) {
-    res.status(500).send('Server error');
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }

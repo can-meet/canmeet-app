@@ -31,7 +31,7 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
 							<FormControl>
 								<Input
 									placeholder="abc@gmail.com"
-									className="w-[300px] h-[30px]"
+									className="w-[300px] h-[40px]"
 									{...field}
 								/>
 							</FormControl>
@@ -51,7 +51,7 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
 							<FormControl>
 								<Input
 									placeholder="123456"
-									className="w-[300px] h-[30px]"
+									className="w-[300px] h-[40px]"
 									{...field}
 								/>
 							</FormControl>
@@ -62,7 +62,7 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
 				/>
 				<Button
 					type="button"
-					className="w-[300px] h-[30px] bg-blue-500 hover:bg-blue-600"
+					className="w-[300px] h-[40px] text-white bg-blue-500 hover:bg-blue-600"
 					onClick={() => onNext()}
 				>
 					次へ
