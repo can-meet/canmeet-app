@@ -1,45 +1,39 @@
 import { Request, Response } from "express";
 import Product from "../models/productModel";
 import User from "../models/userModel";
-import { v2 as cloudinary } from "cloudinary";
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const {
       userId,
+      images,
       product_name,
       price,
       product_status,
       description,
       payment_method,
       location,
-      sale_status
     } = req.body;
-    let { images } = req.body;
+    const formattedPrice = parseInt(price);
 
-    const userExists = await User.findById(userId)
-    if(!userExists) {
+    const user = await User.findById(userId)
+    if(!user) {
       return res.status(404).json({ message: 'User not found' }) 
     }
 
-    if(images) {
-      const imagesToUpload = images.map(async (image: string) => {
-        const result = (await cloudinary.uploader.upload(image)).secure_url;
-        return result;
-      })
-      images = await Promise.all(imagesToUpload);
-    }
-  
+    const imageUrls = Array.isArray(images) ? images : [];
+
     const newProduct = new Product({
-      user: userId,
+      user: user,
       product_name,
-      price,
-      images,
+      price: formattedPrice,
+      images: imageUrls,
       product_status,
       description,
       payment_method,
       location,
-      sale_status
+      sale_status: "売り出し中",
+      comments: []
     })
   
     await newProduct.save()

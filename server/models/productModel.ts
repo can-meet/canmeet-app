@@ -60,7 +60,11 @@ const productSchema = new mongoose.Schema(
       default: "売り出し中",
       required: true,
     },
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    comments: [{ 
+      type: Schema.Types.ObjectId, 
+      ref: 'Comment',
+      default: []
+    }],
   },
   { timestamps: true }
 );
