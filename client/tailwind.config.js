@@ -28,11 +28,19 @@ module.exports = {
         'primary-blue': '#2674C3',
         'secondary-blue': '#0A58A3',
         'stepbar-blue': "#BBDEFF",
+        'stepbar-black': '#464646',
         'primary-gray': '#C1C1C1',
         'secondary-gray': '#9B9B9B',
         'select-gray': '#F4F4F4',
         'label-gray': "#EBEBEB",
         'stepbar-gray': "#A7A7A7",
+        'reply-gray': '#666666',
+        'price-gray': '#EDEEF1',
+        'search-history-gray': '#D7E0E3',
+        'product-status-gray': '#666666',
+        'sale': '#DEF9FF',
+        'in-trade': '#FFF0DE',
+        'sold-out': '#FFDEDE',
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -64,11 +72,6 @@ module.exports = {
       },
       fontSize: {
         'ms': '8px',
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {

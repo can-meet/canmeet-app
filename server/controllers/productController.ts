@@ -16,6 +16,13 @@ export const createProduct = async (req: Request, res: Response) => {
     } = req.body;
     const formattedPrice = parseInt(price);
 
+<<<<<<< HEAD
+=======
+    if(!product_name || !price || !image || !product_status || !description || !payment_method || !location || !sale_status) {
+      return res.status(400).json({ message: 'Still some blanks left' })
+    }
+
+>>>>>>> 6ada94a4533665e864df62e5a17ed7ba30ecd2f7
     const user = await User.findById(userId)
     if(!user) {
       return res.status(404).json({ message: 'User not found' }) 
@@ -37,16 +44,23 @@ export const createProduct = async (req: Request, res: Response) => {
     })
   
     await newProduct.save()
+
+    user.postedProducts.push(newProduct)
+    await user.save()
+
     res.status(201).json(newProduct)
   } catch (error) {
     console.log("Error in product controller")
-    res.status(500).json({ error: (error as Error).message })
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
 export const getProduct = async (req: Request, res: Response) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.productId).populate({
+      path: 'user',
+      select: '_id, username profilePicture'
+    });
 
 		if (!product) {
 			return res.status(404).json({ error: "product not found" });
@@ -54,7 +68,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
 		res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -69,6 +83,30 @@ export const getProducts = async (req: Request, res: Response) => {
 
 		res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+
+export const purchaseProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const { userId } = req.body;
+    const product = await Product.findByIdAndUpdate(productId, {
+      sale_status: '取引中'
+    }, { new: true });
+
+    if (product) {
+      const user = await User.findByIdAndUpdate(userId, {
+        $push: { purchasedProducts: productId }
+      }, { new: true });
+    
+      res.json(product);
+
+    } else {
+      res.status(404).send('Product not found');
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
