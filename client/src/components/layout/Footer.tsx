@@ -11,8 +11,8 @@ export const Footer = () => {
         <Link to="/">
           {location.pathname === '/' ? <IoMdHome className="text-2xl text-red-500" /> : <IoMdHome className="text-2xl" />}
         </Link>
-        <Link to="/">
-          {location.pathname === '/' ? <FaCamera className="text-xl text-red-500" /> : <FaCamera className="text-xl " />}
+        <Link to="/product/create">
+          {location.pathname === '/product/create' ? <FaCamera className="text-xl text-red-500" /> : <FaCamera className="text-xl " />}
         </Link>
         <Link to="/">
           {location.pathname === '/' ? <PiPaperPlaneRightFill className="text-xl text-red-500" /> : <PiPaperPlaneRightFill className="text-xl" />}
