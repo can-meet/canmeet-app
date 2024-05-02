@@ -23,7 +23,6 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { productImagesUpload } from "@/lib/productImagesUpload"
-import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
 
 const CreateProduct = () => {
   const form = useForm<ProductSchema>({

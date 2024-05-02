@@ -16,13 +16,6 @@ export const createProduct = async (req: Request, res: Response) => {
     } = req.body;
     const formattedPrice = parseInt(price);
 
-<<<<<<< HEAD
-=======
-    if(!product_name || !price || !image || !product_status || !description || !payment_method || !location || !sale_status) {
-      return res.status(400).json({ message: 'Still some blanks left' })
-    }
-
->>>>>>> 6ada94a4533665e864df62e5a17ed7ba30ecd2f7
     const user = await User.findById(userId)
     if(!user) {
       return res.status(404).json({ message: 'User not found' }) 
