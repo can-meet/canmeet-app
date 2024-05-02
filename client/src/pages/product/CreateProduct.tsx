@@ -2,15 +2,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Form,
   FormControl,
@@ -26,12 +23,13 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { productImagesUpload } from "@/lib/productImagesUpload"
+import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
 
 const CreateProduct = () => {
   const form = useForm<ProductSchema>({
     defaultValues: {
-      userId: '6624580904e052d3586f145b',
-      images: [],
+      userId: '663044a8737c2c27e30c20cb',
+      images: [''],
       product_name: '',
       price: '',
       description: '',
@@ -45,37 +43,42 @@ const CreateProduct = () => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<ProductSchema> = async (value) => {
-    console.log('value:',  value)
-    const cloudinaryUrls = await productImagesUpload(value.images)
-    form.setValue('images', cloudinaryUrls)
-    setLoading(true)
-    axios.post(`${import.meta.env.VITE_API_URL}/products`, value)
-      .then(() => {
-        toast.success('Successfully posted your product')
-        navigate('/')
-      })
-      .catch(() => {
-        toast.error("Failed to post your product. Try again.")
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    setLoading(true);
+    try {
+      const imageFiles = value.images;
+      const cloudinaryUrls = await productImagesUpload(imageFiles);
+      form.setValue('images', cloudinaryUrls);
+      const updatedValue = form.getValues();
+  
+      await form.trigger();
+      await axios.post(`${import.meta.env.VITE_API_URL}/products`, updatedValue);
+      toast.success('Successfully posted your product');
+      navigate('/');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(`Failed to post your product: ${error.response.data.message}`);
+      } else {
+        toast.error("Failed to post your product. Try again.");
+      }
+      console.error("Submission errors:", error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} encType='multipart/form-data' className="container my-20 space-y-6 text-[#464646]">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="container my-20 space-y-5 text-stepbar-black">
       <FormField
         control={form.control}
         name="images"
         render={() => (
           <FormItem>
-            <FormLabel>Image</FormLabel>
             <FormControl>
               <Input 
                 type="file"
                 multiple
-                accept=".png, .jpg"
+                accept=".png, .jpg, .jpeg"
                 className="rounded bg-zinc-50"
                 {...form.register("images")}
               />
@@ -134,44 +137,26 @@ const CreateProduct = () => {
             </FormItem>
           )}
         />
+        <div className="space-y-4 py-4">
         <FormField
           control={form.control}
           name="product_status"
           render={({ field }) => (
             <FormItem>
-              <Accordion type="single" collapsible className="px-2 rounded bg-[#f4f4f4]">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger><FormLabel className="font-normal my-2">商品の状態</FormLabel></AccordionTrigger>
-                    <FormControl>
-                      <AccordionContent>
-                        <ToggleGroup
-                          type="single"
-                          className="flex flex-wrap justify-start"
-                          // {...form.register("product_status")}
-                          // {...field}
-                          onValueChange={field.onChange}
-                          
-                        >
-                          <ToggleGroupItem value="新品、未使用" aria-label="Toggle 新品、未使用">
-                            新品、未使用
-                          </ToggleGroupItem>
-                          <ToggleGroupItem value="未使用に近い" aria-label="Toggle 未使用に近い">
-                            未使用に近い
-                          </ToggleGroupItem>
-                          <ToggleGroupItem value="目立った傷や汚れなし" aria-label="Toggle 目立った傷や汚れなし">
-                            目立った傷や汚れなし
-                          </ToggleGroupItem>
-                          <ToggleGroupItem value="やや傷や汚れあり" aria-label="Toggle やや傷や汚れあり">
-                            やや傷や汚れあり
-                          </ToggleGroupItem>
-                          <ToggleGroupItem value="全体的に状態が悪い" aria-label="Toggle 全体的に状態が悪い">
-                            全体的に状態が悪い
-                          </ToggleGroupItem>
-                        </ToggleGroup>
-                      </AccordionContent>
-                    </FormControl>
-                </AccordionItem>
-              </Accordion>
+              <FormControl>
+                <Select onValueChange={field.onChange}>
+                  <SelectTrigger className="w-40 bg-select-gray border-none">
+                    <SelectValue placeholder="商品の状態" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-select-gray border-none">
+                    <SelectItem value="新品、未使用">新品、未使用</SelectItem>
+                    <SelectItem value="未使用に近い">未使用に近い</SelectItem>
+                    <SelectItem value="目立った傷や汚れなし">目立った傷や汚れなし</SelectItem>
+                    <SelectItem value="やや傷や汚れあり">やや傷や汚れあり</SelectItem>
+                    <SelectItem value="全体的に状態が悪い">全体的に状態が悪い</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
             </FormItem>
           )}
         />
@@ -180,42 +165,21 @@ const CreateProduct = () => {
           name="location"
           render={({ field }) => (
             <FormItem>
-              <Accordion type="single" collapsible className="bg-[#f4f4f4] px-2 rounded">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger><FormLabel className="font-normal my-2">受け渡し場所</FormLabel></AccordionTrigger>
-                      <FormControl>
-                        <AccordionContent className="flex gap-2 flex-wrap">
-                          <ToggleGroup
-                            type="single"
-                            className="flex flex-wrap justify-start"
-                            onValueChange={field.onChange}
-                          >
-                            <ToggleGroupItem value="Vancouver" aria-label="Toggle vancouver">
-                              Vancouver
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="Burnaby" aria-label="Toggle burnaby">
-                              Burnaby
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="North Vancouver" aria-label="Toggle north-vancouver">
-                              North Vancouver
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="West Vancouver" aria-label="Toggle west-vancouver">
-                              West Vancouver
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="Richmond" aria-label="Toggle richmond">
-                              Richmond
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="Surrey" aria-label="Toggle surrey">
-                              Surrey
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="Coquitlam" aria-label="Toggle coquitlam">
-                              Coquitlam
-                            </ToggleGroupItem>
-                          </ToggleGroup>
-                        </AccordionContent>
-                      </FormControl>
-                </AccordionItem>
-              </Accordion>
+                <FormControl>
+                  <Select onValueChange={field.onChange}>
+                    <SelectTrigger className="w-40 bg-select-gray border-none">
+                      <SelectValue placeholder="受け渡し場所" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-select-gray border-none max-h-32">
+                        <SelectItem value="Vancouver">Vancouver</SelectItem>
+                        <SelectItem value="North Vancouver">North Vancouver</SelectItem>
+                        <SelectItem value="West Vancouver">West Vancouver</SelectItem>
+                        <SelectItem value="Richmond">Richmond</SelectItem>
+                        <SelectItem value="Surrey">Surrey</SelectItem>
+                        <SelectItem value="Coquitlam">Coquitlam</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
             </FormItem>
           )}
         />
@@ -224,30 +188,21 @@ const CreateProduct = () => {
           name="payment_method"
           render={({ field }) => (
             <FormItem>
-              <Accordion type="single" collapsible className="bg-[#f4f4f4] px-2 rounded">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger><FormLabel className="font-normal my-2">支払い方法</FormLabel></AccordionTrigger>
-                      <FormControl>
-                        <AccordionContent className="flex gap-2 flex-wrap">
-                          <ToggleGroup
-                            type="single"
-                            className="flex flex-wrap justify-start"
-                            onValueChange={field.onChange}
-                          >
-                            <ToggleGroupItem value="e-transfer" aria-label="Toggle e-transfer">
-                              e-transfer
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="現金" aria-label="Toggle cash">
-                              現金
-                            </ToggleGroupItem>
-                          </ToggleGroup>
-                        </AccordionContent>
-                      </FormControl>
-                </AccordionItem>
-              </Accordion>
+                <FormControl>
+                  <Select onValueChange={field.onChange}>
+                    <SelectTrigger className="w-40 bg-select-gray border-none">
+                      <SelectValue placeholder="支払い方法" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-select-gray border-none">
+                      <SelectItem value="e-transfer">e-transfer</SelectItem>
+                      <SelectItem value="現金">現金</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
             </FormItem>
           )}
         />
+        </div>
 
         <Button
           variant='blue'
