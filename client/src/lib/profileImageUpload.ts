@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const imageUpload = async (file: File): Promise<string> => {
+export const profileImageUpload = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', 'Canmeet');
