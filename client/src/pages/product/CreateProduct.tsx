@@ -23,11 +23,14 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { productImagesUpload } from "@/lib/productImagesUpload"
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const CreateProduct = () => {
+	const { currentUser } = useSelector((state: RootState) => state.user);
   const form = useForm<ProductSchema>({
     defaultValues: {
-      userId: '663044a8737c2c27e30c20cb',
+      userId: '',
       images: [''],
       product_name: '',
       price: '',
@@ -41,12 +44,16 @@ const CreateProduct = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState<boolean>(false)
 
+
   const onSubmit: SubmitHandler<ProductSchema> = async (value) => {
     setLoading(true);
     try {
       const imageFiles = value.images;
       const cloudinaryUrls = await productImagesUpload(imageFiles);
       form.setValue('images', cloudinaryUrls);
+      if(currentUser) {
+        form.setValue('userId', currentUser._id);
+      }
       const updatedValue = form.getValues();
   
       await form.trigger();
