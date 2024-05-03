@@ -7,6 +7,8 @@ import { Login } from './pages/Login'
 import { NotFound } from './pages/NotFound'
 import DetailProduct from './pages/product/DetailProduct'
 import CreateProduct from './pages/product/CreateProduct'
+import { Profile } from './pages/Profile'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -18,7 +20,10 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="product/:pid" element={<DetailProduct />} />
-            <Route path="product/create" element={<CreateProduct />} />
+            <Route element={<ProtectedRoute />}>
+							<Route path="profile" element={<Profile />} />
+              <Route path="product/create" element={<CreateProduct />} />
+						</Route>
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
