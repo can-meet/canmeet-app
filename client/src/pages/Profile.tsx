@@ -40,7 +40,7 @@ export const Profile = () => {
 				if (currentUser) {
 					setLoading(true);
 					const response = await axios.get(
-						`${import.meta.env.VITE_API_URL}/users/${currentUser?.userId}`,
+						`${import.meta.env.VITE_API_URL}/users/${currentUser?._id}`,
 					);
 					setUser(response.data);
 					setLoading(false);
