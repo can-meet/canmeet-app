@@ -66,7 +66,7 @@ export const SignUp = () => {
 				dispatch(loginSuccess(res.data));
 				toast.success("Successfully registered!");
 				setStep(STEPS.FORM);
-				navigate("/");
+				navigate("/?showModal=true&modalType=registration");
 			})
 			.catch((err) => {
 				dispatch(loginError(err.response.data.error));
