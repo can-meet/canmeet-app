@@ -14,8 +14,8 @@ export const Footer = () => {
         <Link to="/product/create">
           {location.pathname === '/product/create' ? <FaCamera className="text-xl text-red-500" /> : <FaCamera className="text-xl " />}
         </Link>
-        <Link to="/">
-          {location.pathname === '/' ? <PiPaperPlaneRightFill className="text-xl text-red-500" /> : <PiPaperPlaneRightFill className="text-xl" />}
+        <Link to="/rooms">
+          {location.pathname.startsWith('/rooms')  ? <PiPaperPlaneRightFill className="text-xl text-red-500" /> : <PiPaperPlaneRightFill className="text-xl" />}
         </Link>
         <Link to="/profile">
           {location.pathname === '/profile' ? <FaUser className="text-lg text-red-500" /> : <FaUser className="text-lg" />}

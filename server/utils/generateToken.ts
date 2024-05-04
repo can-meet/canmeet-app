@@ -4,7 +4,7 @@ import type { Response } from "express";
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 const generateTokenAndSetCookie = (userId: string, res: Response) => {
-	const token = jwt.sign({ userId }, JWT_SECRET, {
+	const token = jwt.sign({ userId }, JWT_SECRET as string, {
 		expiresIn: "1d",
 	});
 
@@ -14,6 +14,7 @@ const generateTokenAndSetCookie = (userId: string, res: Response) => {
 		sameSite: "strict",
 		secure: process.env.NODE_ENV !== "development",
 	});
+
 };
 
 export default generateTokenAndSetCookie;

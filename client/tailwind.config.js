@@ -28,6 +28,8 @@ module.exports = {
         'primary-blue': '#2674C3',
         'secondary-blue': '#0A58A3',
         'stepbar-blue': "#BBDEFF",
+        'chat-blue': '#A2DBEC',
+        'chat-purple': '#94A9F3',
         'stepbar-black': '#464646',
         'primary-gray': '#C1C1C1',
         'secondary-gray': '#9B9B9B',
@@ -38,7 +40,11 @@ module.exports = {
         'price-gray': '#EDEEF1',
         'search-history-gray': '#D7E0E3',
         'product-status-gray': '#666666',
+<<<<<<< HEAD
+        'chat-gray': '#F1F1F1',
+=======
         'modal-white': '#FBFBFB',
+>>>>>>> 1df4fbdd99d19db05a8f67d7a437d17e3e4df49f
         'sale': '#DEF9FF',
         'in-trade': '#FFF0DE',
         'sold-out': '#FFDEDE',

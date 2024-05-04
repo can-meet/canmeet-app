@@ -3,25 +3,25 @@ import type { User } from "./userModel";
 
 export type Message = {
 	_id: string;
-	senderId: User;
-	receiverId: User;
-	message: string;
+	sender: User;
+	text: string;
+	isRead: boolean;
+	// createdAt: Date;
 };
 
 const messageSchema = new mongoose.Schema(
 	{
-		senderId: {
+		sender: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
 			required: true,
 		},
-		receiverId: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
-		message: {
+		text: {
 			type: String,
+			required: true,
+		},
+		isRead: {
+			type: Boolean,
 			required: true,
 		},
 		createdAt: {

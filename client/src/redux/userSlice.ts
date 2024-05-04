@@ -2,6 +2,7 @@ import { User } from "@/types/user";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+
 type UserState = {
 	currentUser: User | null;
 	error: string | null;
