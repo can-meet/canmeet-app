@@ -4,14 +4,14 @@ import express from "express";
 import mongoose from "mongoose";
 import authRoutes from "./routes/authRoute";
 import commentRoutes from "./routes/commentRoute";
-import messageRoutes from "./routes/messageRoute";
 import productRoutes from "./routes/productRoute";
 import replyRoutes from "./routes/replyRoute";
 import userRoutes from "./routes/userRoute";
+import roomRoutes from "./routes/roomRoute";
+import { app, server } from "./socket/socket";
 
 dotenv.config();
 
-const app: express.Express = express();
 const mongoURI = process.env.MONGODB_URI as string;
 const port = process.env.PORT;
 
@@ -37,13 +37,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/replies", replyRoutes);
-app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/rooms", roomRoutes);
 
 app.get("/", (req: express.Request, res: express.Response) => {
 	res.send("Hello, world!");
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
