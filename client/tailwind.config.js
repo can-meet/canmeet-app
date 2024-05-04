@@ -40,11 +40,8 @@ module.exports = {
         'price-gray': '#EDEEF1',
         'search-history-gray': '#D7E0E3',
         'product-status-gray': '#666666',
-<<<<<<< HEAD
         'chat-gray': '#F1F1F1',
-=======
         'modal-white': '#FBFBFB',
->>>>>>> 1df4fbdd99d19db05a8f67d7a437d17e3e4df49f
         'sale': '#DEF9FF',
         'in-trade': '#FFF0DE',
         'sold-out': '#FFDEDE',
