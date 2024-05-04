@@ -31,7 +31,7 @@ export const CommentForm = ({
 		reset,
 	} = useForm<CommentSchema>({
 		defaultValues: {
-			userId: currentUser?.userId,
+			userId: currentUser?._id,
 			productId: productId,
 			text: "",
 		},
@@ -61,7 +61,7 @@ export const CommentForm = ({
 			{currentUser && (
 				<>
 					<Avatar>
-						<AvatarImage src={user1Pic} />
+						<AvatarImage src={currentUser.profilePicture} />
 					</Avatar>
 					<form onSubmit={handleSubmit(onSubmit)} className="relative w-full">
 						<Input

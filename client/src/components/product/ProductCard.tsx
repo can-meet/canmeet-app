@@ -9,7 +9,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 	return (
 		<Link to={`/products/${product._id}`}>
 			<div className="border relative ">
-				<img src={product.image} alt="product image" className="w-28 h-28" />
+				<img src={product.images[0]} alt="product image" className="w-28 h-28" />
 				{product.price >= 100 ? (
 					<div>
 						<p className="absolute bottom-1.5 left-2 z-10 text-sm">

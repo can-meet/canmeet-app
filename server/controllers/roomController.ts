@@ -62,7 +62,7 @@ export const getRoom = async (req: Request, res: Response) => {
     const { roomId } = req.params;
 
     const room = await Room.findById(roomId)
-      .populate('product', 'title product_name price image')
+      .populate('product', 'title product_name price images')
       .populate('buyer', 'username profilePicture')
       .populate('seller', 'username profilePicture')
       .populate({

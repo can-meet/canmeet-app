@@ -135,7 +135,7 @@ export const Chat = () => {
         </div>
 
         <div className='flex justify-center gap-x-4 my-4'>
-          <img src={room?.product.image} alt="product image" className='w-28 h-24' ></img>
+          <img src={room?.product.images[0]} alt="product image" className='w-28 h-24' ></img>
           <div className='relative w-[150px]'>
             <h2>{room?.product.product_name}</h2>
             <h2>${room?.product.price}</h2>

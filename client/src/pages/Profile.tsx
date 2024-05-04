@@ -15,6 +15,7 @@ import type { User } from "@/types/user";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Loading } from "@/components/layout/Loading";
 
 export const Profile = () => {
 	const [loading, setLoading] = useState<boolean>(false);
@@ -75,6 +76,10 @@ export const Profile = () => {
 		user.purchasedProducts,
 		selectedFilterPurchases,
 	);
+
+	if (loading) {
+		return <Loading />;
+	}
 
   return (
     <div className='my-20 flex flex-col items-center justify-center'>

@@ -5,7 +5,7 @@ export type Product = {
 	_id: string;
 	product_name: string;
 	price: number;
-	image: string;
+	images: string[];
 	product_status: string;
 	description: string;
 	payment_method: string;

@@ -9,20 +9,18 @@ import { Loading } from "@/components/layout/Loading";
 import { Comment } from "@/types/comment";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { timeAgo } from "@/lib/timeAgo";
-<<<<<<< HEAD
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
-=======
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
->>>>>>> 1df4fbdd99d19db05a8f67d7a437d17e3e4df49f
+
 
 export type DetailProduct = {
   _id: string;
   product_name: string,
   price: number,
-  image: string,
+  images: string[],
   product_status: string,
   description: string,
   payment_method: string,
@@ -45,7 +43,7 @@ const DetailProduct = () => {
     _id: '',
     product_name: '',
     price: 0,
-    image: '',
+    images: [],
     product_status: '',
     description: '',
     payment_method: '',
@@ -89,7 +87,6 @@ const DetailProduct = () => {
     } 
     setLoading(true);
     try {
-<<<<<<< HEAD
       await axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
         
       await axios.post(`${import.meta.env.VITE_API_URL}/rooms`, {
@@ -101,13 +98,11 @@ const DetailProduct = () => {
       setLoading(false);
       navigate('/');
 
-=======
       axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
         .then(() => {
           setLoading(false);
           setIsModalOpen(true);
         })
->>>>>>> 1df4fbdd99d19db05a8f67d7a437d17e3e4df49f
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -130,7 +125,7 @@ const DetailProduct = () => {
             <div><IoEllipsisHorizontal className='text-xl' /></div>
           </div>
           <div className='relative'>
-            <img src={product.image} alt="product image" className='' />
+            <img src={product.images[0]} alt="product image" className='' />
             {product.sale_status === '売り出し中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>売り出し</p>
@@ -190,68 +185,29 @@ const DetailProduct = () => {
             <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.payment_method}</p>
           </div>
 
-          <div className="my-2 mx-auto w-fit">
-            {product.sale_status === '売り出し中' ? (
-              <Button 
-                variant="red" 
-                className="text-white font-medium px-20 rounded"
-                onClick={handlePurchaseProduct}
-              >
-                購入手続きに進む
-              </Button>
-            ) : (
-              <Button 
-                variant="disabled" 
-                className="text-white font-medium px-20 rounded"
-              >
-                取引中
-              </Button>
-            )}
-          </div>
+          {product.user._id !== currentUser?._id && (
+            <div className="my-2 mx-auto w-fit">
+              {product.sale_status === '売り出し中' ? (
+                <Button 
+                  variant="red" 
+                  className="text-white font-medium px-20 rounded"
+                  onClick={handlePurchaseProductAndCreateRoom}
+                >
+                  購入手続きに進む
+                </Button>
+              ) : (
+                <Button 
+                  variant="disabled" 
+                  className="text-white font-medium px-20 rounded"
+                >
+                  取引中
+                </Button>
+              )}
+            </div>
+          )}
         </div>
-<<<<<<< HEAD
-        
-
-        <div className='mb-2'>
-          <p className="text-sm">{product.description}</p>
-        </div>
-
-        <CommentList
-          product={product}
-        />
-        
-        <div className="flex flex-wrap justify-between gap-y-2 mt-4 mb-8 max-w-60">
-          <p className="text-sm">商品の状態</p>
-          <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.product_status}</p>
-          <p className="text-sm">受け渡し</p>
-          <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.location}</p>
-          <p className="text-sm">支払い方法</p>
-          <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.payment_method}</p>
-        </div>
-
-        {product.user._id !== currentUser?._id && (
-          <div className="my-2 mx-auto w-fit">
-            {product.sale_status === '売り出し中' ? (
-              <Button 
-                variant="red" 
-                className="text-white font-medium px-20 rounded"
-                onClick={handlePurchaseProductAndCreateRoom}
-              >
-                購入手続きに進む
-              </Button>
-            ) : (
-              <Button 
-                variant="disabled" 
-                className="text-white font-medium px-20 rounded"
-              >
-                取引中
-              </Button>
-            )}
-          </div>
-        )}
-=======
->>>>>>> 1df4fbdd99d19db05a8f67d7a437d17e3e4df49f
       </div>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => navigate("/")}
