@@ -9,6 +9,8 @@ import { Loading } from "@/components/layout/Loading";
 import { Comment } from "@/types/comment";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { timeAgo } from "@/lib/timeAgo";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 
 export type DetailProduct = {
@@ -53,17 +55,18 @@ const DetailProduct = () => {
     createdAt: new Date().toISOString()
   })
 
-  const userId = product.user._id;
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
+  const userId = currentUser?._id;
+  const productUserId = product.user._id;
 
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true);
       try {
-        axios.get(`${import.meta.env.VITE_API_URL}/products/${pid}`)
-          .then((res) => {
-            setProduct(res.data)
-            setLoading(false);
-          })
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${pid}`)
+        setProduct(response.data)
+        setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -73,14 +76,24 @@ const DetailProduct = () => {
   }, [])
 
   
-  const handlePurchaseProduct = async () => {
+  const handlePurchaseProductAndCreateRoom = async () => {
+    if (!currentUser) {
+      navigate('/login');
+      return;
+    } 
     setLoading(true);
     try {
-      axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
-        .then(() => {
-          setLoading(false);
-          navigate('/')
-        })
+      await axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
+        
+      await axios.post(`${import.meta.env.VITE_API_URL}/rooms`, {
+        productId: pid,
+        buyerId: userId,
+        sellerId: productUserId,
+      });
+
+      setLoading(false);
+      navigate('/');
+
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -162,24 +175,26 @@ const DetailProduct = () => {
           <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.payment_method}</p>
         </div>
 
-        <div className="my-2 mx-auto w-fit">
-          {product.sale_status === '売り出し中' ? (
-            <Button 
-              variant="red" 
-              className="text-white font-medium px-20 rounded"
-              onClick={handlePurchaseProduct}
-            >
-              購入手続きに進む
-            </Button>
-          ) : (
-            <Button 
-              variant="disabled" 
-              className="text-white font-medium px-20 rounded"
-            >
-              取引中
-            </Button>
-          )}
-        </div>
+        {product.user._id !== currentUser?._id && (
+          <div className="my-2 mx-auto w-fit">
+            {product.sale_status === '売り出し中' ? (
+              <Button 
+                variant="red" 
+                className="text-white font-medium px-20 rounded"
+                onClick={handlePurchaseProductAndCreateRoom}
+              >
+                購入手続きに進む
+              </Button>
+            ) : (
+              <Button 
+                variant="disabled" 
+                className="text-white font-medium px-20 rounded"
+              >
+                取引中
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

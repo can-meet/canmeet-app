@@ -7,7 +7,7 @@ type ProductCardProps = {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
 	return (
-		<Link to={`/product/${product._id}`}>
+		<Link to={`/products/${product._id}`}>
 			<div className="border relative ">
 				<img src={product.image} alt="product image" className="w-28 h-28" />
 				{product.price >= 100 ? (

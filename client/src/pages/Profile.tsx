@@ -40,7 +40,7 @@ export const Profile = () => {
 				if (currentUser) {
 					setLoading(true);
 					const response = await axios.get(
-						`${import.meta.env.VITE_API_URL}/users/${currentUser?.userId}`,
+						`${import.meta.env.VITE_API_URL}/users/${currentUser?._id}`,
 					);
 					setUser(response.data);
 					setLoading(false);
@@ -76,7 +76,6 @@ export const Profile = () => {
 		selectedFilterPurchases,
 	);
 
-
   return (
     <div className='my-20 flex flex-col items-center justify-center'>
       
@@ -87,14 +86,14 @@ export const Profile = () => {
       
 			<h2 className="my-3 text-lg">{user.username}</h2>
 
-			<Tabs defaultValue="post" className="px-4 w-[400px]">
+			<Tabs defaultValue="sale" className="px-4 w-[400px]">
 				<TabsList className="grid w-full grid-cols-2">
-					<TabsTrigger value="post" className="border-b-secondary-gray">
+					<TabsTrigger value="sale" className="border-b-secondary-gray">
 						投稿した商品
 					</TabsTrigger>
-					<TabsTrigger value="buy">購入した商品</TabsTrigger>
+					<TabsTrigger value="purchase">購入した商品</TabsTrigger>
 				</TabsList>
-				<TabsContent value="post" className="mt-6">
+				<TabsContent value="sale" className="mt-6">
 					<Select
 						onValueChange={(value) => setSelectedFilterPosts(value)}
 						value={selectedFilterPosts}
@@ -111,7 +110,7 @@ export const Profile = () => {
 					</Select>
 					<ProductList products={filteredPostedProducts} />
 				</TabsContent>
-				<TabsContent value="buy" className="mt-6">
+				<TabsContent value="purchase" className="mt-6">
 					<Select
 						onValueChange={(value) => setSelectedFilterPurchases(value)}
 						value={selectedFilterPurchases}
