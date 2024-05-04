@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { SignUpSchema } from '@/schema/signup';
 import { useRef } from 'react';
 import { Label } from '../ui/label';
-import { imageUpload } from '@/lib/imageUpload';
+import { profileImageUpload } from '@/lib/profileImageUpload';
 
 
 type SignUpStepTwoProps = {
@@ -42,7 +42,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
     setImagePreview(fileURL);
 
     try {
-      const uploadFileURL = await imageUpload(fileObject)
+      const uploadFileURL = await profileImageUpload(fileObject)
 
       form.setValue('profilePicture', uploadFileURL);
     } catch (error) {

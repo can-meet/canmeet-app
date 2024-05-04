@@ -33,6 +33,7 @@ module.exports = {
         'stepbar-black': '#464646',
         'primary-gray': '#C1C1C1',
         'secondary-gray': '#9B9B9B',
+        'select-gray': '#F4F4F4',
         'label-gray': "#EBEBEB",
         'stepbar-gray': "#A7A7A7",
         'reply-gray': '#666666',

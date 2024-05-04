@@ -6,40 +6,34 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const {
       userId,
+      images,
       product_name,
       price,
-      image,
       product_status,
       description,
       payment_method,
       location,
-      sale_status
     } = req.body;
-
-    if(!product_name || !price || !image || !product_status || !description || !payment_method || !location || !sale_status) {
-      return res.status(400).json({ message: 'Still some blanks left' })
-    }
+    const formattedPrice = parseInt(price);
 
     const user = await User.findById(userId)
     if(!user) {
       return res.status(404).json({ message: 'User not found' }) 
     }
-  
-    const maxLength = 500;
-    if (description.length > maxLength) {
-      return res.status(400).json({ error: `Text must be less than ${maxLength} characters` });
-    }
-  
+
+    const imageUrls = Array.isArray(images) ? images : [];
+
     const newProduct = new Product({
-      user: userId,
+      user: user,
       product_name,
-      price,
-      image,
+      price: formattedPrice,
+      images: imageUrls,
       product_status,
       description,
       payment_method,
       location,
-      sale_status
+      sale_status: "売り出し中",
+      comments: []
     })
   
     await newProduct.save()
