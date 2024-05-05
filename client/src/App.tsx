@@ -13,6 +13,7 @@ import CreateProduct from './pages/product/CreateProduct'
 import { Rooms } from "./pages/Rooms";
 import { ChatLayout } from "./pages/ChatLayout";
 import { Chat } from "./pages/Chat";
+import EditProduct from "./pages/product/EditProduct";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
 						<Route element={<ProtectedRoute />}>
 							<Route path="/profile" element={<Profile />} />
 							<Route path="product/create" element={<CreateProduct />} />
+							<Route path="product/edit/:pid" element={<EditProduct />} />
 							<Route path="/rooms" element={<Rooms />} />
 						</Route>
 					</Route>
