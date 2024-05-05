@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IoIosArrowBack } from "react-icons/io";
@@ -14,7 +14,13 @@ import { RootState } from "@/redux/store";
 
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export type DetailProduct = {
   _id: string;
@@ -122,10 +128,28 @@ const DetailProduct = () => {
         <div className="max-w-96 my-0 mx-auto">
           <div className="flex justify-between items-center mx-3 my-2">
             <button onClick={() => navigate(-1)}><IoIosArrowBack className='text-xl'/></button>
-            <div><IoEllipsisHorizontal className='text-xl' /></div>
+            {currentUser !== null ? (
+              <Link to={`/product/edit/${pid}`}><IoEllipsisHorizontal className='text-xl' /></Link>
+            ) : (
+              <div></div>
+            )}
           </div>
           <div className='relative'>
-            <img src={product.images[0]} alt="product image" className='' />
+            <div>
+              <Carousel className="relative">
+                <CarouselContent>
+                  {product.images.map((image, index) => (
+                    <CarouselItem key={index}><img src={image} alt="product image" className='' /></CarouselItem>)
+                  )}
+                </CarouselContent>
+                {product.images.length > 1 ? (
+                  <>
+                    <CarouselPrevious className="absolute top-1/2 left-2 text-white" />
+                    <CarouselNext className="absolute top-1/2 right-2 text-white" />
+                  </>
+                ) : null}
+              </Carousel>
+            </div>
             {product.sale_status === '売り出し中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>売り出し</p>
