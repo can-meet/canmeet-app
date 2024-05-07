@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IoIosArrowBack } from "react-icons/io";
@@ -11,7 +11,6 @@ import { IoEllipsisHorizontal } from "react-icons/io5";
 import { timeAgo } from "@/lib/timeAgo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
 import {
@@ -21,6 +20,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import { GoPencil } from "react-icons/go";
+import { IoMenuOutline } from "react-icons/io5";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 export type DetailProduct = {
   _id: string;
@@ -115,6 +124,12 @@ const DetailProduct = () => {
     }
   }
 
+  const handleDelete = () => {
+    axios.delete(`${import.meta.env.VITE_API_URL}/products/${pid}`)
+      .then(() => {
+        navigate('/');
+      })
+  }
 
   if (loading) {
     return (
@@ -128,10 +143,19 @@ const DetailProduct = () => {
         <div className="max-w-96 my-0 mx-auto">
           <div className="flex justify-between items-center mx-3 my-2">
             <button onClick={() => navigate(-1)}><IoIosArrowBack className='text-xl'/></button>
-            {currentUser !== null ? (
-              <Link to={`/product/edit/${pid}`}><IoEllipsisHorizontal className='text-xl' /></Link>
+            {currentUser?._id === product.user._id ? (
+              <Drawer>
+                <DrawerTrigger><IoEllipsisHorizontal className='text-xl' /></DrawerTrigger>
+                <DrawerContent className="bg-white h-1/4">
+                  <DrawerFooter >
+                    <Button onClick={() => navigate(`/product/edit/${pid}`)}><GoPencil />投稿内容を編集する</Button>
+                    <Button><IoMenuOutline />販売ステータスを変更する</Button>
+                    <Button onClick={() => handleDelete()}><RiDeleteBin6Line />投稿を削除する</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
             ) : (
-              <div></div>
+              null
             )}
           </div>
           <div className='relative'>
