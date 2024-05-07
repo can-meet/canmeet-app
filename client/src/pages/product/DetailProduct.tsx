@@ -11,9 +11,24 @@ import { IoEllipsisHorizontal } from "react-icons/io5";
 import { timeAgo } from "@/lib/timeAgo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import { GoPencil } from "react-icons/go";
+import { IoMenuOutline } from "react-icons/io5";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 export type DetailProduct = {
@@ -109,6 +124,12 @@ const DetailProduct = () => {
     }
   }
 
+  const handleDelete = () => {
+    axios.delete(`${import.meta.env.VITE_API_URL}/products/${pid}`)
+      .then(() => {
+        navigate('/');
+      })
+  }
 
   if (loading) {
     return (
@@ -122,10 +143,37 @@ const DetailProduct = () => {
         <div className="max-w-96 my-0 mx-auto">
           <div className="flex justify-between items-center mx-3 my-2">
             <button onClick={() => navigate(-1)}><IoIosArrowBack className='text-xl'/></button>
-            <div><IoEllipsisHorizontal className='text-xl' /></div>
+            {currentUser?._id === product.user._id ? (
+              <Drawer>
+                <DrawerTrigger><IoEllipsisHorizontal className='text-xl' /></DrawerTrigger>
+                <DrawerContent className="bg-white h-1/4">
+                  <DrawerFooter >
+                    <Button onClick={() => navigate(`/product/edit/${pid}`)}><GoPencil />投稿内容を編集する</Button>
+                    <Button><IoMenuOutline />販売ステータスを変更する</Button>
+                    <Button onClick={() => handleDelete()}><RiDeleteBin6Line />投稿を削除する</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+            ) : (
+              null
+            )}
           </div>
           <div className='relative'>
-            <img src={product.images[0]} alt="product image" className='' />
+            <div>
+              <Carousel className="relative">
+                <CarouselContent>
+                  {product.images.map((image, index) => (
+                    <CarouselItem key={index}><img src={image} alt="product image" className='' /></CarouselItem>)
+                  )}
+                </CarouselContent>
+                {product.images.length > 1 ? (
+                  <>
+                    <CarouselPrevious className="absolute top-1/2 left-2 text-white" />
+                    <CarouselNext className="absolute top-1/2 right-2 text-white" />
+                  </>
+                ) : null}
+              </Carousel>
+            </div>
             {product.sale_status === '売り出し中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>売り出し</p>
