@@ -80,6 +80,61 @@ export const getProducts = async (req: Request, res: Response) => {
   }
 }
 
+export const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const {
+      userId,
+      images,
+      product_name,
+      price,
+      product_status,
+      description,
+      payment_method,
+      location
+    } = req.body;
+    const formattedPrice = parseInt(price);
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    await product.updateOne({
+      userId,
+      images,
+      product_name,
+      price: formattedPrice,
+      product_status,
+      description,
+      payment_method,
+      location
+    })
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+export const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const isDeleted = await Product.findByIdAndDelete(productId);
+    if (isDeleted) {
+      res.status(204).send('Product deleted');
+    } else {
+      res.status(404).send('Product not found');
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 export const purchaseProduct = async (req: Request, res: Response) => {
   try {

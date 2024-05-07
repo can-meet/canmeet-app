@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const productImagesUpload = async (files: FileList): Promise<string[]> => {
+export const productImagesUpload = async (files: any ): Promise<string[]> => {
   const uploadedImages: string[] = [];
 
   for(let i = 0; i < files.length; i++) {
