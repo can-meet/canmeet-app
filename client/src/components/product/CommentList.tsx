@@ -33,7 +33,7 @@ export const CommentList = ({ product }: CommentListProps) => {
     const getComments = async () => {
       try {
         if (productId) {
-          axios.get(`${import.meta.env.VITE_API_URL}/comments/${productId}`)
+          axios.get(`${import.meta.env.VITE_API_URL}/comments/products/${productId}`)
             .then((res) => {
               setComments(res.data);
               setCommentScrollDown(!commentScrollDown);

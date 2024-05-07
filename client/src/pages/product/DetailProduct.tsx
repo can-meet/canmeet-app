@@ -57,7 +57,8 @@ const DetailProduct = () => {
     comments: [],
     createdAt: new Date().toISOString()
   })
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/');
 
   const { currentUser } = useSelector((state: RootState) => state.user);
 
@@ -85,29 +86,51 @@ const DetailProduct = () => {
       navigate('/login');
       return;
     } 
-    setLoading(true);
     try {
       await axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
+
+      await axios.post(`${import.meta.env.VITE_API_URL}/notifications/purchase/${pid}`, {  // 商品を購入した際の通知
+        receiverId: productUserId,
+        senderId: userId
+      })  
         
-      await axios.post(`${import.meta.env.VITE_API_URL}/rooms`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/rooms`, {
         productId: pid,
         buyerId: userId,
         sellerId: productUserId,
       });
 
-      setLoading(false);
-      navigate('/');
+      const roomId = response.data._id;
+      setDynamicRoomRoute(`/rooms/${roomId}`);   // modalを開く前のリロードがむずい
 
-      axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
-        .then(() => {
-          setLoading(false);
-          setIsModalOpen(true);
-        })
+      // リロード前にローカルストレージに必要な情報を保存する
+      localStorage.setItem('shouldOpenModal', 'true');
+      localStorage.setItem('roomId', roomId);
+
+      // ページをリロード
+      navigate(0)
+
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   }
+
+  // コンポーネントのマウント時に、ローカルストレージからモーダル開閉の情報を取得する
+  useEffect(() => {
+    setLoading(true);
+    const shouldOpenModal = localStorage.getItem('shouldOpenModal');
+    const roomId = localStorage.getItem('roomId');
+
+    if (shouldOpenModal === 'true') {
+      setIsModalOpen(true);
+      setDynamicRoomRoute(`/rooms/${roomId}`);
+
+      // ローカルストレージから不要な情報を削除する
+      localStorage.removeItem('shouldOpenModal');
+      localStorage.removeItem('roomId');
+    }
+    setLoading(false);
+  }, []);
 
 
   if (loading) {
@@ -210,11 +233,11 @@ const DetailProduct = () => {
 
       <Modal
         isOpen={isModalOpen}
-        onClose={() => navigate("/")}
+        onClose={() => setIsModalOpen(false)}
         heading={"購入手続きを申し込みました"}
         img={purchaseCompletedImage}
         text={"投稿者に購入の申し込みを知らせるメッセージが送られました！ひとこと挨拶をしてみましょう。"}
-        link={"/"}
+        link={dynamicRoomRoute}
         btnText={"DMへあいさつしに行く"}
       />
     </>
