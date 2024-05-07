@@ -13,6 +13,7 @@ import CreateProduct from './pages/product/CreateProduct'
 import { Rooms } from "./pages/Rooms";
 import { ChatLayout } from "./pages/ChatLayout";
 import { Chat } from "./pages/Chat";
+import { Notifications } from "./pages/Notifications";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 							<Route path="/profile" element={<Profile />} />
 							<Route path="product/create" element={<CreateProduct />} />
 							<Route path="/rooms" element={<Rooms />} />
+							<Route path="/notifications" element={<Notifications />} />
 						</Route>
 					</Route>
 					<Route element={<ProtectedRoute />}>
