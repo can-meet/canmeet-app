@@ -57,6 +57,7 @@ const CreateProduct = () => {
       if(currentUser) {
         form.setValue('userId', currentUser._id);
       }
+      
       const updatedValue = form.getValues();
   
       await form.trigger();
@@ -226,11 +227,11 @@ const CreateProduct = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={() => navigate("/")}
-        heading={"購入手続きを申し込みました"}
+        heading={"投稿が完了しました！"}
         img={postCompleteImage}
-        text={"投稿者に購入の申し込みを知らせるメッセージが送られました！ひとこと挨拶をしてみましょう。"}
+        text={"あなたの商品が投稿されました！自分の投稿した商品を見てみましょう。"}
         link={"/"}
-        btnText={"DMへあいさつしに行く"}
+        btnText={"自分が投稿した商品を見る"}
       />
     </>
   )
