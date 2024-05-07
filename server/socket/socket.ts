@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
           { path: 'sender', select: 'username profilePicture' }
         ]
       });
-    
+      
     if (room) {
       socket.emit('roomMessages', room.messages);
     }
