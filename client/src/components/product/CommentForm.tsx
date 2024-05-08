@@ -8,7 +8,6 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { VscSend } from "react-icons/vsc";
 import { useSelector } from "react-redux";
-import user1Pic from "/alex-unsplash.jpg";
 
 type CommentFormProps = {
 	productId: string;
@@ -38,22 +37,26 @@ export const CommentForm = ({
 		resolver: commentResolver,
 	});
 
-	const onSubmit: SubmitHandler<CommentSchema> = (data) => {
+	const onSubmit: SubmitHandler<CommentSchema> = async (data) => {
 		setIsLoading(true);
 
-		axios
-			.post(`${import.meta.env.VITE_API_URL}/comments`, data)
-			.then(() => {
-				toast.success("Successfully put comment!");
-				setCommentsUpdated(!commentsUpdated);
-			})
-			.catch(() => {
-				toast.error("Something went wrong.");
-			})
-			.finally(() => {
-				setIsLoading(false);
-				reset();
-			});
+		try {
+			const response = await axios.post(`${import.meta.env.VITE_API_URL}/comments`, data);  // コメントを投稿
+			toast.success('Successfully put comment!');
+			setCommentsUpdated(!commentsUpdated);
+	
+			const { _id, user, product } = response.data;
+
+			await axios.post(`${import.meta.env.VITE_API_URL}/notifications/comments/${_id}`, {  // コメントを投稿した際の通知を投稿
+        productId: product,
+        userId: user
+      })
+		} catch (error) {
+			toast.error('Something went wrong.');
+		} finally {
+			setIsLoading(false);
+			reset();
+		}
 	};
 
 	return (

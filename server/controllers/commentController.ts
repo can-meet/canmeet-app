@@ -31,6 +31,25 @@ export const createComment = async (req: Request, res: Response) => {
 	}
 };
 
+export const getComment = async (req: Request, res: Response) => {
+	try {
+		const { commentId } = req.params;
+
+		const comment = await Comment.findById(commentId)
+			.populate({
+				path: 'product',
+				select: 'user',
+				populate: {
+					path: 'user',
+				}
+			});
+
+		return comment
+	} catch (error) {
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
+
 export const getComments = async (req: Request, res: Response) => {
 	try {
 		const { productId } = req.params;

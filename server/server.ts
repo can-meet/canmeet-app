@@ -8,6 +8,7 @@ import productRoutes from "./routes/productRoute";
 import replyRoutes from "./routes/replyRoute";
 import userRoutes from "./routes/userRoute";
 import roomRoutes from "./routes/roomRoute";
+import notificationRoutes from "./routes/notificationRoute";
 import { app, server } from "./socket/socket";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -48,6 +49,7 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/replies', replyRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.get("/", (req: express.Request, res: express.Response) => {
 	res.send("Hello, world!");
