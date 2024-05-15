@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { persistor, store } from "./redux/store";
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Toaster } from "@/components/ui/toaster"
 
 
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<App />
+					<Toaster />
 				</PersistGate>
 			</Provider>
 		</QueryClientProvider>
