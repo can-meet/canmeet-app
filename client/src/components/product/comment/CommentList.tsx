@@ -1,7 +1,9 @@
-import { Comment } from '../../../../server/models/commentModel';
+// import { Comment } from '../../../../server/models/commentModel';
+import type { Comment } from "@/types/comment";
 import axios from "axios";
 import CommentIcon from "/comment.svg"
 import {
+  CommentDrawerContent,
   Drawer,
   DrawerContent,
   DrawerFooter,
@@ -62,7 +64,7 @@ export const CommentList = ({ product }: CommentListProps) => {
   return (
     <Drawer>
       <DrawerTrigger>
-        <div className="flex gap-1 my-2 text-[#5F5F5F]">
+        <div className="flex gap-1 text-dark-gray">
           <img src={CommentIcon} alt="icon" />
           <span className="text-xs hover:underline hover:underline-offset-1">
             {isInitialMount ? `${product.comments.length}件のコメント` : `${comments.length}件のコメント`}
@@ -70,12 +72,17 @@ export const CommentList = ({ product }: CommentListProps) => {
         </div>
       </DrawerTrigger>
 
-      <DrawerContent className="bg-white" >
-        <DrawerHeader>
-          <DrawerTitle><p className="text-xl text-center">コメント</p></DrawerTitle>
+      <CommentDrawerContent className="bg-white" >
+        <DrawerHeader className='border-primary-gray border-b relative'>
+          {/* absolute bottom-3 right-40 */}
+          <DrawerTitle className=''>
+            <p className="text-lg font-semibold text-center">
+              コメント
+            </p>
+          </DrawerTitle>
         </DrawerHeader>
 
-        <div className='overflow-scroll' ref={commentListRef}>
+        <div className='overflow-scroll z-50' ref={commentListRef}>
           {comments.map((comment) => (
             <CommentCard
               key={comment._id}
@@ -91,7 +98,7 @@ export const CommentList = ({ product }: CommentListProps) => {
             setCommentsUpdated={setCommentsUpdated}
           />
         </DrawerFooter>
-      </DrawerContent>
+      </CommentDrawerContent>
 
     </Drawer>
   )

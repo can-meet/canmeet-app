@@ -15,6 +15,10 @@ import { ChatLayout } from "./pages/ChatLayout";
 import { Chat } from "./pages/Chat";
 import { Notifications } from "./pages/Notifications";
 import EditProduct from "./pages/product/EditProduct";
+import About from "./pages/sidemenu/About";
+import TermsOfService from "./pages/sidemenu/TermsOfService";
+import Contact from "./pages/sidemenu/Contact";
+import Tutorial from "./pages/sidemenu/Tutorial";
 
 
 function App() {
@@ -27,6 +31,10 @@ function App() {
 						<Route path="login" element={<Login />} />
 						<Route path="signup" element={<SignUp />} />
 						<Route path="products/:pid" element={<DetailProduct />} />
+						<Route path="/tutorial" element={<Tutorial />} />
+						<Route path="/about" element={<About />} />
+						<Route path="/contact" element={<Contact />} />
+						<Route path="/terms-of-service" element={<TermsOfService />} />
 						<Route element={<ProtectedRoute />}>
 							<Route path="/profile" element={<Profile />} />
 							<Route path="product/create" element={<CreateProduct />} />

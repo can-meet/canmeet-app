@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IoIosArrowBack } from "react-icons/io";
-import { CommentList } from "@/components/product/CommentList";
-import { Loading } from "@/components/layout/Loading";
+import { CommentList } from "@/components/product/comment/CommentList";
+import { Loading } from "@/components/layout/loading/Loading";
 import { Comment } from "@/types/comment";
-import { IoEllipsisHorizontal } from "react-icons/io5";
 import { timeAgo } from "@/lib/timeAgo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
+import editCompletedImage from "/edit-product-completed.png";
+
 import {
   Carousel,
   CarouselContent,
@@ -20,16 +20,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import { GoPencil } from "react-icons/go";
-import { IoMenuOutline } from "react-icons/io5";
-import { RiDeleteBin6Line } from "react-icons/ri";
-
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import PopupMenu from "@/components/product/popup-menu/PopupMenu";
 
 export type DetailProduct = {
   _id: string;
@@ -72,7 +64,8 @@ const DetailProduct = () => {
     comments: [],
     createdAt: new Date().toISOString()
   })
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/');
 
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -119,8 +112,9 @@ const DetailProduct = () => {
       setDynamicRoomRoute(`/rooms/${roomId}`);   // modalを開く前のリロードがむずい
 
       // リロード前にローカルストレージに必要な情報を保存する
-      localStorage.setItem('shouldOpenModal', 'true');
+      localStorage.setItem('shouldPurchaseModal', 'true');
       localStorage.setItem('roomId', roomId);
+      localStorage.setItem('shouldOpenEditModal', 'true');
 
       // ページをリロード
       navigate(0)
@@ -133,26 +127,25 @@ const DetailProduct = () => {
   // コンポーネントのマウント時に、ローカルストレージからモーダル開閉の情報を取得する
   useEffect(() => {
     setLoading(true);
-    const shouldOpenModal = localStorage.getItem('shouldOpenModal');
+    const shouldOpenPurchaseModal = localStorage.getItem('shouldOpenPurchaseModal');
     const roomId = localStorage.getItem('roomId');
+    const shouldOpenEditModal = localStorage.getItem('shouldOpenEditModal');
 
-    if (shouldOpenModal === 'true') {
-      setIsModalOpen(true);
+    if (shouldOpenPurchaseModal === 'true') {
+      setIsPurchaseModalOpen(true);
       setDynamicRoomRoute(`/rooms/${roomId}`);
 
       // ローカルストレージから不要な情報を削除する
-      localStorage.removeItem('shouldOpenModal');
+      localStorage.removeItem('shouldOpenPurchaseModal');
       localStorage.removeItem('roomId');
+    }
+
+    if(shouldOpenEditModal === 'true') {
+      setIsEditModalOpen(true);
+      localStorage.removeItem('shouldOpenEditModal');
     }
     setLoading(false);
   }, []);
-
-  const handleDelete = () => {
-    axios.delete(`${import.meta.env.VITE_API_URL}/products/${pid}`)
-      .then(() => {
-        navigate('/');
-      })
-  }
 
   if (loading) {
     return (
@@ -162,37 +155,27 @@ const DetailProduct = () => {
 
   return (
     <>
-      <div className="my-20">
+      <div className="mt-16 mb-32">
         <div className="max-w-96 my-0 mx-auto">
-          <div className="flex justify-between items-center mx-3 my-2">
-            <button onClick={() => navigate(-1)}><IoIosArrowBack className='text-xl'/></button>
-            {currentUser?._id === product.user._id ? (
-              <Drawer>
-                <DrawerTrigger><IoEllipsisHorizontal className='text-xl' /></DrawerTrigger>
-                <DrawerContent className="bg-white h-1/4">
-                  <DrawerFooter >
-                    <Button onClick={() => navigate(`/product/edit/${pid}`)}><GoPencil />投稿内容を編集する</Button>
-                    <Button><IoMenuOutline />販売ステータスを変更する</Button>
-                    <Button onClick={() => handleDelete()}><RiDeleteBin6Line />投稿を削除する</Button>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
-            ) : (
-              null
-            )}
-          </div>
+
+          <PopupMenu product={product} />
+
           <div className='relative'>
             <div>
               <Carousel className="relative">
                 <CarouselContent>
                   {product.images.map((image, index) => (
-                    <CarouselItem key={index}><img src={image} alt="product image" className='' /></CarouselItem>)
+                    <CarouselItem key={index} className="">
+                      <AspectRatio ratio={9/9} >
+                        <img src={image} alt="product image" className='object-cover w-96 h-96' />
+                      </AspectRatio>
+                    </CarouselItem>)
                   )}
                 </CarouselContent>
                 {product.images.length > 1 ? (
                   <>
-                    <CarouselPrevious className="absolute top-1/2 left-2 text-white" />
-                    <CarouselNext className="absolute top-1/2 right-2 text-white" />
+                    <CarouselPrevious className="absolute top-1/2 left-2 text-default-white" />
+                    <CarouselNext className="absolute top-1/2 right-2 text-default-white" />
                   </>
                 ) : null}
               </Carousel>
@@ -239,29 +222,36 @@ const DetailProduct = () => {
           </div>
           
 
-          <div className='mb-2'>
+          <div className='mb-2 min-h-14'>
             <p className="text-sm">{product.description}</p>
           </div>
 
           <CommentList
             product={product}
           />
-          
-          <div className="flex flex-wrap justify-between gap-y-2 mt-4 mb-8 max-w-60">
-            <p className="text-sm">商品の状態</p>
-            <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.product_status}</p>
-            <p className="text-sm">受け渡し</p>
-            <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.location}</p>
-            <p className="text-sm">支払い方法</p>
-            <p className="min-w-32 bg-label-gray text-center py-1 px-2 rounded-sm text-xs">{product.payment_method}</p>
+
+          <div className="grid grid-cols-2 mt-4 mb-8">
+            <div className="col-span-1  w-96">
+              <div className="flex mb-4">
+                <span className="text-sm text-start w-24 py-2">商品の状態</span>
+                <span className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.product_status}</span>
+              </div>
+              <div className="flex mb-4">
+                <p className="text-sm w-24 py-2">受け渡し場所</p>
+                <p className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.location}</p>
+              </div>
+              <div className="flex mb-4">
+                <div className="text-sm w-24 py-2">支払い方法</div>
+                <div className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.payment_method}</div>
+              </div>
+            </div>
           </div>
 
           {product.user._id !== currentUser?._id && (
-            <div className="my-2 mx-auto w-fit">
+            <div className="my-2 mx-auto w-button">
               {product.sale_status === '売り出し中' ? (
                 <Button 
-                  variant="red" 
-                  className="text-white font-medium px-20 rounded"
+                  variant="red"
                   onClick={handlePurchaseProductAndCreateRoom}
                 >
                   購入手続きに進む
@@ -269,7 +259,6 @@ const DetailProduct = () => {
               ) : (
                 <Button 
                   variant="disabled" 
-                  className="text-white font-medium px-20 rounded"
                 >
                   取引中
                 </Button>
@@ -280,13 +269,22 @@ const DetailProduct = () => {
       </div>
 
       <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isPurchaseModalOpen}
+        onClose={() => setIsPurchaseModalOpen(false)}
         heading={"購入手続きを申し込みました"}
         img={purchaseCompletedImage}
         text={"投稿者に購入の申し込みを知らせるメッセージが送られました！ひとこと挨拶をしてみましょう。"}
         link={dynamicRoomRoute}
         btnText={"DMへあいさつしに行く"}
+      />
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        heading={"販売ステータスの変更が完了しました！"}
+        img={editCompletedImage}
+        text={"販売ステータスの変更が完了しました！自分の編集した商品を見てみましょう。"}
+        link={`/products/${pid}`}
+        btnText={"たった今ステータスを変更した商品を見る"}
       />
     </>
   )

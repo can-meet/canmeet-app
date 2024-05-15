@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import type { RootState } from "@/redux/store";
 import { VscSend } from "react-icons/vsc";
 import { useSelector } from "react-redux";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 
 type ReplyFormProps = {
 	commentId: string;
@@ -24,7 +24,7 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 		reset,
 	} = useForm<ReplySchema>({
 		defaultValues: {
-			userId: currentUser?.userId,
+			userId: currentUser?._id,
 			commentId: commentId,
 			text: "",
 		},
@@ -56,7 +56,7 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 						<Input
 							placeholder="返信する"
 							type="text"
-							className="rounded-xl border-secondary-gray px-4"
+							className="rounded-xl px-4"
 							{...register("text")}
 						/>
 						{errors.text?.message && (

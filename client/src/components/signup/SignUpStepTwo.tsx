@@ -54,6 +54,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
 
   return (
     <Form {...form}>
+      <p className="text-primary-red text-ms text-center w-72 mb-6">※このページ以降、プロフィール情報の変更はできません。<br />ご注意ください。</p>
       <form className="space-y-8">
 
         <FormField
@@ -61,12 +62,12 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>名前</FormLabel>
-              <span className="text-red-500 ">*</span>
+              <FormLabel className="font-normal">名前</FormLabel>
+              <span className="text-primary-red">*</span>
               <FormControl>
                 <Input 
-                  placeholder="矢野 太郎"
-                  className="w-[300px] h-[40px]"
+                  // placeholder="矢野 太郎"
+                  className=""
                   {...field} 
                 />
               </FormControl>
@@ -77,11 +78,10 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
         />
 
         <div className="">
-          <Label>画像</Label>
-          <div className='flex flex-col items-center gap-4'>
+          <div className='flex flex-col items-center gap-2'>
 
             <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-              <AvatarImage src={imagePreview || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}/>
+              <AvatarImage src={imagePreview || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
               <AvatarFallback>PROFILE</AvatarFallback>
             </Avatar>
 
@@ -96,7 +96,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
             <Button
               id="file-upload-button"
               type='button'
-              className="w-[150px] h-[30px] bg-stone-300 text-black font-normal focus:bg-stone-300 hover:bg-stone-400"
+              className="py-2 bg-button-gray text-xs font-medium w-fit"
               onClick={handleImageClick}
             >
               画像をアップロード
@@ -110,14 +110,15 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
         <div className="flex flex-col items-center gap-2">
           <Button 
             type="button"
-            className="w-[300px] h-[40px] bg-blue-500 text-white hover:bg-blue-600"
+            variant={"blue"}
+            className=""
             onClick={() => onNext()}
           >
             次へ
           </Button>
           <Button 
             type="button"
-            className="w-[300px] h-[40px] bg-stone-300 text-black hover:bg-stone-400 hover:text-black"
+            className=" bg-stone-300 hover:bg-stone-400 hover:text-black"
             onClick={() => onBack()}
           >
             戻る

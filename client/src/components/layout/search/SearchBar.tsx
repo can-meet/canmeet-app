@@ -8,8 +8,9 @@ import {
 import { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { SearchHistory } from "./SearchHistory";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 type SearchBarProps = {
 	onSearch(query: string): void;
@@ -41,42 +42,34 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 			<DialogTrigger className="outline-none">
 				<div className="relative w-[300px]">
 					<div className="flex items-center">
-						<Input className="w-[375px] rounded-xl border-slate-300 px-4 pointer-events-none" />
-						<button
-							type="submit"
-							className="absolute bottom-0 right-2 flex items-center justify-center p-2"
-						>
-							<IoMdSearch className="h-6 w-6 text-black" />
-						</button>
+						<Input className="w-96 rounded-xl px-4 pointer-events-none" />
+						<div className="absolute bottom-0 right-2 flex items-center justify-center p-2">
+							<IoMdSearch className="h-6 w-6 text-default-black" />
+						</div>
 					</div>
 				</div>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogDescription>
-						<div className="mt-12 px-2">
-							<h2 className="text-start p-2 text-lg font-medium">検索</h2>
-							<div className="relative w-[330px]">
-								<div className="flex items-center">
-									<Input
-										placeholder="商品を検索..."
-										className="w-full rounded-xl border-slate-300 px-4"
-										value={query}
-										onChange={handleInputChange}
-										onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-									/>
-									<button
-										type="submit"
-										className="absolute bottom-0 right-2 flex items-center justify-center p-2"
-										onClick={handleSearch}
-									>
-										<IoMdSearch className="h-6 w-6 text-black" />
-									</button>
-								</div>
+					<DialogTitle className="p-2 text-lg font-semibold">検索</DialogTitle>
+						<DialogDescription>
+							<div className="flex items-center relative w-72">
+								<Input
+									placeholder="商品を検索..."
+									className="rounded-xl px-4"
+									value={query}
+									onChange={handleInputChange}
+									onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+								/>
+								<button
+									type="submit"
+									className="absolute bottom-0 right-2 flex items-center justify-center p-2"
+									onClick={handleSearch}
+								>
+									<IoMdSearch className="h-6 w-6 text-default-black" />
+								</button>
 							</div>
-
-							<SearchHistory searchHistory={searchHistory} />
-						</div>
+						<SearchHistory searchHistory={searchHistory} />
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>

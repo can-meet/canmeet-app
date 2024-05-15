@@ -66,11 +66,11 @@ export const CommentForm = ({
 					<Avatar>
 						<AvatarImage src={currentUser.profilePicture} />
 					</Avatar>
-					<form onSubmit={handleSubmit(onSubmit)} className="relative w-full">
+					<form onSubmit={handleSubmit(onSubmit)} className="relative max-w-96 mx-auto">
 						<Input
 							placeholder="コメントする"
 							type="text"
-							className="rounded-xl border-secondary-gray"
+							className="rounded-xl"
 							{...register("text")}
 						/>
 						{errors.text?.message && (

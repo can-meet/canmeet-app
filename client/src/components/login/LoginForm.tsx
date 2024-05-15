@@ -25,17 +25,16 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 					name="email"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>メールアドレス</FormLabel>
-							<span className="text-red-500">*</span>
+							<FormLabel className="font-normal">メールアドレス</FormLabel>
+							<span className="text-primary-red">*</span>
 							<FormControl>
 								<Input
 									placeholder="abc@gmail.com"
-									className="w-[300px] h-[40px]"
 									{...field}
 								/>
 							</FormControl>
 
-							<FormMessage className="w-[300px] text-xs text-red-500" />
+							<FormMessage className="w-72 text-xs text-primary-red" />
 						</FormItem>
 					)}
 				/>
@@ -44,24 +43,24 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 					name="password"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>パスワード</FormLabel>
-							<span className="text-red-500 mr-2">*</span>
+							<FormLabel className="font-normal">パスワード</FormLabel>
+							<span className="text-primary-red mr-2">*</span>
 							<span className="ml-2 text-xs">※8文字以上</span>
 							<FormControl>
 								<Input
 									placeholder="123456"
-									className="w-[300px] h-[40px]"
 									{...field}
 								/>
 							</FormControl>
 
-							<FormMessage className="w-[300px] text-xs text-red-500" />
+							<FormMessage className="w-[300px] text-xs text-primary-red" />
 						</FormItem>
 					)}
 				/>
 				<Button
 					type="submit"
-					className="w-[300px] h-[40px] bg-red-500 hover:bg-red-600"
+					variant={"red"}
+					className=""
 				>
 					送信
 				</Button>

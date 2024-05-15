@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // const IMAGE_TYPES = ["image/png", "image/jpg", "image/jpeg"];
-// const IMAGE_SIZE_LIMIT = 500_000;
+// const IMAGE_SIZE_LIMIT = 100_000;
 
 // const imageFileListSchema = z.object({
 //   images: z
@@ -24,29 +24,51 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 export const productSchema = z.object({
   userId: z.string(),
-  images: z.any(),
+  images: z
+    .any()
+    .refine((files) => files.length > 0, {
+      message: '商品写真を選択してください',
+    })
+    .refine((files: any) => files && files.length > 0 && files.length <= 5, {
+      message: "商品写真は最大5つまで選択できます",
+    }),
     // .array(z.string()),
   product_name: z
     .string({
       required_error: "商品名を入力してください",
     }),
   price: z
-    .string({
-      required_error: "商品の価格を入力してください",
-      invalid_type_error: '数字を入力してください。',
+    .string()
+    .min(1, {
+      message: '価格を入力してください。',
+    })
+    .max(5, {
+      message: '価格は5桁までです。',
     }),
   description: z
     .string({
       invalid_type_error: '商品説明を入力してください。',
+    })
+    .min(1, {
+      message: '商品説明を入力してください。',
     }),
   product_status: z
     .string({
       required_error: "商品の状態を選択してください",
+    })
+    .min(1, {
+      message: '商品説明を入力してください。',
     }),
   location: z
-    .string(),
+    .string()
+    .min(1, {
+      message: '商品説明を入力してください。',
+    }),
   payment_method: z
-    .string(),
+    .string()
+    .min(1, {
+      message: '商品説明を入力してください。',
+    }),
 })
 
 export type ProductSchema = z.infer<typeof productSchema>;

@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import type { Reply } from "@/types/reply";
-import { Loading } from "../layout/Loading";
+import { Loading } from "../../layout/loading/Loading";
 
 type ReplyCardProps = {
 	reply: Reply;

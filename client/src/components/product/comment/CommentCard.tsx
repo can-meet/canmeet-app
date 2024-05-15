@@ -7,8 +7,8 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import type { Comment } from "@/types/comment";
-import { ReplyButton } from "./ReplyButton";
-import { ReplyList } from "./ReplyList";
+import { ReplyButton } from "../reply/ReplyButton";
+import { ReplyList } from "../reply/ReplyList";
 
 type CommentCardProps = {
 	comment: Comment;
@@ -21,18 +21,18 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
 				<Avatar>
 					<AvatarImage src={comment.user.profilePicture} className="h-10" />
 				</Avatar>
-				<p>{comment.user.username}</p>
+				<p className="text-sm font-medium">{comment.user.username}</p>
 			</div>
 			<div className="mt-2">
-				<p>{comment.text}</p>
+				<p className="text-xs font-medium">{comment.text}</p>
 				<ReplyButton commentId={comment._id} />
 				<Separator />
 				<div className="flex">
 					<Accordion type="single" collapsible>
 						<AccordionItem value="item-1">
 							{comment.replies.length > 0 && (
-								<AccordionTrigger className="text-reply-gray">
-									<span className="text-xs text-reply-gray flex justify-center gap-2">
+								<AccordionTrigger className="text-dark-gray">
+									<span className="text-xs text-dark-gray flex justify-center gap-2">
 										<div className="flex items-center justify-center">
 											<div className="w-[30px] border-t"></div>
 										</div>

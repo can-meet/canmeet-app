@@ -1,9 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage
+} from "@/components/ui/avatar";
+import {
+	ProfileSelectTrigger,
 	Select,
 	SelectContent,
 	SelectItem,
-	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,7 +19,7 @@ import type { User } from "@/types/user";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Loading } from "@/components/layout/Loading";
+import { Loading } from "@/components/layout/loading/Loading";
 
 export const Profile = () => {
 	const [loading, setLoading] = useState<boolean>(false);
@@ -84,12 +88,14 @@ export const Profile = () => {
   return (
     <div className='my-20 flex flex-col items-center justify-center'>
       
-      <Avatar className="rounded-full h-20 w-20 object-cover cursor-pointer self-center">
-        <AvatarImage src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
-        <AvatarFallback>PROFILE IMAGE</AvatarFallback>
-      </Avatar>
+      <div className="relative">
+				<Avatar className="object-cover self-center w-20 h-20" >
+					<AvatarImage src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
+					<AvatarFallback>PROFILE IMAGE</AvatarFallback>
+				</Avatar>
+			</div>
       
-			<h2 className="my-3 text-lg">{user.username}</h2>
+			<h2 className="my-4">{user.username}</h2>
 
 			<Tabs defaultValue="sale" className="px-4 w-[400px]">
 				<TabsList className="grid w-full grid-cols-2">
@@ -103,10 +109,10 @@ export const Profile = () => {
 						onValueChange={(value) => setSelectedFilterPosts(value)}
 						value={selectedFilterPosts}
 					>
-						<SelectTrigger className="w-[100px] h-[35px] bg-product-status-gray text-white mb-4">
+						<ProfileSelectTrigger className="py-1 px-2 w-fit bg-dark-gray text-default-white mb-4">
 							<SelectValue placeholder="すべて" className="font-normal" />
-						</SelectTrigger>
-						<SelectContent className="w-[80px] z-20 bg-white">
+						</ProfileSelectTrigger>
+						<SelectContent className="w-16 z-50 bg-default-white">
 							<SelectItem value="すべて">すべて</SelectItem>
 							<SelectItem value="売り出し中">売り出し</SelectItem>
 							<SelectItem value="取引中">取引中</SelectItem>
@@ -120,10 +126,10 @@ export const Profile = () => {
 						onValueChange={(value) => setSelectedFilterPurchases(value)}
 						value={selectedFilterPurchases}
 					>
-						<SelectTrigger className="w-[100px] h-[35px] bg-product-status-gray text-white mb-4">
+						<ProfileSelectTrigger className="py-1 px-2 w-fit bg-dark-gray text-default-white mb-4">
 							<SelectValue placeholder="すべて" className="font-normal" />
-						</SelectTrigger>
-						<SelectContent className="w-[80px] z-20 bg-white">
+						</ProfileSelectTrigger>
+						<SelectContent className="w-20 z-50 bg-white">
 							<SelectItem value="すべて">すべて</SelectItem>
 							<SelectItem value="売り出し中">売り出し</SelectItem>
 							<SelectItem value="取引中">取引中</SelectItem>

@@ -1,17 +1,14 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { VscSend } from "react-icons/vsc";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Room } from "@/types/room";
-import { Loading } from "@/components/layout/Loading";
+import { Loading } from "@/components/layout/loading/Loading";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { MessageCard } from "@/components/chat/MessageCard";
 import { Message } from "@/types/message";
 import { useQuery } from "react-query";
 import { MessageList } from "@/components/chat/MessageList";
@@ -106,49 +103,51 @@ export const Chat = () => {
   }
 
   return (
-    <div className='my-4 mb-16 flex flex-col gap-y-4'>
-      <div className='fixed bg-white w-full z-10 top-0 p-4 pb-2 mr-24'>
-        <div className='flex items-center gap-x-4'>
-          <button 
-            onClick={() => navigate("/rooms")}
-          >
-            <IoIosArrowBack className='text-xl'/>
-          </button>
+    <div className='max-w-96 mx-auto h-screen relative z-50'>
 
-          {currentUser?._id === room?.seller._id ? (
-            <div className='flex items-center gap-x-2'>
-              <Avatar className="rounded-full h-9 w-9 object-cover cursor-pointer self-center">
-                <AvatarImage src={room?.buyer.profilePicture} />
-                <AvatarFallback>PROFILE IMAGE</AvatarFallback>
-              </Avatar>
-              <h3 className='text-lg'>{room?.buyer.username}</h3>
-            </div>
-          ) : (
-            <div className='flex items-center gap-x-2'>
-              <Avatar className="rounded-full h-9 w-9 object-cover cursor-pointer self-center">
-                <AvatarImage src={room?.seller.profilePicture} />
-                <AvatarFallback>PROFILE IMAGE</AvatarFallback>
-              </Avatar>
-              <h3 className='text-lg'>{room?.seller.username}</h3>
-            </div>
-          )}
-        </div>
+      {/* message room fixed header */}
+      <div className='fixed bg-default-white z-20 top-0 right-0 w-full border-b-[0.5px] border-primary-gray pt-4 pb-6'>
+        <div className="max-w-96 min-w-80 mx-auto">
+          <div className='flex items-center gap-x-5 pl-4'>
+            <button onClick={() => navigate("/rooms")}>
+              <IoIosArrowBack className='text-xl'/>
+            </button>
 
-        <div className='flex justify-center gap-x-4 my-4'>
-          <img src={room?.product.images[0]} alt="product image" className='w-28 h-24' ></img>
-          <div className='relative w-[150px]'>
-            <h2>{room?.product.product_name}</h2>
-            <h2>${room?.product.price}</h2>
-            <Link to={`/products/${room?.product._id}`}>
-              <div className='flex items-center gap-x-1 absolute right-0 bottom-1'>
-                <h3 className='text-sm hover:underline hover:underline-offset-2'>商品詳細を確認</h3>
-                <IoIosArrowForward />
+            {currentUser?._id === room?.seller._id ? (
+              <div className='flex items-center gap-x-4'>
+                <Avatar className="rounded-full h-9 w-9 object-cover cursor-pointer self-center">
+                  <AvatarImage src={room?.buyer.profilePicture} />
+                  <AvatarFallback>PROFILE IMAGE</AvatarFallback>
+                </Avatar>
+                <h3 className='text-lg'>{room?.buyer.username}</h3>
               </div>
-            </Link>
+            ) : (
+              <div className='flex items-center gap-x-2'>
+                <Avatar className="rounded-full h-9 w-9 object-cover cursor-pointer self-center">
+                  <AvatarImage src={room?.seller.profilePicture} />
+                  <AvatarFallback>PROFILE IMAGE</AvatarFallback>
+                </Avatar>
+                <h3 className='text-lg'>{room?.seller.username}</h3>
+              </div>
+            )}
+          </div>
+
+          <div className='flex justify-center gap-x-7 mt-7 pl-10'>
+            <img src={room?.product.images[0]} alt="product image" className='h-24 w-24 object-cover'></img>
+            <div className='relative w-full'>
+              <div className="text-lg font-semibold space-y-1">
+                <h2>{room?.product.product_name}</h2>
+                <h2>${room?.product.price}</h2>
+              </div>
+              <Link to={`/products/${room?.product._id}`}>
+                <div className='flex items-center gap-x-1 absolute right-0 bottom-1'>
+                  <h3 className='text-xs hover:underline hover:underline-offset-4'>商品詳細を確認</h3>
+                  <IoIosArrowForward />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
-
-        <Separator className=" bg-gray-200" />
       </div>
 
       <MessageList
@@ -156,12 +155,12 @@ export const Chat = () => {
         messagesEndRef={messagesEndRef}
       />
 
-      <div className='fixed bottom-10 pb-6 px-4 w-full z-10 bg-white'>
-        <form className="relative w-full">
+      <form className="fixed bottom-10 left-0 right-0 px-4 z-10 max-w-96 mx-auto">
+        <div className="relative">
           <Input
             type="file" 
             accept="image/*"
-            className='hidden'
+            className="hidden"
             ref={fileInputRef}
             onChange={handleFileChange}
           />
@@ -172,7 +171,7 @@ export const Chat = () => {
           <Input
             placeholder="コメントする"
             type="text"
-            className="rounded-xl border-secondary-gray pl-10 pr-12"
+            className="rounded-xl pl-10 pr-12 w-full"
             value={messageText}
             onChange={(e) => setMessageText(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e)}
@@ -185,8 +184,8 @@ export const Chat = () => {
           >
             <VscSend className="text-2xl" />
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   )
 }

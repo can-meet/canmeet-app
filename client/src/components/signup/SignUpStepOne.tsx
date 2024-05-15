@@ -20,23 +20,22 @@ type SignUpStepOneProps = {
 export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
 	return (
 		<Form {...form}>
-			<form className="space-y-8">
+			<form className="space-y-8 mt-8">
 				<FormField
 					control={form.control}
 					name="email"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>メールアドレス</FormLabel>
-							<span className="text-red-500 ">*</span>
+							<FormLabel className="font-normal">メールアドレス</FormLabel>
+							<span className="text-primary-red">*</span>
 							<FormControl>
 								<Input
-									placeholder="abc@gmail.com"
-									className="w-[300px] h-[40px]"
+									// placeholder="abc@gmail.com"
+									className="w-button placeholder:text-default-black"
 									{...field}
 								/>
 							</FormControl>
-
-							<FormMessage className="w-[300px] text-xs text-red-500" />
+							<FormMessage className="w-button text-xs text-primary-red" />
 						</FormItem>
 					)}
 				/>
@@ -45,24 +44,24 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
 					name="password"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>パスワード</FormLabel>
-							<span className="text-red-500 mr-2">*</span>
+							<FormLabel className="font-normal">パスワード</FormLabel>
+							<span className="text-primary-red mr-2">*</span>
 							<span className="ml-2 text-xs">※8文字以上</span>
 							<FormControl>
 								<Input
-									placeholder="123456"
-									className="w-[300px] h-[40px]"
+									// placeholder="123456"
+									className="w-button"
 									{...field}
 								/>
 							</FormControl>
 
-							<FormMessage className="w-[300px] text-xs text-red-500" />
+							<FormMessage className="w-72 text-xs text-primary-red" />
 						</FormItem>
 					)}
 				/>
 				<Button
 					type="button"
-					className="w-[300px] h-[40px] text-white bg-blue-500 hover:bg-blue-600"
+					variant={"blue"}
 					onClick={() => onNext()}
 				>
 					次へ

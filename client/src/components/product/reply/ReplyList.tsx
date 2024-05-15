@@ -1,7 +1,7 @@
 import type { Reply } from "@/types/reply";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ReplyLoading } from "../layout/ReplyLoading";
+import { ReplyLoading } from "@/components/layout/loading/ReplyLoading";
 import { ReplyCard } from "./ReplyCard";
 
 type ReplyListProps = {

@@ -26,28 +26,28 @@ export const Modal = ({
   return (
     <div
       onClick={onClose}
-      className="bg-slate-800/50 w-full h-screen mx-auto absolute top-0 z-50"
+      className="bg-slate-800/50 w-full h-screen mx-auto fixed top-0 left-0 z-50"
     >
-       <div
-       onClick={(event) => event.stopPropagation()}
-       className="bg-modal-white rounded-xl w-80 h-fit-content mx-auto relative top-1/4">
+      <div
+        onClick={(event) => event.stopPropagation()}
+        className="bg-default-white rounded-xl w-80 h-fit-content mx-auto relative top-1/4">
           <button
-          onClick={onClose}
+            onClick={onClose}
             className="absolute top-4 left-4">
             <IoMdClose />
           </button>
           <div className="flex flex-col items-center py-8 gap-3 w-64 mx-auto max-w-72">
             <h3 className="text-lg font-semibold ">{heading}</h3>
             <img src={img} alt="modal image" className="max-w-32" />
-            <p>{text}</p>
+            <p className="text-xs">{text}</p>
             <Button 
               variant='blue'
-              className="text-white rounded-full w-64"
+              className="text-default-white text-xs rounded-full w-64"
               onClick={() => navigate(`${link}`)}>
                 {btnText}
             </Button>
           </div>
-        </div>
+      </div>
     </div>
   )
 }

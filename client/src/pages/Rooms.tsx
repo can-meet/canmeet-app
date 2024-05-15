@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery } from 'react-query';
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
-import { Loading } from "@/components/layout/Loading";
+import { Loading } from "@/components/layout/loading/Loading";
 import { RoomCard } from "@/components/chat/RoomCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Room } from "@/types/room";
@@ -13,7 +13,7 @@ export const Rooms = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
 
 	const fetchRoomDetail = async (userId: string) => {
-		const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/user/${userId}`);
+		const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/users/${userId}`);
 		return data;
 	};
 
@@ -38,9 +38,9 @@ export const Rooms = () => {
 
 
   return (
-    <div className='my-16 flex flex-col items-center justify-center'>
+    <div className='mt-14 mb-28 flex flex-col items-center justify-center'>
 
-			<Tabs defaultValue="sale" className="px-4 w-[400px]">
+			<Tabs defaultValue="sale" className="px-8 w-[400px]">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="sale">売る</TabsTrigger>
 					<TabsTrigger value="purchase">買う</TabsTrigger>
