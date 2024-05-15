@@ -13,11 +13,11 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { AiOutlineLeft } from "react-icons/ai";
+import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginError, loginStart, loginSuccess } from "../redux/userSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 export enum STEPS {
 	FORM = 0,
@@ -29,6 +29,7 @@ export const SignUp = () => {
   const [step, setStep] = useState(STEPS.FORM);
   const [complete, setComplete] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
+	const { toast } = useToast()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,13 +65,22 @@ export const SignUp = () => {
 			.post(`${import.meta.env.VITE_API_URL}/auth/signup`, data)
 			.then((res) => {
 				dispatch(loginSuccess(res.data));
-				toast.success("Successfully registered!");
+				// toast.success("Successfully registered!");
+				// toast({
+        //   title: "Scheduled: Catch up",
+        //   description: "Friday, February 10, 2023 at 5:57 PM",
+        // })
 				setStep(STEPS.FORM);
 				navigate("/?showModal=true&modalType=registration");
 			})
 			.catch((err) => {
 				dispatch(loginError(err.response.data.error));
-				toast.error("Something went wrong.");
+				// toast.error("Something went wrong.");
+				toast({
+					variant: "destructive",
+          title: `${err.response.data.error}`,
+          description: "Please try again later.",
+        })
 			});
 	};
 
@@ -90,26 +100,25 @@ export const SignUp = () => {
 
 	return (
 		<>
-			<div className="my-24 flex flex-col items-center gap-y-4">
-				<div className="flex justify-between items-center py-2 w-[300px]">
+			<div className="my-24 max-w-96 mx-auto">
+				{ step === STEPS.FORM ? (
 					<Link to="/">
-						<AiOutlineLeft className="text-lg" />
+						<IoIosArrowBack className="text-2xl" />
 					</Link>
-					<div className="text-2xl font-semibold flex-1 text-center">
-						新規登録
-					</div>
-					<div style={{ width: 24 }} />
-				</div>
+				) : null}
+				<h3 className="text-lg font-semibold text-center mt-4 mb-10">新規登録</h3>
+				<div className="flex flex-col items-center">
 				<Stepper currentStep={step} complete={complete} />
-				<Separator className="my-4 w-[300px] bg-secondary-gray" />
+				<Separator className="mt-4 w-64 bg-secondary-gray" />
 				{getSectionComponent()}
 				<Button
 					variant="link"
-					className="text-blue-500 text-xs"
+					className="text-primary-blue text-xs"
 					onClick={() => navigate("/login")}
 				>
 					既にアカウントをお持ちの方はこちら
 				</Button>
+				</div>
 			</div>
 		</>
 	);
