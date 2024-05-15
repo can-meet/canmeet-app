@@ -50,7 +50,7 @@ export const Header = () => {
               <div className="flex items-center gap-4">
                 <div className=" relative">
                   <button type="button" onClick={() => navigate("/notifications")}>
-                    <FaRegBell className="text-lg mt-2" />
+                    <FaRegBell className="text-lg mt-2 hover:opacity-80" />
                   </button>
                   {unreadNotifications.length > 0  && (
                     <div className="absolute top-1.5 -right-0.5 bg-primary-red w-1.5 h-1.5 rounded-full"></div>
@@ -69,7 +69,7 @@ export const Header = () => {
               <div className="flex items-center gap-4">
                 <div className=" relative">
                   <button type="button" onClick={() => navigate("/notifications")}>
-                    <FaRegBell className="text-lg mt-2" />
+                    <FaRegBell className="text-lg mt-2 hover:opacity-80" />
                   </button>
                   {unreadNotifications.length > 0 && (
                     <div className="absolute top-1.5 -right-0.5 bg-primary-red w-1.5 h-1.5 rounded-full"></div>
@@ -83,7 +83,7 @@ export const Header = () => {
           ) : (isLoggedIn && location.pathname === "/product/create") 
           || (isLoggedIn && location.pathname === `/product/edit/${pid}`)
           || (isLoggedIn && location.pathname === "/notifications") ? (
-            <div className="flex justify-between items-center  py-2">
+            <div className="flex justify-between items-center py-2">
               <button className="text-lg" onClick={() => navigate(-1)}>
                 <FaChevronLeft />
               </button>
@@ -126,7 +126,7 @@ export const Header = () => {
                   {isLoggedIn && location.pathname !== "/notifications" && (
                     <div className=" relative">
                       <button type="button" onClick={() => navigate("/notifications")}>
-                        <FaRegBell className="text-lg mt-2" />
+                        <FaRegBell className="text-lg mt-2 hover:opacity-80" />
                       </button>
                       {unreadNotifications.length > 0 && (
                         <div className="absolute top-1.5 -right-0.5 bg-primary-red w-1.5 h-1.5 rounded-full"></div>

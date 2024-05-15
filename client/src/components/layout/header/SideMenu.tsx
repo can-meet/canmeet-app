@@ -19,7 +19,7 @@ const SideMenu = ({ handleLogout, isLoggedIn }: SideMenuProps) => {
     <>
       <Sheet>
         <SheetTrigger>
-          <CgMenu className="text-2xl" />
+          <CgMenu className="text-2xl hover:opacity-80" />
         </SheetTrigger>
         <SheetContent className="bg-default-white w-52 rounded-l-[48px] flex flex-col max-h-screen">
           <SheetHeader className="mt-10 flex-grow">
