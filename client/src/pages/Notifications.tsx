@@ -1,6 +1,6 @@
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
-import { Loading } from "@/components/layout/Loading";
+import { Loading } from "@/components/layout/loading/Loading";
 import { NotificationList } from "@/components/notification/NotificationList";
 import { useEffect, useState } from "react";
 import { useNotificationsStore } from "@/store/notificationsStore";
