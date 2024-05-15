@@ -6,7 +6,6 @@ export type Message = {
 	sender: User;
 	text: string;
 	isRead: boolean;
-	// createdAt: Date;
 };
 
 const messageSchema = new mongoose.Schema(

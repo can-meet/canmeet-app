@@ -1,3 +1,4 @@
+import { Loading } from "@/components/layout/loading/Loading";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import type { RootState } from "@/redux/store";
@@ -58,6 +59,10 @@ export const CommentForm = ({
 			reset();
 		}
 	};
+
+	if(isLoading) {
+		return <Loading />
+	}
 
 	return (
 		<div className="flex items-center gap-2 w-80 my-0 mx-auto">

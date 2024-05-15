@@ -1,11 +1,9 @@
-// import { Comment } from '../../../../server/models/commentModel';
 import type { Comment } from "@/types/comment";
 import axios from "axios";
 import CommentIcon from "/comment.svg"
 import {
   CommentDrawerContent,
   Drawer,
-  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,

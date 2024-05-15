@@ -21,12 +21,24 @@ const userSchema = new mongoose_1.default.Schema({
     },
     profilePicture: {
         type: String,
-        default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+        default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     },
     isAdmin: {
         type: Boolean,
         default: false,
     },
+    postedProducts: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: "Product",
+        },
+    ],
+    purchasedProducts: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: "Product",
+        },
+    ],
 }, { timestamps: true });
-const User = mongoose_1.default.model('User', userSchema);
+const User = mongoose_1.default.model("User", userSchema);
 exports.default = User;

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose from "mongoose";
 import type { Comment } from "./commentModel";
 import type { User } from "./userModel";
 
@@ -60,7 +60,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     comments: [{ 
-      type: Schema.Types.ObjectId, 
+      type: mongoose.Schema.Types.ObjectId, 
       ref: 'Comment',
       default: []
     }],

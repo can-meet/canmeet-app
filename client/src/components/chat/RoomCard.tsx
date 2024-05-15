@@ -2,7 +2,7 @@ import { Room } from "@/types/room"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import io, { Socket } from "socket.io-client";
+import io from "socket.io-client";
 import { Message } from "@/types/message";
 import { timeAgo } from "@/lib/timeAgo";
 
@@ -13,21 +13,19 @@ type RoomCardProps = {
 }
 
 export const RoomCard = ({ room, recipientName, recipientImage }: RoomCardProps) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [latestMessage, setLatestMessage] = useState<Message>();
 
   useEffect(() => {
-    const newSocket = io(`${import.meta.env.VITE_BASE_URL}`)
-    setSocket(newSocket)
-    newSocket.emit('getLatestMessage', room._id);
+    const socket = io(`${import.meta.env.VITE_BASE_URL}`)
+    socket.emit('getLatestMessage', room._id);
 
-    newSocket.on('latestMessage', (latestMessage: Message) => {
+    socket.on('latestMessage', (latestMessage: Message) => {
       setLatestMessage(latestMessage)
     });
 
     return () => {
-      newSocket.off('latestMessage');
-      newSocket.disconnect();
+      socket.off('latestMessage');
+      socket.disconnect();
     };
   }, []);
 

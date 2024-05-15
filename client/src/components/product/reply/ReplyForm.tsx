@@ -8,6 +8,7 @@ import type { RootState } from "@/redux/store";
 import { VscSend } from "react-icons/vsc";
 import { useSelector } from "react-redux";
 import { Input } from "../../ui/input";
+import { Loading } from "@/components/layout/loading/Loading";
 
 type ReplyFormProps = {
 	commentId: string;
@@ -47,6 +48,10 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 				reset();
 			});
 	};
+
+	if(isLoading) {
+		return <Loading />
+	}
 
 	return (
 		<div className="flex items-center gap-2 w-80 my-1 mx-auto">

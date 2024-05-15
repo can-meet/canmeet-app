@@ -23,7 +23,7 @@ type SignUpStepThreeProps = {
   setImagePreview: (imagePreview: string) => void;
 }
 
-export const SignUpStepThree = ({ form, onSubmit, onBack, imagePreview, setImagePreview }: SignUpStepThreeProps) => {
+export const SignUpStepThree = ({ form, onSubmit, onBack, imagePreview }: SignUpStepThreeProps) => {
 
   return (
     <Form {...form}>

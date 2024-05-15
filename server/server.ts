@@ -2,6 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import path from "path";
 import authRoutes from "./routes/authRoute";
 import commentRoutes from "./routes/commentRoute";
 import productRoutes from "./routes/productRoute";
@@ -42,6 +43,7 @@ app.use(
 	}),
 );
 
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);

@@ -27,7 +27,7 @@ export enum STEPS {
 
 export const SignUp = () => {
   const [step, setStep] = useState(STEPS.FORM);
-  const [complete, setComplete] = useState<boolean>(false);
+  const [complete] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
 	const { toast } = useToast()
 

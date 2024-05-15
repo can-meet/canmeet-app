@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose from "mongoose";
 import type { Product } from "./productModel";
 import type { Reply } from "./replyModel";
 import type { User } from "./userModel";
