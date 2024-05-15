@@ -20,6 +20,16 @@ export const getNotifications = async (req: Request, res: Response) => {
   }
 }
 
+// 未読の通知を表示させる
+export const getUnreadNotifications = async (req: Request, res: Response) => {
+  try {
+    const notifications = await Notification.find({ receiver: req.params.userId, isRead: false })
+    res.status(200).json(notifications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server Error' });
+  }
+}
 
 // 通知を未読から既読にする
 export const markNotificationAsRead = async (req: Request, res: Response) => {
