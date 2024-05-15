@@ -65,7 +65,6 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 }
 
-
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find({}).sort({ createdAt: -1 });
@@ -117,6 +116,27 @@ export const updateProduct = async (req: Request, res: Response) => {
     })
 
     res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+export const updateProductStatus = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const { userId, sale_status } = req.body;
+
+    const user = await User.findById(userId);
+    if(!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const product = await Product.findById(productId);
+    if(!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    await product.updateOne({ sale_status });
+    res.status(200).json(product.sale_status);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
