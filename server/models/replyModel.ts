@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose from "mongoose";
 import type { Comment } from "./commentModel";
 import type { User } from "./userModel";
 

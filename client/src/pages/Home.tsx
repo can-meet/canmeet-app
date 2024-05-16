@@ -3,7 +3,7 @@ import { SearchBar } from "@/components/layout/search/SearchBar";
 import { ProductList } from "@/components/product/ProductList";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { Product } from "../../../server/models/productModel";
+import type { Product } from "@/types/product";
 import { Modal } from "@/components/layout/Modal";
 import registerImage from "/register-account-completed.png";
 import editCompleteImage from "/edit-product-completed.png";
@@ -88,7 +88,9 @@ export const Home = () => {
 		);
 		setFilteredProducts(results);
 		setLoading(false);
+
 	};
+
 
 	if (loading) {
 		return <Loading />;

@@ -1,5 +1,4 @@
 import type { UseFormReturn } from "react-hook-form";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +13,6 @@ import { Input } from "@/components/ui/input";
 
 import { SignUpSchema } from '@/schema/signup';
 import { useRef } from 'react';
-import { Label } from '../ui/label';
 import { profileImageUpload } from '@/lib/profileImageUpload';
 
 

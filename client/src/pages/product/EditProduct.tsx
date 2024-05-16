@@ -85,7 +85,6 @@ const EditProduct = () => {
   }, [])
 
   const onSubmit: SubmitHandler<ProductSchema> = async (value) => {
-    console.log(value.images)
     setLoading(true);
     try {
       const currentImages = [...value.images];

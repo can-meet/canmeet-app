@@ -4,7 +4,7 @@ import type { RootState } from "@/redux/store";
 import { logoutSuccess } from "@/redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Notification } from "@/types/notification";
-import Logo from "/logo-original.png"
+import Logo from "/logo.png"
 import SideMenu from "./SideMenu";
 import { FaChevronLeft, FaRegBell } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ export const Header = () => {
         {isLoggedIn && location.pathname === "/rooms" ? (
           <div className="flex justify-between items-center py-2 mx-4">
             <Link to="/" className="flex items-center">
-              <img alt="logo" src={Logo} />
+              <img alt="logo" src={Logo} className="w-12" />
             </Link>
             <h3 className="text-lg font-semibold">メッセージ</h3>
             <div className="flex gap-4">
@@ -63,7 +63,7 @@ export const Header = () => {
         ) : isLoggedIn ? (
           <div className="flex justify-between items-center py-2 mx-4">
             <Link to="/" className="flex items-center">
-              <img alt="logo" src={Logo} />
+              <img alt="logo" src={Logo} className="w-12" />
             </Link>
             <div className="flex gap-4">
               <div className="flex items-center gap-4">
@@ -100,7 +100,7 @@ export const Header = () => {
             <div className="flex justify-between items-center py-2 mx-4">
 
               <Link to="/" className="flex items-center">
-                <img alt="logo" src={Logo} />
+                <img alt="logo" src={Logo} className="w-12" />
               </Link>
 
               <nav className="flex gap-4 items-center">

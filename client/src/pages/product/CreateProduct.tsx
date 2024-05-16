@@ -26,7 +26,7 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ProductSchema, productResolver } from "@/schema/product";
 import axios from "axios";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { productImagesUpload } from "@/lib/productImagesUpload"
 import { useSelector } from "react-redux";

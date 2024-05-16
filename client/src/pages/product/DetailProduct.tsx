@@ -210,7 +210,7 @@ const DetailProduct = () => {
 
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-x-2'>
-              <Avatar className="my-2 rounded-full object-cover cursor-pointer self-center">
+              <Avatar className="mt-2 mb-3 rounded-full object-cover cursor-pointer self-center">
                 <AvatarImage src={product.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
                 <AvatarFallback>USER IMAGE</AvatarFallback>
               </Avatar>
@@ -222,7 +222,7 @@ const DetailProduct = () => {
           </div>
           
 
-          <div className='mb-2 min-h-14'>
+          <div className='mb-5'>
             <p className="text-sm">{product.description}</p>
           </div>
 
