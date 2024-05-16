@@ -3,7 +3,7 @@ import { SearchBar } from "@/components/layout/search/SearchBar";
 import { ProductList } from "@/components/product/ProductList";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { Product } from "../../../server/models/productModel";
+import type { Product } from "@/types/product";
 import { Modal } from "@/components/layout/Modal";
 import registerImage from "/register-account-completed.png";
 import editCompleteImage from "/edit-product-completed.png";
@@ -27,7 +27,6 @@ export const Home = () => {
 				);
 				setProducts(response.data);
 				setFilteredProducts(response.data);
-				console.log('hello')
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching products:", error);
@@ -92,7 +91,6 @@ export const Home = () => {
 
 	};
 
-	console.log(loading)
 
 	if (loading) {
 		return <Loading />;
