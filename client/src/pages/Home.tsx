@@ -27,6 +27,7 @@ export const Home = () => {
 				);
 				setProducts(response.data);
 				setFilteredProducts(response.data);
+				console.log('hello')
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching products:", error);
@@ -88,7 +89,10 @@ export const Home = () => {
 		);
 		setFilteredProducts(results);
 		setLoading(false);
+
 	};
+
+	console.log(loading)
 
 	if (loading) {
 		return <Loading />;
