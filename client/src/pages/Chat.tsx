@@ -13,7 +13,6 @@ import { Message } from "@/types/message";
 import { useQuery } from "react-query";
 import { MessageList } from "@/components/chat/MessageList";
 import io, { Socket } from "socket.io-client";
-import { Room } from "@/types/room";
 
 
 export const Chat = () => {
