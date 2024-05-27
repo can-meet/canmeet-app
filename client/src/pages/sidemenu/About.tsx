@@ -4,7 +4,7 @@ import OtohaProfileImage from '/emma-unsplash.jpg'
 
 const About = () => {
   return (
-    <div className='mt-16 mb-32 w-96 mx-auto px-4'>
+    <div className='mt-16 mb-20 w-96 mx-auto px-4'>
       <div className='mb-40'>
         <h1 className='text-lg font-semibold'>Can Meet とは</h1>
         <p className="text-xs">can meetは、バンクーバーに住むすべての日本人のためのフリマアプリです。海を越えて新しい国で生活を送る日本人の皆さまが、より安心して・より良い価格で、買えるモノ・売れる機会に出会えます（＝can meet）ように！</p>
