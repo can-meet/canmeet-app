@@ -13,6 +13,7 @@ import { Message } from "@/types/message";
 import { useQuery } from "react-query";
 import { MessageList } from "@/components/chat/MessageList";
 import io, { Socket } from "socket.io-client";
+import { Room } from "@/types/room";
 
 
 export const Chat = () => {
@@ -40,10 +41,11 @@ export const Chat = () => {
     }
   });
 
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [messages]);
-
+  
   useEffect(() => {
     const newSocket = io(`${import.meta.env.VITE_BASE_URL}`);
     setSocket(newSocket);
@@ -103,7 +105,7 @@ export const Chat = () => {
   }
 
   return (
-    <div className='max-w-96 mx-auto h-screen relative z-50'>
+    <div className='flex flex-col h-screen'>
 
       {/* message room fixed header */}
       <div className='fixed bg-default-white z-20 top-0 right-0 w-full border-b-[0.5px] border-primary-gray pt-4 pb-6'>
@@ -150,42 +152,47 @@ export const Chat = () => {
         </div>
       </div>
 
-      <MessageList
-        messages={messages}
-        messagesEndRef={messagesEndRef}
-      />
+      <div className='mt-56 pb-24 flex-grow overflow-hidden'>
+        <MessageList
+          messages={messages}
+          messagesEndRef={messagesEndRef}
+        />
+      </div>
 
-      <form className="fixed bottom-10 left-0 right-0 px-4 z-10 max-w-96 mx-auto">
-        <div className="relative">
-          <Input
-            type="file" 
-            accept="image/*"
-            className="hidden"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-          />
-          <AiFillPlusCircle 
-            className='h-6 w-6 absolute top-2 left-2 cursor-pointer'
-            onClick={() => fileInputRef.current?.click()} 
-          />
-          <Input
-            placeholder="コメントする"
-            type="text"
-            className="rounded-xl pl-10 pr-12 w-full"
-            value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
-            onKeyDown={(e) => handleKeyDown(e)}
-            onCompositionStart={() => setIsComposing(true)}
-            onCompositionEnd={() => setIsComposing(false)}
-          />
-          <button 
-            className="absolute top-2 right-4 cursor-pointer"
-            onClick={(e) => handleSendMessage(e)}
-          >
-            <VscSend className="text-2xl" />
-          </button>
-        </div>
-      </form>
+      <div className='fixed pb-8 bottom-0 left-0 right-0 w-full bg-default-white'>
+        <form className="px-4 z-20 max-w-96 mx-auto">
+          <div className="relative">
+            <Input
+              type="file" 
+              accept="image/*"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+            <AiFillPlusCircle 
+              className='h-6 w-6 absolute top-2 left-2 cursor-pointer'
+              onClick={() => fileInputRef.current?.click()} 
+            />
+            <Input
+              placeholder="コメントする"
+              type="text"
+              className="rounded-xl pl-10 pr-12 w-full placeholder:text-sm"
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e)}
+              onCompositionStart={() => setIsComposing(true)}
+              onCompositionEnd={() => setIsComposing(false)}
+            />
+            <button 
+              className="absolute top-2 right-4 cursor-pointer"
+              onClick={(e) => handleSendMessage(e)}
+            >
+              <VscSend className="text-2xl" />
+            </button>
+          </div>
+        </form>
+      </div>
+
     </div>
   )
 }

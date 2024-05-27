@@ -9,7 +9,7 @@ type MessageListProps = {
 
 export const MessageList = ({ messages, messagesEndRef }: MessageListProps) => {
   return (
-    <div className="mt-52 mb-14 py-2 px-4 space-y-2 overflow-y-auto max-w-96 mx-auto">
+    <div className="px-4 space-y-2 overflow-y-auto max-w-96 mx-auto h-full">
       {messages.map((message, index) => (
         <MessageCard
           key={message._id}

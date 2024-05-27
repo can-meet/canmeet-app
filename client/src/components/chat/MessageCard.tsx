@@ -19,13 +19,15 @@ export const MessageCard = ({
     <>
       {(message.sender._id === currentUser?._id) ? (
         <>
-          <div className="flex justify-end items-end gap-x-2">
-            <span className="text-xs text-gray-400 mb-0.5">{formatTime(message.createdAt)}</span>
-            <span className='text-start max-w-72 rounded-xl bg-gradient-to-r from-chat-blue to-chat-purple py-1 px-3'>{message.text}</span>
+          <div>
+            <div className="flex justify-end items-end gap-x-2">
+              <span className="text-xs text-gray-400 mb-0.5">{formatTime(message.createdAt)}</span>
+              <span className='text-start max-w-72 rounded-xl bg-gradient-to-r from-chat-blue to-chat-purple py-1 px-3'>{message.text}</span>
+            </div>
+            {(message.isRead  && isLastMessage ) && 
+              <p className='text-sm text-gray-400 text-end'>Seen</p>
+            }
           </div>
-          {(message.isRead  && isLastMessage ) && 
-            <p className='text-sm text-gray-400 text-end'>Seen</p>
-          }
         </>
       ) : (
         <div className='flex gap-x-2'>
