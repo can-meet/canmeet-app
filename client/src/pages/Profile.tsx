@@ -86,10 +86,10 @@ export const Profile = () => {
 	}
 
   return (
-    <div className='my-20 flex flex-col items-center justify-center'>
+    <div className='mt-20 mb-12 flex flex-col items-center justify-center'>
       
       <div className="relative">
-				<Avatar className="object-cover self-center w-20 h-20" >
+				<Avatar className="object-cover w-20 h-20" >
 					<AvatarImage src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
 					<AvatarFallback>PROFILE IMAGE</AvatarFallback>
 				</Avatar>
@@ -97,14 +97,14 @@ export const Profile = () => {
       
 			<h2 className="my-4">{user.username}</h2>
 
-			<Tabs defaultValue="sale" className="px-4 w-[400px]">
+			<Tabs defaultValue="sale" className="max-w-96 mx-auto px-3">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="sale" className="border-b-secondary-gray">
 						投稿した商品
 					</TabsTrigger>
 					<TabsTrigger value="purchase">購入した商品</TabsTrigger>
 				</TabsList>
-				<TabsContent value="sale" className="mt-6">
+				<TabsContent value="sale" className="mt-6 w-full mx-auto">
 					<Select
 						onValueChange={(value) => setSelectedFilterPosts(value)}
 						value={selectedFilterPosts}

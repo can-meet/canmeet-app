@@ -35,7 +35,10 @@ export const productSchema = z.object({
     // .array(z.string()),
   product_name: z
     .string({
-      required_error: "商品名を入力してください",
+      invalid_type_error: "商品名を入力してください",
+    })
+    .min(1, {
+      message: '商品名を入力してください。',
     }),
   price: z
     .string()
@@ -54,7 +57,7 @@ export const productSchema = z.object({
     }),
   product_status: z
     .string({
-      required_error: "商品の状態を選択してください",
+      invalid_type_error: "商品の状態を選択してください",
     })
     .min(1, {
       message: '商品説明を入力してください。',

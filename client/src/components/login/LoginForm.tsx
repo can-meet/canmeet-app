@@ -29,7 +29,8 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 							<span className="text-primary-red">*</span>
 							<FormControl>
 								<Input
-									placeholder="abc@gmail.com"
+									type="email"
+									// placeholder="abc@gmail.com"
 									{...field}
 								/>
 							</FormControl>
@@ -48,7 +49,8 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 							<span className="ml-2 text-xs">※8文字以上</span>
 							<FormControl>
 								<Input
-									placeholder="123456"
+									type="password"
+									// placeholder="123456"
 									{...field}
 								/>
 							</FormControl>

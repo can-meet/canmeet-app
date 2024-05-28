@@ -45,17 +45,17 @@ const StatusForm = ({ productSaleStatus }: StatusFormProps ) => {
         <DrawerHeader className="mt-6 p-0">
           <div className="space-y-4 text-default-black">
             <div className="relative">
-              {status === "売り出し" ? <IoMdCheckmark className="absolute top-2.5 left-6 text-xl" /> : null}
+              {status === "売り出し中" && <IoMdCheckmark className="absolute top-2.5 left-6 text-xl" />}
               <Button
                 type="button"
                 className="w-[358px] font-normal justify-start pl-20"
-                onClick={() => setStatus("売り出し")}
+                onClick={() => setStatus("売り出し中")}
               >
                 売り出し
               </Button>
             </div>
             <div className="relative">
-              {status === "取引中" ? <IoMdCheckmark className="absolute top-2.5 left-6 text-xl" /> : null}
+              {status === "取引中" && <IoMdCheckmark className="absolute top-2.5 left-6 text-xl" />}
               <Button
                 type="button"
                 className="w-[358px] font-normal justify-start pl-20"
@@ -65,7 +65,7 @@ const StatusForm = ({ productSaleStatus }: StatusFormProps ) => {
               </Button>
             </div>
             <div className="relative">
-              {status === "売り切れ" ? <IoMdCheckmark className="absolute top-2.5 left-6 text-xl" /> : null}
+              {status === "売り切れ" && <IoMdCheckmark className="absolute top-2.5 left-6 text-xl" />}
               <Button
                 type="button"
                 className="w-[358px] font-normal justify-start pl-20"

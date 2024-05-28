@@ -1,6 +1,6 @@
 const TermsOfService = () => {
   return (
-    <div className="mt-16 mb-32 w-96 mx-auto px-4 text-xs space-y-4 leading-relaxed">
+    <div className="mt-16 mb-20 w-80 mx-auto text-xs space-y-4 leading-relaxed">
       <div>
         <h1 className="font-semibold text-base text-center py-6">利用規約</h1>
         <p className="">CanMeet（以下、「当サイト」とします）内のコンテンツをご利用される場合、下記の利用規約（以下、「当規約」とします）に同意していただく必要があります。従って、当サイト内のコンテンツをご利用いただく場合、当規約の内容を承諾していただいたものとみなされます。<br />また、当規約は事前の告知なく変更・中止する場合がありますので、ご利用の際には必ず当規約をご参照ください。変更後、当サイト内のコンテンツを継続してご利用される場合は、変更後の規約もご承諾いただいたものとみなします。</p>

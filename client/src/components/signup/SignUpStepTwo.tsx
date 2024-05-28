@@ -52,7 +52,7 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
 
   return (
     <Form {...form}>
-      <p className="text-primary-red text-ms text-center w-72 mb-6">※このページ以降、プロフィール情報の変更はできません。<br />ご注意ください。</p>
+      <p className="text-primary-red text-xs text-center w-72 mt-2 mb-6">※このページ以降、プロフィール情報の変更はできません。<br />ご注意ください。</p>
       <form className="space-y-8">
 
         <FormField
@@ -78,10 +78,12 @@ export const SignUpStepTwo = ({ form, onNext, onBack, imagePreview, setImagePrev
         <div className="">
           <div className='flex flex-col items-center gap-2'>
 
-            <Avatar className="rounded-full h-32 w-32 object-cover cursor-pointer self-center">
-              <AvatarImage src={imagePreview || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
-              <AvatarFallback>PROFILE</AvatarFallback>
-            </Avatar>
+            <div className="relative">
+              <Avatar className="rounded-full h-32 w-32 object-cover">
+                <AvatarImage src={imagePreview || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
+                <AvatarFallback>PROFILE</AvatarFallback>
+              </Avatar>
+            </div>
 
             <Input 
               ref={fileInputRef}

@@ -102,9 +102,11 @@ export const SignUp = () => {
 		<>
 			<div className="my-24 max-w-96 mx-auto">
 				{ step === STEPS.FORM ? (
-					<Link to="/">
-						<IoIosArrowBack className="text-2xl" />
-					</Link>
+					<div className="w-72 mx-auto">
+						<Link to="/">
+							<IoIosArrowBack className="text-2xl" />
+						</Link>
+					</div>
 				) : null}
 				<h3 className="text-lg font-semibold text-center mt-4 mb-10">新規登録</h3>
 				<div className="flex flex-col items-center">

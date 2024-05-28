@@ -31,6 +31,7 @@ export const SignUpStepOne = ({ form, onNext }: SignUpStepOneProps) => {
 							<FormControl>
 								<Input
 									// placeholder="abc@gmail.com"
+									type="email"
 									className="w-button placeholder:text-default-black"
 									{...field}
 								/>

@@ -88,7 +88,7 @@ export const SignUpStepThree = ({ form, onSubmit, onBack, imagePreview }: SignUp
           )}
         />
         <div className="mt-4 w-72 text-center">
-        <p className="text-primary-red text-ms">※一度登録したら、プロフィール情報の変更はできません。<br/>ご注意ください。</p>
+        <p className="text-primary-red text-xs">※一度登録したら、プロフィール情報の変更はできません。<br/>ご注意ください。</p>
         </div>
         <div className="flex flex-col items-center gap-2">
           <Button 
