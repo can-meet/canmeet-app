@@ -8,7 +8,7 @@ import Logo from "/logo.png"
 import SideMenu from "./SideMenu";
 import { FaChevronLeft, FaRegBell } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-
+import axios from "axios";
 
 export const Header = () => {
   const { pid } = useParams();
@@ -16,7 +16,6 @@ export const Header = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
   const location = useLocation();
-  // const hideNavPaths = ["/login", "/signup"];
   const isLoggedIn = currentUser !== null;
   const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
 
@@ -24,8 +23,8 @@ export const Header = () => {
   useEffect(() => {
     if (currentUser) {
       const fetchUnreadNotifications = async () => {
-        const response = await fetch(`/api/notifications/unread/${currentUser._id}`);
-        const data = await response.json();
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications/unread/${currentUser._id}`);
+        const data = await response.data;
         setUnreadNotifications(data);
       }
       fetchUnreadNotifications();

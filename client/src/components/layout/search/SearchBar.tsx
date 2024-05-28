@@ -5,7 +5,7 @@ import {
 	DialogHeader,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import { Input } from "../../ui/input";
@@ -20,6 +20,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [searchHistory, setSearchHistory] = useState<string[]>([]);
 	const [searchParams, setSearchParams] = useSearchParams();
+	const [isComposing, setIsComposing] = useState<boolean>(false);
 	const query = searchParams.get("q") || "";
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +32,18 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 		}
 	};
 
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey && !isComposing) {
+      e.preventDefault();
+      handleSearch()
+    }
+  };
+
 	const handleSearch = () => {
 		onSearch(query);
-		setSearchHistory([query, ...searchHistory]);
+		if (query.trim().length > 0) {
+			setSearchHistory([query, ...searchHistory]);
+		}
 		setOpen(false);
 	};
 
@@ -59,7 +69,9 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 									className="rounded-xl px-4"
 									value={query}
 									onChange={handleInputChange}
-									onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+									onCompositionStart={() => setIsComposing(true)}
+									onCompositionEnd={() => setIsComposing(false)}
+									onKeyDown={(e) => handleKeyDown(e)}
 								/>
 								<button
 									type="submit"
