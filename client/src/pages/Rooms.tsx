@@ -12,14 +12,14 @@ import { Room } from "@/types/room";
 export const Rooms = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
 
-	const fetchRoomDetail = async (userId: string) => {
+	const fetchUserRoom = async (userId: string) => {
 		const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/users/${userId}`);
 		return data;
 	};
 
 	const { data, isLoading } = useQuery(['rooms', currentUser?._id], () => {
 		if (currentUser) {
-			return fetchRoomDetail(currentUser._id);
+			return fetchUserRoom(currentUser._id);
 		} else {
 			throw new Error('User ID is undefined');
 		}
