@@ -46,7 +46,7 @@ export const CommentForm = ({
 			toast.success('Successfully put comment!');
 			setCommentsUpdated(!commentsUpdated);
 	
-			const { _id, user, product } = response.data;
+			const { _id, user, product } = await response.data;
 
 			await axios.post(`${import.meta.env.VITE_API_URL}/notifications/comments/${_id}`, {  // コメントを投稿した際の通知を投稿
         productId: product,
@@ -69,7 +69,7 @@ export const CommentForm = ({
 			{currentUser && (
 				<>
 					<Avatar>
-						<AvatarImage src={currentUser.profilePicture} />
+						<AvatarImage src={currentUser.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
 					</Avatar>
 					<form onSubmit={handleSubmit(onSubmit)} className="relative max-w-96 mx-auto">
 						<Input
