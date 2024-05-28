@@ -13,7 +13,7 @@ export const Footer = () => {
         null
       ) : (
         <footer className="fixed bottom-0 w-full bg-white z-10 border-t">
-          <div className="flex justify-between items-center px-11 pt-6 pb-9 max-w-96 mx-auto">
+          <div className="flex justify-between items-center px-11 pt-3 pb-4 max-w-96 mx-auto">
             <Link to="/">
               {location.pathname === '/' ? <MdHomeFilled className="text-3xl" /> : <MdHomeFilled className="text-3xl text-secondary-gray  hover:text-default-black/80" />}
             </Link>

@@ -1,10 +1,11 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  SheetFooter,
+  SheetClose,
 } from "@/components/ui/sheet";
 import { CgMenu } from "react-icons/cg";
 import { Link } from "react-router-dom";
@@ -30,12 +31,12 @@ const SideMenu = ({ handleLogout, isLoggedIn }: SideMenuProps) => {
               </div>
             </Link>
             <SheetTitle className="text-start py-6">Menu</SheetTitle>
-            <SheetDescription className="flex flex-col justify-between h-full mb-14">
+            <SheetFooter className="flex flex-col justify-between h-full mb-14">
               <div className="flex flex-col items-start text-xs font-medium gap-y-4">
-                <Link to='/terms-of-service'>利用規約</Link>
-                <Link to='/'>プライバシーポリシー</Link>
-                <Link to='/about'>About Us</Link>
-                <Link to='/contact'>お問い合わせ</Link>
+                  <SheetClose asChild><Link to='/terms-of-service'>利用規約</Link></SheetClose>
+                  <SheetClose asChild><Link to='/'>プライバシーポリシー</Link></SheetClose>
+                  <SheetClose asChild><Link to='/about'>About Us</Link></SheetClose>
+                  <SheetClose asChild><Link to='/contact'>お問い合わせ</Link></SheetClose>
               </div>
               <div>
                 {isLoggedIn ? (
@@ -44,7 +45,7 @@ const SideMenu = ({ handleLogout, isLoggedIn }: SideMenuProps) => {
                   </button>
                 ) : null}
               </div>
-            </SheetDescription>
+            </SheetFooter>
           </SheetHeader>
         </SheetContent>
       </Sheet>

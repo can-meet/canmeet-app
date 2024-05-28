@@ -59,11 +59,9 @@ const CreateProduct = () => {
 	const { toast } = useToast()
   const [pid, setPid] = useState<string>('');
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const [chosenFiles, setChosenFiles] = useState<File[]>([]);
 
   const onSubmit: SubmitHandler<ProductSchema> = async (value) => {
     setLoading(true);
-    console.log(value.images)
     try {
       const imageFiles = value.images;
       const cloudinaryUrls = await productImagesUpload(imageFiles);
@@ -100,24 +98,19 @@ const CreateProduct = () => {
   const handleAddImages = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const previewUrls = Array.from(files || []).map((file) => URL.createObjectURL(file));
-    setChosenFiles(Array.from(files || []));
-  
-    if(previewImages.length > 0) {
-      setPreviewImages([...previewImages, ...previewUrls]);
-      form.setValue('images', [...chosenFiles, ...Array.from(files || [])]);
-    } else {
-      setPreviewImages(previewUrls);
-      form.setValue('images', [...Array.from(files || [])]);
-    }
-  }
+    setPreviewImages([...previewImages, ...previewUrls]);
 
+    const updatedImages = [...(form.getValues('images') || []), ...Array.from(files || [])];
+    form.setValue('images', updatedImages);
+  };
+  
   const handleDeleteImages = (index: number) => {
     const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
     setPreviewImages(updatedPreviewImages);
 
     const updatedFormImages = form.getValues('images').filter((_: File | string, i: number) => i !== index);
     form.setValue('images', updatedFormImages);
-  }
+  };
 
   if (loading) {
 		return <Loading />;
@@ -157,7 +150,7 @@ const CreateProduct = () => {
                           {...form.register("images")}
                           onChange={(e) => handleAddImages(e)}
                         />
-                        <div className="font-light">Click to add images</div>
+                        <div className="text-sm font-light">画像を追加する</div>
                       </label>
                     </CarouselItem>
                   </>

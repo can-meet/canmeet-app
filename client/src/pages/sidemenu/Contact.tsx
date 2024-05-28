@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 const Contact = () => {
   return (
-    <div className='mt-16 mb-32 w-96 mx-auto px-4'>
+    <div className='mt-16 mb-20 w-96 mx-auto px-4'>
       <h3 className="font-semibold text-center py-6">お問い合わせ</h3>
       <form action="" className="space-y-3">
         <div>
