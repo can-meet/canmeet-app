@@ -8,33 +8,41 @@ import { Modal } from "@/components/layout/Modal";
 import registerImage from "/register-account-completed.png";
 import editCompleteImage from "/edit-product-completed.png";
 import deleteCompleteImage from "/delete-product-post.png";
-import { useLocation } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 
 export const Home = () => {
-	const [loading, setLoading] = useState<boolean>(false);
-	const [products, setProducts] = useState<Product[]>([]);
 	const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 	const location = useLocation();
 	const [modalType, setModalType] = useState<string | null>(null);
 
+	const [searchParams] = useSearchParams();
+	const query = searchParams.get("q") || "";
+
+	const fetchProducts = async () => {
+		const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
+		return response.data;
+	};
+	
+  const { data: products, isLoading } = useQuery(['products'], fetchProducts);
+
 	useEffect(() => {
-		const fetchProducts = async () => {
-			try {
-				setLoading(true);
-				const response = await axios.get(
-					`${import.meta.env.VITE_API_URL}/products`,
-				);
-				setProducts(response.data);
-				setFilteredProducts(response.data);
-				setLoading(false);
-			} catch (error) {
-				console.error("Error fetching products:", error);
-				setLoading(false);
-			}
-		};
-		fetchProducts();
-	}, []);
+		if (products) {
+			const queryProducts = products.filter((product: Product) =>
+				product.product_name.toLowerCase().includes(query.toLowerCase()),
+			);
+			setFilteredProducts(queryProducts);
+		}
+	}, [products]);
+
+
+	const handleSearch = (searchQuery: string) => {
+		const results = products.filter((product: Product) =>
+			product.product_name.toLowerCase().includes(searchQuery.toLowerCase()),
+		);
+		setFilteredProducts(results);
+	};
 
 	useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -82,17 +90,8 @@ export const Home = () => {
   };
 	const modalProps = getModalProps();
 
-	const getFilteredProducts = (searchQuery: string) => {
-		const results = products.filter((product) =>
-			product.product_name.toLowerCase().includes(searchQuery.toLowerCase()),
-		);
-		setFilteredProducts(results);
-		setLoading(false);
 
-	};
-
-
-	if (loading) {
+	if (isLoading) {
 		return <Loading />;
 	}
 
@@ -100,7 +99,7 @@ export const Home = () => {
 		<>
 			<div className="my-20">
 				<div className="flex flex-col items-center gap-1 px-4">
-					<SearchBar onSearch={getFilteredProducts} />
+					<SearchBar onSearch={handleSearch} />
 					<div>
 						<h2 className="my-4 text-xs font-medium">最近投稿された商品</h2>
 						<ProductList products={filteredProducts} />
