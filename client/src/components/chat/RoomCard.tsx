@@ -13,7 +13,7 @@ type RoomCardProps = {
 }
 
 export const RoomCard = ({ room, recipientName, recipientImage }: RoomCardProps) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const [_, setSocket] = useState<Socket | null>(null);
   const [latestMessage, setLatestMessage] = useState<Message | null>(null);
 
   useEffect(() => {
