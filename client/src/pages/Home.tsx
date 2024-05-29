@@ -2,21 +2,22 @@ import { Loading } from "@/components/layout/loading/Loading";
 import { SearchBar } from "@/components/layout/search/SearchBar";
 import { ProductList } from "@/components/product/ProductList";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/types/product";
 import { Modal } from "@/components/layout/Modal";
 import registerImage from "/register-account-completed.png";
 import editCompleteImage from "/edit-product-completed.png";
 import deleteCompleteImage from "/delete-product-post.png";
-import { useSearchParams, useLocation } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from 'react-query';
+import { Button } from "@/components/ui/button";
+
 
 export const Home = () => {
-	const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+	const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 	const location = useLocation();
 	const [modalType, setModalType] = useState<string | null>(null);
-
 	const [searchParams] = useSearchParams();
 	const query = searchParams.get("q") || "";
 
@@ -24,25 +25,19 @@ export const Home = () => {
 		const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
 		return response.data;
 	};
-	
-  const { data: products, isLoading } = useQuery(['products'], fetchProducts);
 
-	useEffect(() => {
-		if (products) {
-			const queryProducts = products.filter((product: Product) =>
-				product.product_name.toLowerCase().includes(query.toLowerCase()),
-			);
-			setFilteredProducts(queryProducts);
-		}
-	}, [products]);
+	const { data: products, isLoading } = useQuery(['products'], fetchProducts, {
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+  });
 
-
-	const handleSearch = (searchQuery: string) => {
-		const results = products.filter((product: Product) =>
-			product.product_name.toLowerCase().includes(searchQuery.toLowerCase()),
-		);
-		setFilteredProducts(results);
-	};
+	const filteredProducts = useMemo(() => {
+    if (!products) return [];
+		if (!query) return products;
+    return products.filter((product: Product) =>
+      product.product_name.toLowerCase().includes(query.toLowerCase())
+    );
+  }, [products, query]);
 
 	useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -90,7 +85,6 @@ export const Home = () => {
   };
 	const modalProps = getModalProps();
 
-
 	if (isLoading) {
 		return <Loading />;
 	}
@@ -99,11 +93,25 @@ export const Home = () => {
 		<>
 			<div className="my-20">
 				<div className="flex flex-col items-center gap-1 px-4">
-					<SearchBar onSearch={handleSearch} />
-					<div>
-						<h2 className="my-4 text-xs font-medium">最近投稿された商品</h2>
-						<ProductList products={filteredProducts} />
-					</div>
+					<SearchBar />
+					{filteredProducts.length !== 0 ? (
+						<div>
+							<h2 className="my-4 text-xs text-start font-medium">最近投稿された商品</h2>
+							<ProductList products={filteredProducts} />
+						</div>
+					) : (
+						<div className='flex flex-col gap-2 items-center pt-16'>
+							<p className='font-bold'>お探しの商品は見つかりませんでした</p>
+							<p>再度条件を設定するか、下のボタンでホームへ戻ってください。</p>
+							<Button
+								type="button"
+								className="w-28 font-semibold text-default-white bg-secondary-blue hover:bg-primary-blue"
+								onClick={() => navigate("/")}
+							>
+								ホームへ戻る
+							</Button>
+						</div>
+					)}
 				</div>
 			</div>
 			<Modal
