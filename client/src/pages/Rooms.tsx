@@ -12,14 +12,14 @@ import { Room } from "@/types/room";
 export const Rooms = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
 
-	const fetchRoomDetail = async (userId: string) => {
+	const fetchUserRoom = async (userId: string) => {
 		const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/users/${userId}`);
 		return data;
 	};
 
 	const { data, isLoading } = useQuery(['rooms', currentUser?._id], () => {
 		if (currentUser) {
-			return fetchRoomDetail(currentUser._id);
+			return fetchUserRoom(currentUser._id);
 		} else {
 			throw new Error('User ID is undefined');
 		}
@@ -40,7 +40,7 @@ export const Rooms = () => {
   return (
     <div className='mt-14 mb-28 flex flex-col items-center justify-center'>
 
-			<Tabs defaultValue="sale" className="px-8 w-[400px]">
+			<Tabs defaultValue="sale" className="px-8 max-w-96 mx-auto">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="sale">売る</TabsTrigger>
 					<TabsTrigger value="purchase">買う</TabsTrigger>

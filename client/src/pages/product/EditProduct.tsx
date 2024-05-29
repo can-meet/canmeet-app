@@ -131,7 +131,7 @@ const EditProduct = () => {
 	}
 
   return (
-    <div className="max-w-96 mx-auto mt-20 mb-32">
+    <div className="max-w-96 mx-auto mt-20 mb-32 px-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -152,7 +152,7 @@ const EditProduct = () => {
                             <div onClick={() => handleDeleteImages(index)} className="relative">
                               <RiDeleteBin6Line className="absolute top-2 left-2 text-default-black bg-chat-gray rounded-full p-1 text-2xl" />
                             </div>
-                            <img src={image} alt="product image" className='w-48 h-48 object-cove' />
+                            <img src={image} alt="product image" className='w-48 h-48 object-cover' />
                           </CarouselItem>)
                         )}
                       </>
@@ -166,7 +166,7 @@ const EditProduct = () => {
                             onChange={(e) => handleAddImage(e)}
                             className="hidden"
                           />
-                          <div className="font-light">Click to add images</div>
+                          <div className="font-light">画像を追加する</div>
                         </label>
                       </CarouselItem>
                     </CarouselContent>

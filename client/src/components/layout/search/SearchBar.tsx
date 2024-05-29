@@ -12,35 +12,28 @@ import { Input } from "../../ui/input";
 import { SearchHistory } from "./SearchHistory";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
-type SearchBarProps = {
-	onSearch(query: string): void;
-};
 
-export const SearchBar = ({ onSearch }: SearchBarProps) => {
+export const SearchBar = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [searchHistory, setSearchHistory] = useState<string[]>([]);
-	const [searchParams, setSearchParams] = useSearchParams();
 	const [isComposing, setIsComposing] = useState<boolean>(false);
-	const query = searchParams.get("q") || "";
+	const [_, setSearchParams] = useSearchParams();
+	const [query, setQuery] = useState<string>("");
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const product_name = e.target.value;
-		if (product_name) {
-			setSearchParams({ q: product_name });
-		} else {
-			setSearchParams({});
-		}
-	};
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !isComposing) {
-      e.preventDefault();
+			const product_name = (e.target as HTMLInputElement).value;
       handleSearch()
+			if (product_name) {
+				setSearchParams({ q: product_name });
+			} else {
+				setSearchParams({});
+			}
     }
   };
 
 	const handleSearch = () => {
-		onSearch(query);
 		if (query.trim().length > 0) {
 			setSearchHistory([query, ...searchHistory]);
 		}
@@ -68,7 +61,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 									placeholder="商品を検索..."
 									className="rounded-xl px-4"
 									value={query}
-									onChange={handleInputChange}
+									onChange={(e) => setQuery(e.target.value)}
 									onCompositionStart={() => setIsComposing(true)}
 									onCompositionEnd={() => setIsComposing(false)}
 									onKeyDown={(e) => handleKeyDown(e)}

@@ -41,9 +41,11 @@ export const Login = () => {
 	return (
 		<>
 			<div className="my-24 max-w-96 mx-auto">
-				<Link to="/">
-					<IoIosArrowBack className="text-2xl" />
-				</Link>
+				<div className="w-72 mx-auto">
+					<Link to="/">
+						<IoIosArrowBack className="text-2xl" />
+					</Link>
+				</div>
 				<div className="flex flex-col items-center mt-4">
 					<h3 className="text-lg font-semibold text-center mb-6">ログイン</h3>
 					<LoginForm form={form} onSubmit={onSubmit} />

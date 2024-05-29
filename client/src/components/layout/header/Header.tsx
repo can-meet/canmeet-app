@@ -10,6 +10,7 @@ import { FaChevronLeft, FaRegBell } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 
+
 export const Header = () => {
   const { pid } = useParams();
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ export const Header = () => {
   const location = useLocation();
   const isLoggedIn = currentUser !== null;
   const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
-
 
   useEffect(() => {
     if (currentUser) {
@@ -29,7 +29,6 @@ export const Header = () => {
       }
       fetchUnreadNotifications();
     }
-
   }, []);
 
   const handleLogout = async () => {
@@ -41,7 +40,10 @@ export const Header = () => {
       <div className="max-w-96 mx-auto px-1">
         {isLoggedIn && location.pathname === "/rooms" ? (
           <div className="flex justify-between items-center py-2 mx-4">
-            <Link to="/" className="flex items-center">
+            <Link
+              to="/" 
+              className="flex items-center"
+            >
               <img alt="logo" src={Logo} className="w-12" />
             </Link>
             <h3 className="text-lg font-semibold">メッセージ</h3>

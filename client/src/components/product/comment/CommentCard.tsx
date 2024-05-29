@@ -19,7 +19,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
 		<div className="w-80 my-2 mx-auto">
 			<div className="flex items-center gap-2">
 				<Avatar>
-					<AvatarImage src={comment.user.profilePicture} className="h-10" />
+					<AvatarImage src={comment.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}  className="h-10" />
 				</Avatar>
 				<p className="text-sm font-medium">{comment.user.username}</p>
 			</div>
