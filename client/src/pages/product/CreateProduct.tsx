@@ -117,7 +117,7 @@ const CreateProduct = () => {
 	}
 
   return (
-    <div className="max-w-96 mx-auto mt-20 mb-32 px-4">
+    <div className="max-w-96 mx-auto mt-20 mb-24 px-4">
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-6 relative">
@@ -145,7 +145,7 @@ const CreateProduct = () => {
                         <Input 
                           type="file"
                           multiple
-                          accept=".png, .jpg, .jpeg, .heic, .heif"
+                          accept="image/*"
                           className="hidden"
                           {...form.register("images")}
                           onChange={(e) => handleAddImages(e)}
