@@ -12,7 +12,6 @@ import { RootState } from "@/redux/store";
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
 import editCompletedImage from "/edit-product-completed.png";
-
 import {
   Carousel,
   CarouselContent,
@@ -114,7 +113,6 @@ const DetailProduct = () => {
       // リロード前にローカルストレージに必要な情報を保存する
       localStorage.setItem('shouldPurchaseModal', 'true');
       localStorage.setItem('roomId', roomId);
-      localStorage.setItem('shouldOpenEditModal', 'true');
 
       // ページをリロード
       navigate(0)
@@ -231,7 +229,7 @@ const DetailProduct = () => {
           />
 
           <div className="grid grid-cols-2 mt-4 mb-8">
-            <div className="col-span-1  w-96">
+            <div className="col-span-1  w-80">
               <div className="flex mb-4">
                 <span className="text-sm text-start w-24 py-2">商品の状態</span>
                 <span className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.product_status}</span>

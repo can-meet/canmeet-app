@@ -24,7 +24,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
 				<p className="text-sm font-medium">{comment.user.username}</p>
 			</div>
 			<div className="mt-2">
-				<p className="text-xs font-medium">{comment.text}</p>
+				<p className="text-sm">{comment.text}</p>
 				<ReplyButton commentId={comment._id} />
 				<Separator />
 				<div className="flex">

@@ -15,7 +15,7 @@ export const ReplyButton = ({ commentId }: ReplyButtonProps) => {
 		<div>
 			<button
 				type="button"
-				className="mt-2 text-dark-gray text-ms font-semibold"
+				className="mt-2 text-dark-gray text-xs font-semibold"
 				onClick={handleReplyClick}
 			>
 				{isReplying ? "閉じる" : "返信する"}
