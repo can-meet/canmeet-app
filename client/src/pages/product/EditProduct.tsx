@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/carousel";
 import editCompleteImage from "/edit-product-completed.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useToast } from "@/components/ui/use-toast";
 
 const EditProduct = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -55,6 +56,7 @@ const EditProduct = () => {
   const navigate = useNavigate()
   const { pid } = useParams()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+	const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
@@ -103,6 +105,11 @@ const EditProduct = () => {
       await axios.put(`${import.meta.env.VITE_API_URL}/products/${pid}`, updatedValues);
       setIsModalOpen(true);
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: `Failed to edit your product. Try again.`,
+        description: "Please try again later.",
+      })
       console.log(error);
       setLoading(false);
     } finally {
@@ -161,7 +168,7 @@ const EditProduct = () => {
                           <input
                             type="file"
                             multiple
-                            accept=".png, .jpg, .jpeg"
+                            accept=".png, .jpg, .jpeg, .heic, .heif"
                             {...form.register("images")}
                             onChange={(e) => handleAddImage(e)}
                             className="hidden"

@@ -80,7 +80,7 @@ const CreateProduct = () => {
       if (axios.isAxiosError(error) && error.response) {
         toast({
           variant: "destructive",
-          description: `${error.response.data.message}`,
+          description: `Unexpected error happened.`,
         })
       } else {
         toast({
@@ -145,7 +145,7 @@ const CreateProduct = () => {
                         <Input 
                           type="file"
                           multiple
-                          accept=".png, .jpg, .jpeg"
+                          accept=".png, .jpg, .jpeg, .heic, .heif"
                           className="hidden"
                           {...form.register("images")}
                           onChange={(e) => handleAddImages(e)}
