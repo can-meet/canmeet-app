@@ -5,35 +5,38 @@ import {
 	DialogHeader,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import { Input } from "../../ui/input";
 import { SearchHistory } from "./SearchHistory";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
-type SearchBarProps = {
-	onSearch(query: string): void;
-};
 
-export const SearchBar = ({ onSearch }: SearchBarProps) => {
+export const SearchBar = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [searchHistory, setSearchHistory] = useState<string[]>([]);
-	const [searchParams, setSearchParams] = useSearchParams();
-	const query = searchParams.get("q") || "";
+	const [isComposing, setIsComposing] = useState<boolean>(false);
+	const [_, setSearchParams] = useSearchParams();
+	const [query, setQuery] = useState<string>("");
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const product_name = e.target.value;
-		if (product_name) {
-			setSearchParams({ q: product_name });
-		} else {
-			setSearchParams({});
-		}
-	};
+
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey && !isComposing) {
+			const product_name = (e.target as HTMLInputElement).value;
+      handleSearch()
+			if (product_name) {
+				setSearchParams({ q: product_name });
+			} else {
+				setSearchParams({});
+			}
+    }
+  };
 
 	const handleSearch = () => {
-		onSearch(query);
-		setSearchHistory([query, ...searchHistory]);
+		if (query.trim().length > 0) {
+			setSearchHistory([query, ...searchHistory]);
+		}
 		setOpen(false);
 	};
 
@@ -58,8 +61,10 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 									placeholder="商品を検索..."
 									className="rounded-xl px-4"
 									value={query}
-									onChange={handleInputChange}
-									onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+									onChange={(e) => setQuery(e.target.value)}
+									onCompositionStart={() => setIsComposing(true)}
+									onCompositionEnd={() => setIsComposing(false)}
+									onKeyDown={(e) => handleKeyDown(e)}
 								/>
 								<button
 									type="submit"

@@ -107,8 +107,10 @@ export const Chat = () => {
     <div className='flex flex-col h-screen'>
 
       {/* message room fixed header */}
-      <div className='fixed bg-default-white z-20 top-0 right-0 w-full border-b-[0.5px] border-primary-gray pt-4 pb-6'>
+      <div className='fixed bg-default-white z-20 top-0 right-0 w-full border-b-[0.5px] border-primary-gray pt-4 pb-6 h-52'>
         <div className="max-w-96 min-w-80 mx-auto">
+
+          {/* header top (back arrow & user info) */}
           <div className='flex items-center gap-x-5 pl-4'>
             <button onClick={() => navigate("/rooms")}>
               <IoIosArrowBack className='text-xl'/>
@@ -133,8 +135,9 @@ export const Chat = () => {
             )}
           </div>
 
-          <div className='flex justify-center gap-x-7 mt-7 pl-10'>
-            <img src={room?.product.images[0]} alt="product image" className='h-24 w-24 object-cover'></img>
+          {/* header bottom (product info) */}
+          <div className='flex justify-center mt-7 max-w-96 mx-auto px-4 '>
+            <img src={room?.product.images[0]} alt="product image" className='h-24 w-24 object-cover mx-8'></img>
             <div className='relative w-full'>
               <div className="text-lg font-semibold space-y-1">
                 <h2>{room?.product.product_name}</h2>
@@ -151,11 +154,13 @@ export const Chat = () => {
         </div>
       </div>
 
-      <div className='mt-56 pb-24 flex-grow overflow-hidden'>
-        <MessageList
-          messages={messages}
-          messagesEndRef={messagesEndRef}
-        />
+      <div className='flex-grow overflow-y-auto'>
+        <div className="mt-52 pb-16">
+          <MessageList
+            messages={messages}
+            messagesEndRef={messagesEndRef}
+          />
+        </div>
       </div>
 
       <div className='fixed pb-8 bottom-0 left-0 right-0 w-full bg-default-white'>

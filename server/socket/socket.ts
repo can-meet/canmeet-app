@@ -10,6 +10,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: 'https://canmeet.netlify.app',
+    // origin: 'http://localhost:5173',
     methods: ['GET', 'POST'],
   },
 });
@@ -87,8 +88,8 @@ io.on('connection', (socket) => {
 
     const populatedMessage = await savedMessage.populate('sender');
 
-    io.emit('addNewMessage', populatedMessage);
-    io.emit('latestMessage', populatedMessage);
+    io.to(roomId).emit('addNewMessage', populatedMessage);
+    io.to(roomId).emit('latestMessage', populatedMessage);
   });
 
 
