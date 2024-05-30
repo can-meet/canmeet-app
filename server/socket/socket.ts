@@ -88,8 +88,8 @@ io.on('connection', (socket) => {
 
     const populatedMessage = await savedMessage.populate('sender');
 
-    io.emit('addNewMessage', populatedMessage);
-    io.emit('latestMessage', populatedMessage);
+    io.to(roomId).emit('addNewMessage', populatedMessage);
+    io.to(roomId).emit('latestMessage', populatedMessage);
   });
 
 
