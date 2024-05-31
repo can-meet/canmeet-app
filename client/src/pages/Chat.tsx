@@ -137,25 +137,31 @@ export const Chat = () => {
 
           {/* header bottom (product info) */}
           <div className='flex justify-center mt-7 max-w-96 mx-auto px-4 '>
-            <img src={room?.product.images[0]} alt="product image" className='h-24 w-24 object-cover mx-8'></img>
-            <div className='relative w-full'>
-              <div className="text-lg font-semibold space-y-1">
-                <h2>{room?.product.product_name}</h2>
-                <h2>${room?.product.price}</h2>
+            {room.product ? (
+              <>
+                <img src={room?.product.images[0]} alt="product image" className='h-24 w-24 object-cover mx-8'></img>
+                <div className='relative w-full'>
+                  <div className="text-lg font-semibold space-y-1">
+                    <h2>{room?.product.product_name}</h2>
+                    <h2>${room?.product.price}</h2>
+                  </div>
+                  <Link to={`/products/${room?.product._id}`}>
+                    <div className='flex items-center gap-x-1 absolute right-0 bottom-1'>
+                      <h3 className='text-xs hover:underline hover:underline-offset-4'>商品詳細を確認</h3>
+                      <IoIosArrowForward />
+                  </div>
+                </Link>
               </div>
-              <Link to={`/products/${room?.product._id}`}>
-                <div className='flex items-center gap-x-1 absolute right-0 bottom-1'>
-                  <h3 className='text-xs hover:underline hover:underline-offset-4'>商品詳細を確認</h3>
-                  <IoIosArrowForward />
-                </div>
-              </Link>
-            </div>
+              </>
+            ) : (
+              <span>この商品は出品者により削除されました</span>
+            )}
           </div>
         </div>
       </div>
 
-      <div className='flex-grow overflow-y-auto'>
-        <div className="mt-52 pb-16">
+      <div className='flex flex-col overscroll-hidden h-screen'>
+        <div className="mt-52 mb-16 space-y-2 w-11/12 max-w-96 mx-auto first:py-2 last:pb-2 flex-grow overflow-y-auto">
           <MessageList
             messages={messages}
             messagesEndRef={messagesEndRef}
