@@ -42,12 +42,12 @@ export const login = async (req: Request, res: Response) => {
 	try {
 		const user = await User.findOne({ email });
 		if (!user) {
-			return res.status(401).send({ message: "Authentication failed" });
+			return res.status(401).send({ message: "Invalid email address" });
 		}
 
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
-			return res.status(401).send({ message: "Authentication failed" });
+			return res.status(401).send({ message: "Invalid password" });
 		}
 
 		generateTokenAndSetCookie(user._id, res);

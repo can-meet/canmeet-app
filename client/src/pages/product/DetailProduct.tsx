@@ -12,7 +12,6 @@ import { RootState } from "@/redux/store";
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
 import editCompletedImage from "/edit-product-completed.png";
-
 import {
   Carousel,
   CarouselContent,
@@ -64,6 +63,7 @@ const DetailProduct = () => {
     comments: [],
     createdAt: new Date().toISOString()
   })
+  const [saleStatus, setSaleStatus] = useState<string>('');
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/');
@@ -79,6 +79,7 @@ const DetailProduct = () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${pid}`)
         setProduct(response.data)
+        setSaleStatus(response.data.sale_status)
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -109,16 +110,9 @@ const DetailProduct = () => {
       });
 
       const roomId = response.data._id;
-      setDynamicRoomRoute(`/rooms/${roomId}`);   // modalを開く前のリロードがむずい
-
-      // リロード前にローカルストレージに必要な情報を保存する
-      localStorage.setItem('shouldPurchaseModal', 'true');
-      localStorage.setItem('roomId', roomId);
-      localStorage.setItem('shouldOpenEditModal', 'true');
-
-      // ページをリロード
-      navigate(0)
-
+      setDynamicRoomRoute(`/rooms/${roomId}`);
+      setSaleStatus('取引中')
+      setIsPurchaseModalOpen(true)
     } catch (error) {
       console.log(error);
     }
@@ -127,21 +121,11 @@ const DetailProduct = () => {
   // コンポーネントのマウント時に、ローカルストレージからモーダル開閉の情報を取得する
   useEffect(() => {
     setLoading(true);
-    const shouldOpenPurchaseModal = localStorage.getItem('shouldOpenPurchaseModal');
-    const roomId = localStorage.getItem('roomId');
     const shouldOpenEditModal = localStorage.getItem('shouldOpenEditModal');
-
-    if (shouldOpenPurchaseModal === 'true') {
-      setIsPurchaseModalOpen(true);
-      setDynamicRoomRoute(`/rooms/${roomId}`);
-
-      // ローカルストレージから不要な情報を削除する
-      localStorage.removeItem('shouldOpenPurchaseModal');
-      localStorage.removeItem('roomId');
-    }
 
     if(shouldOpenEditModal === 'true') {
       setIsEditModalOpen(true);
+      // ローカルストレージから不要な情報を削除する
       localStorage.removeItem('shouldOpenEditModal');
     }
     setLoading(false);
@@ -155,7 +139,7 @@ const DetailProduct = () => {
 
   return (
     <>
-      <div className="mt-16 mb-32">
+      <div className="mt-16 mb-24">
         <div className="max-w-96 my-0 mx-auto">
 
           <PopupMenu product={product} />
@@ -180,19 +164,19 @@ const DetailProduct = () => {
                 ) : null}
               </Carousel>
             </div>
-            {product.sale_status === '売り出し中' ? (
+            {saleStatus === '売り出し中' ? (
               <div>
-                <p className='absolute top-1.5 right-2 z-10 text-lg'>売り出し</p>
+                <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
                 <div className='absolute top-0 right-0 border-sale w-28 h-36 bg-sale opacity-95 clip-path'></div>
               </div>
-            ) : product.sale_status === '取引中' ? (
+            ) : saleStatus === '取引中' ? (
               <div>
-                <p className='absolute top-1.5 right-2 z-10 text-lg'>取引中</p>
+                <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
                 <div className='absolute top-0 right-0 border-in-trade w-28 h-36 bg-in-trade opacity-95 clip-path'></div>
               </div>
             ) : (
               <div>
-                <p className='absolute top-1.5 right-2 z-10 text-lg'>売り切れ</p>
+                <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
                 <div className='absolute top-0 right-0 border-sold-out w-28 h-36 bg-sold-out opacity-95 clip-path'></div>
               </div>
             )}
@@ -231,7 +215,7 @@ const DetailProduct = () => {
           />
 
           <div className="grid grid-cols-2 mt-4 mb-8">
-            <div className="col-span-1  w-96">
+            <div className="col-span-1  w-80">
               <div className="flex mb-4">
                 <span className="text-sm text-start w-24 py-2">商品の状態</span>
                 <span className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.product_status}</span>

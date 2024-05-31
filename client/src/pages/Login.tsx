@@ -3,15 +3,16 @@ import { Button } from "@/components/ui/button";
 import { type LoginSchema, loginResolver } from "@/schema/login";
 import axios from "axios";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginError, loginStart, loginSuccess } from "../redux/userSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 export const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { toast } = useToast()
 
 	const form = useForm<LoginSchema>({
 		defaultValues: {
@@ -29,12 +30,18 @@ export const Login = () => {
 			.post(`${import.meta.env.VITE_API_URL}/auth/login`, data)
 			.then((res) => {
 				dispatch(loginSuccess(res.data));
-				toast.success("Successfully login!");
+				toast({
+          title: `Successfully logged in!`,
+        })
 				navigate("/");
 			})
 			.catch((err) => {
 				dispatch(loginError(err.response.data.error));
-				toast.error("Something went wrong.");
+				toast({
+					variant: "destructive",
+          title: `${err.response.data.message}`,
+          description: "Please check your entry and try again.",
+        })
 			});
 	};
 

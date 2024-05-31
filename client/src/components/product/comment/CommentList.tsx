@@ -45,7 +45,7 @@ export const CommentList = ({ product }: CommentListProps) => {
       }
     }
     getComments();
-  }, [commentsUpdated])
+  }, [commentsUpdated, productId])
 
   // コメントが追加されたら、一番下にスクロールダウン
   useEffect(() => {

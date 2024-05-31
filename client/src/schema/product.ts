@@ -60,17 +60,17 @@ export const productSchema = z.object({
       invalid_type_error: "商品の状態を選択してください",
     })
     .min(1, {
-      message: '商品説明を入力してください。',
+      message: '商品の状態を選択してください。',
     }),
   location: z
     .string()
     .min(1, {
-      message: '商品説明を入力してください。',
+      message: '受け渡し場所を選択してください。',
     }),
   payment_method: z
     .string()
     .min(1, {
-      message: '商品説明を入力してください。',
+      message: '支払い方法を選択してください。',
     }),
 })
 

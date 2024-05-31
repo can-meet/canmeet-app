@@ -17,7 +17,7 @@ export const ReplyList = ({ commentId }: ReplyListProps) => {
 			try {
 				if (commentId) {
 					setLoading(true);
-					axios
+					await axios
 						.get(`${import.meta.env.VITE_API_URL}/replies/${commentId}`)
 						.then((res) => {
 							setReplies(res.data);
