@@ -91,7 +91,7 @@ export const Home = () => {
 
 	return (
 		<>
-			<div className="my-20">
+			<div className="mt-20 mb-16">
 				<div className="flex flex-col items-center gap-1 px-4">
 					<SearchBar />
 					{filteredProducts.length !== 0 ? (

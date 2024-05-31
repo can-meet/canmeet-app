@@ -48,7 +48,10 @@ export const RoomCard = ({ room, recipientName, recipientImage }: RoomCardProps)
             <p className='text-xs break-all'>{latestMessage && latestMessage.text}</p>
           </div>
         </div>
-        {room.product.images && <img src={room.product.images[0]} alt="product image" className='w-10 h-13' />}
+        {/* {room.product.images && <img src={room.product.images[0]} alt="product image" className='w-10 h-13' />} */}
+        {room.product && room.product.images && (
+          <img src={room.product.images[0]} alt="product image" className='w-10 h-13' />
+        )}
       </div>
     </Link>
   )
