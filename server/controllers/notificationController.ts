@@ -4,6 +4,7 @@ import Product from "../models/productModel";
 import User from "../models/userModel";
 import Comment from "../models/commentModel";
 import Message from "../models/messageModel";
+import { sendPurchaseNotification } from "../mail";
 
 
 // 通知を全て表示させる
@@ -113,6 +114,11 @@ export const purchaseNotification = async (req: Request, res: Response) => {
     });
 
     await notification.save();
+
+    const sellerEmail = receiver.email
+    const productName = product.product_name
+    sendPurchaseNotification(sellerEmail, productName)
+
     res.status(200).json(notification);
   } catch (err) {
     console.error(err);
