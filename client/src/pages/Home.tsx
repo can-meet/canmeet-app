@@ -11,6 +11,7 @@ import deleteCompleteImage from "/delete-product-post.png";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 
+
 export const Home = () => {
 	const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
