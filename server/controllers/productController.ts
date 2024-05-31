@@ -16,6 +16,10 @@ export const createProduct = async (req: Request, res: Response) => {
     } = req.body;
     const formattedPrice = parseInt(price);
 
+    if (!userId || !images || !product_name || !price || !product_status || !description || !payment_method || !location) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
     const user = await User.findById(userId)
     if(!user) {
       return res.status(404).json({ message: 'User not found' }) 

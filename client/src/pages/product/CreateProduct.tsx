@@ -78,14 +78,34 @@ const CreateProduct = () => {
       setIsModalOpen(true)
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        toast({
-          variant: "destructive",
-          description: `Unexpected error happened.`,
-        })
+        const { status, data } = error.response;
+  
+        switch (status) {
+          case 400:
+            toast({
+              variant: 'destructive',
+              title: '入力エラー',
+              description: data.message,
+            });
+            break;
+          case 404:
+            toast({
+              variant: 'destructive',
+              title: 'ユーザーが見つかりません',
+              description: data.message,
+            });
+            break;
+          default:
+            toast({
+              variant: 'destructive',
+              title: 'エラーが発生しました',
+              description: data.message || 'リクエストに失敗しました。',
+            });
+        }
       } else {
         toast({
 					variant: "destructive",
-          title: `Failed to post your product. Try again.`,
+          title: '予期せぬエラーが発生しました',
           description: "Please try again later.",
         })
       }
