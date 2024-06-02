@@ -1,7 +1,6 @@
 import { Loading } from "@/components/layout/loading/Loading";
 import { SearchBar } from "@/components/layout/search/SearchBar";
 import { ProductList } from "@/components/product/ProductList";
-import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/types/product";
 import { Modal } from "@/components/layout/Modal";
@@ -10,6 +9,7 @@ import editCompleteImage from "/edit-product-completed.png";
 import deleteCompleteImage from "/delete-product-post.png";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
+import { fetchProducts } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
 
@@ -20,11 +20,6 @@ export const Home = () => {
 	const [modalType, setModalType] = useState<string | null>(null);
 	const [searchParams] = useSearchParams();
 	const query = searchParams.get("q") || "";
-
-	const fetchProducts = async () => {
-		const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
-		return response.data;
-	};
 
 	const { data: products, isLoading } = useQuery(['products'], fetchProducts, {
     staleTime: 1000 * 60 * 5,
