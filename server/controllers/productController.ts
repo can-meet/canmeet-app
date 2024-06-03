@@ -71,7 +71,10 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({}).sort({ createdAt: -1 });
+    const products = await Product.find({}).sort({ createdAt: -1 }).populate({
+      path: 'user',
+      select: '_id, username profilePicture'
+    });
 
 		if (!products) {
 			return res.status(404).json({ error: "product not found" });
