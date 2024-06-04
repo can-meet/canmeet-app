@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 import { Loading } from "@/components/layout/loading/Loading";
 
 export const Profile = () => {
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [selectedFilterPosts, setSelectedFilterPosts] =
 		useState<string>("すべて");
 	const [selectedFilterPurchases, setSelectedFilterPurchases] =
@@ -43,15 +43,14 @@ export const Profile = () => {
 		const fetchUserData = async () => {
 			try {
 				if (currentUser) {
-					setLoading(true);
 					const response = await axios.get(
 						`${import.meta.env.VITE_API_URL}/users/${currentUser?._id}`,
 					);
 					setUser(response.data);
-					setLoading(false);
 				}
 			} catch (error) {
 				console.error("Error fetching products:", error);
+			} finally {
 				setLoading(false);
 			}
 		};
