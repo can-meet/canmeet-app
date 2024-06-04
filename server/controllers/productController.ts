@@ -14,23 +14,22 @@ export const createProduct = async (req: Request, res: Response) => {
       payment_method,
       location,
     } = req.body;
-    const formattedPrice = parseInt(price);
 
     if (!userId || !images || !product_name || !price || !product_status || !description || !payment_method || !location) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const user = await User.findById(userId)
-    if(!user) {
+    if (!user) {
       return res.status(404).json({ message: 'User not found' }) 
     }
 
     const imageUrls = Array.isArray(images) ? images : [];
 
     const newProduct = new Product({
-      user: user,
+      user: user._id,
       product_name,
-      price: formattedPrice,
+      price,
       images: imageUrls,
       product_status,
       description,
@@ -42,8 +41,10 @@ export const createProduct = async (req: Request, res: Response) => {
   
     await newProduct.save()
 
-    user.postedProducts.push(newProduct)
-    await user.save()
+    if (user) {
+      user.postedProducts.push(newProduct)
+      await user.save()
+    }
 
     res.status(201).json(newProduct)
   } catch (error) {
