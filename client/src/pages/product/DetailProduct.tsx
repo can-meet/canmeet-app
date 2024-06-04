@@ -153,17 +153,17 @@ const DetailProduct = () => {
             {saleStatus === '売り出し中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
-                <div className='absolute top-0 right-0 border-sale w-28 h-36 bg-sale opacity-95 clip-path'></div>
+                <div className='absolute rounded-tr top-0 right-0 border-sale w-28 h-36 bg-sale opacity-95 clip-path'></div>
               </div>
             ) : saleStatus === '取引中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
-                <div className='absolute top-0 right-0 border-in-trade w-28 h-36 bg-in-trade opacity-95 clip-path'></div>
+                <div className='absolute rounded-tr top-0 right-0 border-in-trade w-28 h-36 bg-in-trade opacity-95 clip-path'></div>
               </div>
             ) : (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
-                <div className='absolute top-0 right-0 border-sold-out w-28 h-36 bg-sold-out opacity-95 clip-path'></div>
+                <div className='absolute rounded-tr top-0 right-0 border-sold-out w-28 h-36 bg-sold-out opacity-95 clip-path'></div>
               </div>
             )}
           </div>
