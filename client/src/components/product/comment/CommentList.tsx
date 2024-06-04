@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/drawer"
 import { CommentCard } from './CommentCard';
 import { useRef, useEffect, useState } from 'react';
-import { DetailProduct } from '@/pages/product/DetailProduct';
+import DetailProduct from '@/pages/product/DetailProduct';
 import { CommentForm } from './CommentForm';
 
 

@@ -1,15 +1,19 @@
 import express from 'express';
+import dotenv from "dotenv";
 import http from 'http';
 import { Server } from 'socket.io';
-import { createMessage, updateMessageReadStatus, getRoomMessages } from '../controllers/messageController';
+import { createMessage, updateMessageReadStatus } from '../controllers/messageController';
 
+dotenv.config();
 
 const app: express.Express = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    // origin: 'https://canmeet.netlify.app',
-    origin: 'http://localhost:5173',
+    origin:
+			process.env.NODE_ENV === 'development'
+				? 'http://localhost:5173'
+				: 'https://canmeet.netlify.app',
     methods: ['GET', 'POST'],
   },
 });
