@@ -97,7 +97,7 @@ export const Profile = () => {
       
 			<h2 className="my-4">{user.username}</h2>
 
-			<Tabs defaultValue="sale" className="max-w-96 w-11/12 mx-auto">
+			<Tabs defaultValue="sale" className="max-w-96 w-80 mx-auto">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="sale" className="border-b-secondary-gray">
 						投稿した商品

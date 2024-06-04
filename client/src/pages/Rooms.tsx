@@ -1,40 +1,59 @@
 import axios from "axios";
-import { useQuery } from 'react-query';
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
-import { Loading } from "@/components/layout/loading/Loading";
 import { RoomCard } from "@/components/chat/RoomCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Room } from "@/types/room";
+import io from "socket.io-client";
+import { useEffect, useState } from "react";
 
 
+const socket = io(import.meta.env.VITE_BASE_URL as string);
 
 export const Rooms = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
-
-	const fetchUserRoom = async (userId: string) => {
-		const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/users/${userId}`);
-		return data;
-	};
-
-	const { data, isLoading } = useQuery(['rooms', currentUser?._id], () => {
-		if (currentUser) {
-			return fetchUserRoom(currentUser._id);
-		} else {
-			throw new Error('User ID is undefined');
-		}
-	}, {
-		enabled: !!currentUser
-	});
-
-	const { saleRooms, purchaseRooms } = data || { saleRooms: [], purchaseRooms: [] };
+  const [saleRooms, setSaleRooms] = useState<Room[]>([]);
+  const [purchaseRooms, setPurchaseRooms] = useState<Room[]>([]);
 
 
-  if (isLoading) {
-    return (
-      <Loading />
-    )
-  }
+  useEffect(() => {
+    if (!currentUser) return;
+    const fetchUserRooms = async (userId: string) => {
+      try {
+        const data = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/users/${userId}`);
+        const saleRoomsData = data.data.saleRooms;
+        const purchaseRoomsData = data.data.purchaseRooms;
+
+        saleRoomsData.sort((a: Room, b: Room) => {
+          const latestMessageA = a.messages[0];
+          const latestMessageB = b.messages[0];
+          return new Date(latestMessageB?.createdAt).getTime() - new Date(latestMessageA?.createdAt).getTime();
+        });
+
+        purchaseRoomsData.sort((a: Room, b: Room) => {
+          const latestMessageA = a.messages[0];
+          const latestMessageB = b.messages[0];
+          return new Date(latestMessageB?.createdAt).getTime() - new Date(latestMessageA?.createdAt).getTime();
+        });
+
+        setSaleRooms(saleRoomsData);
+        setPurchaseRooms(purchaseRoomsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchUserRooms(currentUser?._id);
+
+    const handleLatestMessage = () => {
+      fetchUserRooms(currentUser?._id);
+    };
+
+    socket.on('latestMessage', handleLatestMessage);
+
+    return () => {
+      socket.off('latestMessage', handleLatestMessage);
+    };
+  }, []);
 
 
   return (
