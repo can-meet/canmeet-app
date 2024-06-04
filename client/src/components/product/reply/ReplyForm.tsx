@@ -1,6 +1,5 @@
 import { type ReplySchema, replyResolver } from "@/schema/reply";
 import axios from "axios";
-import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
@@ -8,14 +7,12 @@ import type { RootState } from "@/redux/store";
 import { VscSend } from "react-icons/vsc";
 import { useSelector } from "react-redux";
 import { Input } from "../../ui/input";
-import { Loading } from "@/components/layout/loading/Loading";
 
 type ReplyFormProps = {
 	commentId: string;
 };
 
 export const ReplyForm = ({ commentId }: ReplyFormProps) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { currentUser } = useSelector((state: RootState) => state.user);
 
 	const {
@@ -33,8 +30,6 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 	});
 
 	const onSubmit: SubmitHandler<ReplySchema> = (data) => {
-		setIsLoading(true);
-
 		axios
 			.post(`${import.meta.env.VITE_API_URL}/replies`, data)
 			.then(() => {
@@ -44,14 +39,9 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 				toast.error("Something went wrong.");
 			})
 			.finally(() => {
-				setIsLoading(false);
 				reset();
 			});
 	};
-
-	if(isLoading) {
-		return <Loading />
-	}
 
 	return (
 		<div className="flex items-center gap-2 w-80 my-1 mx-auto">
@@ -69,7 +59,7 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 						)}
 						<button
 							type="submit"
-							className="absolute top-2 right-4 cursor-pointer"
+							className="absolute top-2 right-10 cursor-pointer"
 						>
 							<VscSend className="text-2xl" />
 						</button>

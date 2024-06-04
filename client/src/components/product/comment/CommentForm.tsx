@@ -1,10 +1,8 @@
-import { Loading } from "@/components/layout/loading/Loading";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import type { RootState } from "@/redux/store";
 import { type CommentSchema, commentResolver } from "@/schema/comment";
 import axios from "axios";
-import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { VscSend } from "react-icons/vsc";
@@ -21,7 +19,6 @@ export const CommentForm = ({
 	commentsUpdated,
 	setCommentsUpdated,
 }: CommentFormProps) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { currentUser } = useSelector((state: RootState) => state.user);
 
 	const {
@@ -39,8 +36,6 @@ export const CommentForm = ({
 	});
 
 	const onSubmit: SubmitHandler<CommentSchema> = async (data) => {
-		setIsLoading(true);
-
 		try {
 			const response = await axios.post(`${import.meta.env.VITE_API_URL}/comments`, data);  // コメントを投稿
 			toast.success('Successfully put comment!');
@@ -55,14 +50,9 @@ export const CommentForm = ({
 		} catch (error) {
 			toast.error('Something went wrong.');
 		} finally {
-			setIsLoading(false);
 			reset();
 		}
 	};
-
-	if(isLoading) {
-		return <Loading />
-	}
 
 	return (
 		<div className="flex items-center gap-2 w-80 my-0 mx-auto">
