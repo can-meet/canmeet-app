@@ -69,7 +69,7 @@ export const ReplyForm = ({ commentId }: ReplyFormProps) => {
 						)}
 						<button
 							type="submit"
-							className="absolute top-2 right-4 cursor-pointer"
+							className="absolute top-2 right-12 cursor-pointer"
 						>
 							<VscSend className="text-2xl" />
 						</button>
