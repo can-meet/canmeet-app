@@ -63,6 +63,7 @@ export const Chat = () => {
         setLoading(true);
         const data = await axios.get(`${import.meta.env.VITE_API_URL}/rooms/${rid}`);
         setRoom(data.data);
+        setMessages(data.data.messages);
       } catch (error) {
         console.error(error)
       } finally {
@@ -71,10 +72,6 @@ export const Chat = () => {
     };
 
     fetchData();
-
-    socket.on('messages', (messages: Message[]) => {
-      setMessages(messages);
-    });
 
     return () => {
       socket.emit('leaveRoom', rid);
@@ -158,7 +155,7 @@ export const Chat = () => {
       </div>
 
       <div className='flex flex-col overscroll-hidden h-screen'>
-        <div className="mt-52 mb-16 space-y-2 w-11/12 max-w-96 mx-auto first:py-2 last:pb-2 flex-grow overflow-y-auto">
+        <div className="mt-52 mb-16 space-y-2 w-11/12 max-w-96 mx-auto px-4 first:py-2 flex-grow overflow-y-auto">
           <MessageList
             messages={messages}
             messagesEndRef={messagesEndRef}
@@ -166,7 +163,7 @@ export const Chat = () => {
         </div>
       </div>
 
-      <div className='fixed pb-8 bottom-0 left-0 right-0 w-full bg-default-white'>
+      <div className='fixed h-16 pb-8 bottom-0 left-0 right-0 w-full bg-default-white'>
         <form 
           className="px-4 z-20 max-w-96 mx-auto"
           onSubmit={form.handleSubmit(onSubmit)}
