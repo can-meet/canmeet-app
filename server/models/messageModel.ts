@@ -22,6 +22,7 @@ const messageSchema = new mongoose.Schema(
 		isRead: {
 			type: Boolean,
 			required: true,
+			default: false,
 		},
 		createdAt: {
 			type: Date,

@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { fetchProductById } from "@/lib/api";
+import PopupMenu from "@/components/product/popup-menu/PopupMenu";
+import { useQuery, useQueryClient } from "react-query";
+import type { DetailProduct } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentList } from "@/components/product/comment/CommentList";
 import { Loading } from "@/components/layout/loading/Loading";
-import { Comment } from "@/types/comment";
 import { timeAgo } from "@/lib/timeAgo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -20,32 +23,35 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import PopupMenu from "@/components/product/popup-menu/PopupMenu";
-
-export type DetailProduct = {
-  _id: string;
-  product_name: string,
-  price: number,
-  images: string[],
-  product_status: string,
-  description: string,
-  payment_method: string,
-  location: string,
-  sale_status: string,
-  user: {
-    _id: string;
-    username: string, 
-    profilePicture: string,
-  },
-  comments: Comment[],
-  createdAt: string
-}
 
 const DetailProduct = () => {
   const navigate = useNavigate();
   const { pid } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
-  const [product, setProduct] = useState<DetailProduct>({
+  const [saleStatus, setSaleStatus] = useState<string>('');
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/');
+
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const userId = currentUser?._id;
+
+  const queryClient = useQueryClient();
+  const products = queryClient.getQueryData<DetailProduct[]>('products') || [];
+
+  const product = products?.find((p) => p._id === pid);
+  const productUserId = product?.user._id;
+
+  const { data: productDetail } = useQuery<DetailProduct>(
+    ['product', pid],
+    () => fetchProductById(pid),
+    {
+      enabled: !product,
+      initialData: product,
+    }
+  )
+
+  const productData = productDetail || product || {
     _id: '',
     product_name: '',
     price: 0,
@@ -62,46 +68,26 @@ const DetailProduct = () => {
     },
     comments: [],
     createdAt: new Date().toISOString()
-  })
-  const [saleStatus, setSaleStatus] = useState<string>('');
-  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState<boolean>(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/');
-
-  const { currentUser } = useSelector((state: RootState) => state.user);
-
-  const userId = currentUser?._id;
-  const productUserId = product.user._id;
+  };
 
   useEffect(() => {
-    const getProduct = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${pid}`)
-        setProduct(response.data)
-        setSaleStatus(response.data.sale_status)
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    }
-    getProduct()
-  }, [])
+    setSaleStatus(productData.sale_status);
+  }, [productData.sale_status]);
 
-  
   const handlePurchaseProductAndCreateRoom = async () => {
     if (!currentUser) {
       navigate('/login');
       return;
     } 
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId })
-
-      await axios.post(`${import.meta.env.VITE_API_URL}/notifications/purchase/${pid}`, {  // 商品を購入した際の通知
-        receiverId: productUserId,
-        senderId: userId
-      })  
+      await Promise.all([
+        axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId }),
+        // 商品を購入した際の通知
+        axios.post(`${import.meta.env.VITE_API_URL}/notifications/purchase/${pid}`, {
+          receiverId: productUserId,
+          senderId: userId
+        })
+      ])
         
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/rooms`, {
         productId: pid,
@@ -142,21 +128,21 @@ const DetailProduct = () => {
       <div className="mt-16 mb-24">
         <div className="max-w-96 my-0 mx-auto">
 
-          <PopupMenu product={product} />
+          <PopupMenu product={productData} />
 
           <div className='relative'>
             <div>
               <Carousel className="relative">
                 <CarouselContent>
-                  {product.images.map((image, index) => (
+                  {productData.images.map((image: string, index: number) => (
                     <CarouselItem key={index} className="">
                       <AspectRatio ratio={9/9} >
-                        <img src={image} alt="product image" className='object-cover w-96 h-96' />
+                        <img src={image} alt="product image" className='object-cover w-96 h-96 rounded-md' />
                       </AspectRatio>
                     </CarouselItem>)
                   )}
                 </CarouselContent>
-                {product.images.length > 1 ? (
+                {productData.images.length > 1 ? (
                   <>
                     <CarouselPrevious className="absolute top-1/2 left-2 text-default-white" />
                     <CarouselNext className="absolute top-1/2 right-2 text-default-white" />
@@ -167,17 +153,17 @@ const DetailProduct = () => {
             {saleStatus === '売り出し中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
-                <div className='absolute top-0 right-0 border-sale w-28 h-36 bg-sale opacity-95 clip-path'></div>
+                <div className='absolute rounded-tr top-0 right-0 border-sale w-28 h-36 bg-sale opacity-95 clip-path'></div>
               </div>
             ) : saleStatus === '取引中' ? (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
-                <div className='absolute top-0 right-0 border-in-trade w-28 h-36 bg-in-trade opacity-95 clip-path'></div>
+                <div className='absolute rounded-tr top-0 right-0 border-in-trade w-28 h-36 bg-in-trade opacity-95 clip-path'></div>
               </div>
             ) : (
               <div>
                 <p className='absolute top-1.5 right-2 z-10 text-lg'>{saleStatus}</p>
-                <div className='absolute top-0 right-0 border-sold-out w-28 h-36 bg-sold-out opacity-95 clip-path'></div>
+                <div className='absolute rounded-tr top-0 right-0 border-sold-out w-28 h-36 bg-sold-out opacity-95 clip-path'></div>
               </div>
             )}
           </div>
@@ -186,54 +172,54 @@ const DetailProduct = () => {
 
         <div className="w-11/12 max-w-96 mt-3 mx-auto">
           <div>
-            <p className="text-lg font-semibold">{product.product_name}</p>
+            <p className="text-lg font-semibold">{productData.product_name}</p>
           </div>
           <div>
-            <p className=" text-lg font-semibold">${product.price}</p>
+            <p className=" text-lg font-semibold">${productData.price}</p>
           </div>
 
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-x-2'>
               <Avatar className="mt-2 mb-3 rounded-full object-cover cursor-pointer self-center">
-                <AvatarImage src={product.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
+                <AvatarImage src={productData.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
                 <AvatarFallback>USER IMAGE</AvatarFallback>
               </Avatar>
-              <div>{product.user.username}</div>
+              <div>{productData.user.username}</div>
             </div>
             <div className='text-sm text-secondary-gray'>
-              投稿日 : {timeAgo(product.createdAt)}
+              投稿日 : {timeAgo(productData.createdAt)}
             </div>
           </div>
           
 
           <div className='mb-5'>
-            <p className="text-sm">{product.description}</p>
+            <p className="text-sm">{productData.description}</p>
           </div>
 
           <CommentList
-            product={product}
+            product={productData}
           />
 
           <div className="grid grid-cols-2 mt-4 mb-8">
             <div className="col-span-1  w-80">
               <div className="flex mb-4">
                 <span className="text-sm text-start w-24 py-2">商品の状態</span>
-                <span className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.product_status}</span>
+                <span className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{productData.product_status}</span>
               </div>
               <div className="flex mb-4">
                 <p className="text-sm w-24 py-2">受け渡し場所</p>
-                <p className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.location}</p>
+                <p className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{productData.location}</p>
               </div>
               <div className="flex mb-4">
                 <div className="text-sm w-24 py-2">支払い方法</div>
-                <div className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{product.payment_method}</div>
+                <div className="text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm">{productData.payment_method}</div>
               </div>
             </div>
           </div>
 
-          {product.user._id !== currentUser?._id && (
+          {productData.user._id !== currentUser?._id && (
             <div className="my-2 mx-auto w-button">
-              {product.sale_status === '売り出し中' ? (
+              {productData.sale_status === '売り出し中' ? (
                 <Button 
                   variant="red"
                   onClick={handlePurchaseProductAndCreateRoom}

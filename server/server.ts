@@ -15,7 +15,6 @@ import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -39,9 +38,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
 	cors({
-		origin: process.env.PROXY_URL,
+		origin:
+			process.env.NODE_ENV === 'development'
+				? 'http://localhost:5173'
+				: 'https://canmeet.netlify.app',
 	}),
 );
+
+
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
