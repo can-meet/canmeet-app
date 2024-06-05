@@ -41,13 +41,14 @@ export const productSchema = z.object({
       message: '商品名を入力してください。',
     }),
   price: z
-    .string()
-    .min(1, {
-      message: '価格を入力してください。',
-    })
-    .max(5, {
-      message: '価格は5桁までです。',
-    }),
+    .number()
+    .positive(),
+    // .min(1, {
+    //   message: '価格を入力してください。',
+    // })
+    // .max(5, {
+    //   message: '価格は5桁までです。',
+    // }),
   description: z
     .string({
       invalid_type_error: '商品説明を入力してください。',

@@ -72,6 +72,7 @@ const DetailProduct = () => {
 
   useEffect(() => {
     setSaleStatus(productData.sale_status);
+    window.scrollTo(0, 0);
   }, [productData.sale_status]);
 
   const handlePurchaseProductAndCreateRoom = async () => {
