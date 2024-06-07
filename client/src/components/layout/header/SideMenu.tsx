@@ -36,7 +36,7 @@ const SideMenu = ({ handleLogout, isLoggedIn }: SideMenuProps) => {
                   <SheetClose asChild><Link to='/terms-of-service'>利用規約</Link></SheetClose>
                   <SheetClose asChild><Link to='/'>プライバシーポリシー</Link></SheetClose>
                   <SheetClose asChild><Link to='/about'>About Us</Link></SheetClose>
-                  <SheetClose asChild><Link to='/contact'>お問い合わせ</Link></SheetClose>
+                  {/* <SheetClose asChild><Link to='/'>お問い合わせ</Link></SheetClose> */}
               </div>
               <div>
                 {isLoggedIn ? (
