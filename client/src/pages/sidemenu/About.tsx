@@ -1,6 +1,6 @@
-import YuProfileImage from '/alex-unsplash.jpg'
-import MarinaProfileImage from '/emma-unsplash.jpg'
-import OtohaProfileImage from '/emma-unsplash.jpg'
+// import YuProfileImage from '/alex-unsplash.jpg'
+// import MarinaProfileImage from '/emma-unsplash.jpg'
+// import OtohaProfileImage from '/emma-unsplash.jpg'
 
 const About = () => {
   return (
