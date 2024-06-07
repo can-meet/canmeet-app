@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { VscSend } from "react-icons/vsc";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Loading } from "@/components/layout/loading/Loading";
 import { useSelector } from "react-redux";
@@ -77,11 +77,6 @@ export const Chat = () => {
       socket.emit('leaveRoom', rid);
     };
   }, [rid]);
-
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-  };
 
 
   const onSubmit = (data: MessageSchema) => {
@@ -171,7 +166,6 @@ export const Chat = () => {
               accept="image/*"
               className="hidden"
               ref={fileInputRef}
-              onChange={handleFileChange}
             />
             <AiFillPlusCircle 
               className='h-6 w-6 absolute top-2 left-2 cursor-pointer'
