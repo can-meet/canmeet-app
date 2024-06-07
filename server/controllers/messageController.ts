@@ -35,7 +35,6 @@ export const updateMessageReadStatus = async (userId: string) => {
       { sender: { $ne: userId }, isRead: false },
       { $set: { isRead: true } }
     );
-    console.log(`All messages are read ${userId}`);
   } catch (err) {
     console.error(err);
   }

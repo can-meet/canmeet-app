@@ -79,7 +79,6 @@ const CreateProduct = () => {
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const { status, data } = error.response;
-        console.log(status, data)
   
         switch (status) {
           case 400:

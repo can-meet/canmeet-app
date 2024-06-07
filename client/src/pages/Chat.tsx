@@ -81,9 +81,6 @@ export const Chat = () => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      console.log('File selected:', file.name);
-    }
   };
 
 
