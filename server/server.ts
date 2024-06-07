@@ -41,7 +41,7 @@ app.use(
 		origin:
 			process.env.NODE_ENV === 'development'
 				? 'http://localhost:5173'
-				: 'https://canmeet.netlify.app',
+				: 'https://canmeet.app',
 	}),
 );
 
