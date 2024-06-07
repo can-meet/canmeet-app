@@ -37,7 +37,7 @@ const TermsOfService = () => {
       </div>
       <div>
         <h3 className="font-medium">6. 付記 </h3>
-        <p>当規約は、2024年5月◯日から実施いたします。</p>
+        <p>当規約は、2024年6月6日から実施いたします。</p>
       </div>
     </div>
   )
