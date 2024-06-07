@@ -25,8 +25,6 @@ export const createRoom = async (req: Request, res: Response) => {
       seller: sellerId,
     });
 
-    console.log(newRoom)
-
     // 商品の投稿者が最初のメッセージを送信
     await createMessage(newRoom._id, sellerId, "商品購入申請して頂きありがとうございます！")
 

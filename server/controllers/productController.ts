@@ -48,7 +48,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
     res.status(201).json(newProduct)
   } catch (error) {
-    console.log("Error in product controller")
+    console.error("Error in product controller")
     res.status(500).json({ error: "Internal Server Error" });
   }
 }

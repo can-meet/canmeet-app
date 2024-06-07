@@ -17,7 +17,6 @@ import { Notifications } from "./pages/Notifications";
 import EditProduct from "./pages/product/EditProduct";
 import About from "./pages/sidemenu/About";
 import TermsOfService from "./pages/sidemenu/TermsOfService";
-import Contact from "./pages/sidemenu/Contact";
 import Tutorial from "./pages/sidemenu/Tutorial";
 
 
@@ -33,7 +32,6 @@ function App() {
 						<Route path="products/:pid" element={<DetailProduct />} />
 						<Route path="/tutorial" element={<Tutorial />} />
 						<Route path="/about" element={<About />} />
-						<Route path="/contact" element={<Contact />} />
 						<Route path="/terms-of-service" element={<TermsOfService />} />
 						<Route element={<ProtectedRoute />}>
 							<Route path="/profile" element={<Profile />} />

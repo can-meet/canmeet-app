@@ -36,7 +36,7 @@ export const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 bg-default-white w-full z-50 shadow-sm border-b">
+    <div className="fixed top-0 left-0 right-0 bg-default-white w-full z-50 shadow-sm border-b">
       <div className="max-w-96 mx-auto px-1">
         {isLoggedIn && location.pathname === "/rooms" ? (
           <div className="flex justify-between items-center py-2 mx-4">
