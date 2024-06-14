@@ -76,10 +76,11 @@ const DetailProduct = () => {
   }, [productData.sale_status]);
 
   const handlePurchaseProductAndCreateRoom = async () => {
+    setLoading(true);
     if (!currentUser) {
       navigate('/login');
       return;
-    } 
+    }
     try {
       await Promise.all([
         axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, { userId }),
@@ -102,6 +103,8 @@ const DetailProduct = () => {
       setIsPurchaseModalOpen(true)
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
