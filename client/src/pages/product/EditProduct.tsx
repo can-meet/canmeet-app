@@ -65,13 +65,12 @@ const EditProduct = () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/products/${pid}`)
         const data = res.data;
-        const formattedPrice = data.price.toString();
         setPreviewImages(data.images);
         form.reset({
           userId: currentUser?._id,
           images: data.images,
           product_name: data.product_name,
-          price: formattedPrice,
+          price: data.price,
           description: data.description,
           product_status: data.product_status,
           location: data.location,
