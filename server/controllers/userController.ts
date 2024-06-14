@@ -7,8 +7,14 @@ export const getUser = async (req: Request, res: Response) => {
 
 		const user = await User.findById(userId)
 			.select("-password")
-			.populate("postedProducts").sort({ createdAt: -1 })
-			.populate("purchasedProducts").sort({ createdAt: -1 });
+			.populate({
+				path: "postedProducts",
+				options: { sort: { createdAt: -1 } },
+			})
+			.populate({
+				path: "purchasedProducts",
+				options: { sort: { createdAt: -1 } },
+			});
 
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });
