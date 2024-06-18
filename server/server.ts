@@ -46,7 +46,6 @@ app.use(
 );
 
 
-
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/auth', authRoutes);
