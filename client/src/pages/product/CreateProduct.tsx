@@ -45,7 +45,7 @@ const CreateProduct = () => {
       userId: '',
       images: [],
       product_name: '',
-      price: '',
+      price: 0,
       description: '',
       product_status: '',
       location: '',
@@ -213,6 +213,10 @@ const CreateProduct = () => {
                     type="number" 
                     className="rounded w-52"
                     {...field}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10);
+                      form.setValue('price', value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage className="w-button text-xs text-primary-red" />

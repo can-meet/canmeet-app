@@ -8,7 +8,7 @@ type NotificationListProps = {
 export const NotificationList = ({ notifications }: NotificationListProps) => {
 
   return (
-    <div className='px-4 flex flex-col gap-y-2'>
+    <div className='px-4 flex flex-col gap-y-2 max-w-96'>
       {notifications.map((notification) => (
         <NotificationCard 
           key={notification._id} 

@@ -13,7 +13,7 @@ const io = new Server(server, {
     origin:
 			process.env.NODE_ENV === 'development'
 				? 'http://localhost:5173'
-				: 'https://canmeet.netlify.app',
+				: 'https://canmeet.app',
     methods: ['GET', 'POST'],
   },
 });
