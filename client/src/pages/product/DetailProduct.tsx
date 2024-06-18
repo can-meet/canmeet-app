@@ -7,7 +7,6 @@ import { useQuery, useQueryClient } from "react-query";
 import type { DetailProduct } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CommentList } from "@/components/product/comment/CommentList";
 import { Loading } from "@/components/layout/loading/Loading";
 import { timeAgo } from "@/lib/timeAgo";
 import { useSelector } from "react-redux";
@@ -23,6 +22,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { CommentView } from "@/components/product/comment/CommentView";
 
 const DetailProduct = () => {
   const navigate = useNavigate();
@@ -196,7 +196,7 @@ const DetailProduct = () => {
             <p className="text-sm">{productData.description}</p>
           </div>
 
-          <CommentList
+          <CommentView
             product={productData}
           />
 

@@ -39,7 +39,7 @@ export const CommentForm = ({
 		try {
 			const response = await axios.post(`${import.meta.env.VITE_API_URL}/comments`, data);  // コメントを投稿
 			toast.success('Successfully put comment!');
-			setCommentsUpdated(!commentsUpdated);
+			setCommentsUpdated(!commentsUpdated);  // コメントが投稿されたら更新
 	
 			const { _id, user, product } = await response.data;
 
@@ -55,7 +55,7 @@ export const CommentForm = ({
 	};
 
 	return (
-		<div className="flex items-center gap-2 w-80 my-0 mx-auto">
+		<div className="flex items-center gap-2 w-80 py-4 mx-auto">
 			{currentUser && (
 				<>
 					<Avatar>

@@ -1,27 +1,18 @@
-import { useState } from "react";
-import { ReplyForm } from "./ReplyForm";
-
 type ReplyButtonProps = {
+	toggleReplyForComment: (id: string) => void;
 	commentId: string;
 };
 
-export const ReplyButton = ({ commentId }: ReplyButtonProps) => {
-	const [isReplying, setIsReplying] = useState(false);
-	const handleReplyClick = () => {
-		setIsReplying(!isReplying);
-	};
-
+export const ReplyButton = ({ toggleReplyForComment, commentId }: ReplyButtonProps) => {
 	return (
 		<div>
 			<button
 				type="button"
 				className="mt-2 text-dark-gray text-xs font-semibold"
-				onClick={handleReplyClick}
+				onClick={() => toggleReplyForComment(commentId)}
 			>
-				{isReplying ? "閉じる" : "返信する"}
+				返信する
 			</button>
-
-			{isReplying && <ReplyForm commentId={commentId} />}
 		</div>
 	);
 };
