@@ -59,7 +59,7 @@ export const ReplyForm = ({
 	};
 
 	return (
-		<div className={`py-4 absolute bottom-0 left-0 w-full bg-white z-20 transform ${replySelected ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500`}>
+		<div className={`py-4 absolute bottom-0 left-0 w-full bg-white transform ${replySelected ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500`}>
 			<div className="flex items-center gap-2 w-80 my-0 mx-auto">
 				{currentUser && (
 					<>

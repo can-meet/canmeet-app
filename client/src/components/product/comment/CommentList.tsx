@@ -9,7 +9,7 @@ type CommentListProps = {
 
 export const CommentList = ({ comments, toggleReplyForComment }: CommentListProps) => {
   return (
-    <>
+    <div className='mt-4 flex flex-col gap-4'>
       {comments.map((comment) => (
         <CommentCard
           key={comment._id}
@@ -17,6 +17,6 @@ export const CommentList = ({ comments, toggleReplyForComment }: CommentListProp
           toggleReplyForComment={toggleReplyForComment}
         />
       ))}
-    </>
+    </div>
   )
 }
