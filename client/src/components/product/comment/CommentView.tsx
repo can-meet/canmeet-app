@@ -99,7 +99,7 @@ export const CommentView = ({ product }: CommentListProps) => {
           </DrawerTitle>
         </DrawerHeader>
 
-        <div className={`relative ${replySelected ? '' : 'overflow-scroll'}`}>
+        <div className={`relative ${replySelected ? '' : 'overflow-scroll overflow-x-hidden'}`}>
         {/* <div className='relative'> */}
           {!replySelected && (
             <CommentList 
