@@ -36,9 +36,7 @@ export const CommentView = ({ product }: CommentListProps) => {
 
   const toggleReplyForComment = (id?: string) => {
     setReplySelected(!replySelected);
-    if (replySelected) {
-      setSelectedComments(comments);
-    } else {
+    if (!replySelected) {
       const filteredComments = comments.filter((comment) => comment._id === id);
       setSelectedComments(filteredComments);
     }
@@ -99,15 +97,13 @@ export const CommentView = ({ product }: CommentListProps) => {
           </DrawerTitle>
         </DrawerHeader>
 
-        <div className={`relative ${replySelected ? '' : 'overflow-scroll overflow-x-hidden'}`}>
-        {/* <div className='relative'> */}
+        <div className={`relative h-full overflow-x-hidden ${replySelected ? '' : 'overflow-scroll'}`}>
           {!replySelected && (
             <CommentList 
-              comments={selectedComments}
+              comments={comments}
               toggleReplyForComment={toggleReplyForComment}
             />
           )}
-
           {/* 返信するボタンを押したら、コメントリストの上指定されたコメントが表示される */}
           <CommentCardForReply
             comment={selectedComments[0]} 
@@ -115,25 +111,20 @@ export const CommentView = ({ product }: CommentListProps) => {
             repliesUpdated={repliesUpdated}
           />
         </div>
-        
-        <DrawerFooter>
-          <div className='relative'>
-            {!replySelected && (
-              <CommentForm
-                productId={productId}
-                commentsUpdated={commentsUpdated}
-                setCommentsUpdated={setCommentsUpdated}
-              />
-            )}
 
-            {/* 返信するボタンを押したら、コメントフォームの上に表示される */}
-            <ReplyForm 
-              replySelected={replySelected}
-              selectedCommentId={selectedComments[0]?._id}
-              repliesUpdated={repliesUpdated}
-              setRepliesUpdated={setRepliesUpdated}
-            />
-          </div>
+        <DrawerFooter>
+          <CommentForm
+            productId={productId}
+            commentsUpdated={commentsUpdated}
+            setCommentsUpdated={setCommentsUpdated}
+          />
+          {/* 返信するボタンを押したら、コメントフォームの上に表示される */}
+          <ReplyForm 
+            replySelected={replySelected}
+            selectedCommentId={selectedComments[0]?._id}
+            repliesUpdated={repliesUpdated}
+            setRepliesUpdated={setRepliesUpdated}
+          />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

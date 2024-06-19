@@ -7,7 +7,7 @@ type ReplyCardProps = {
 
 export const ReplyCard = ({ reply }: ReplyCardProps) => {
 	return (
-		<div className="ml-5 my-1.5">
+		<div className="ml-6">
 			<div className="flex items-center gap-2">
 				<Avatar>
 					<AvatarImage src={reply.user.profilePicture} />

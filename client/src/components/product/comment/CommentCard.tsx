@@ -40,7 +40,7 @@ export const CommentCard = ({ toggleReplyForComment, comment }: CommentCardProps
 	}, [commentId]);
 
 	return (
-		<div className="w-80 my-4 mx-auto">
+		<div className="w-80 mx-auto">
 			<div className="flex items-center gap-2">
 				<Avatar>
 					<AvatarImage src={comment.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}  className="h-10" />
@@ -68,7 +68,6 @@ export const CommentCard = ({ toggleReplyForComment, comment }: CommentCardProps
 								</AccordionTrigger>
 							)}
 							<AccordionContent>
-								
 								<ReplyList replies={replies} />
 							</AccordionContent>
 						</AccordionItem>
