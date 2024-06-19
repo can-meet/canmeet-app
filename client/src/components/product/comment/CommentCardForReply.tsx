@@ -1,11 +1,4 @@
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import type { Comment } from "@/types/comment";
 import { ReplyList } from "../reply/ReplyList";
 import { useEffect, useState } from "react";
