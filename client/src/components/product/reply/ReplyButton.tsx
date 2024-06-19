@@ -8,7 +8,7 @@ export const ReplyButton = ({ toggleReplyForComment, commentId }: ReplyButtonPro
 		<div>
 			<button
 				type="button"
-				className="mt-2 text-dark-gray text-xs font-semibold"
+				className="mt-1.5 text-dark-gray text-xs font-semibold"
 				onClick={() => toggleReplyForComment(commentId)}
 			>
 				返信する
