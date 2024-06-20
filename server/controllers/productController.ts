@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import Product from "../models/productModel";
 import User from "../models/userModel";
+import Comment from "../models/commentModel";
+import Notification from "../models/notificationModel";
+import Reply from "../models/replyModel";
+import Room from "../models/roomModel";
+import Message from "../models/messageModel";
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
@@ -153,9 +158,45 @@ export const updateProductStatus = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const isDeleted = await Product.findByIdAndDelete(productId);
-    if (isDeleted) {
-      res.status(204).send('Product deleted');
+    const product = await Product.findByIdAndDelete(productId);
+
+    if (product) {
+      const { user } = product;
+
+      if (user) {
+        await User.findByIdAndUpdate(user, {
+          $pull: { postedProducts: productId }
+        });
+      }
+
+      // Remove product from purchaseProducts of the user who bought it
+      if (user) {
+        await User.findByIdAndUpdate(user, {
+          $pull: { purchaseProducts: productId }
+        });
+      }
+
+      // Delete comments related to the product
+      const comments = await Comment.find({ product: productId });
+      const commentIds = comments.map(comment => comment._id);
+
+      // Delete replies related to each comment
+      await Reply.deleteMany({ comment: { $in: commentIds } });
+      await Comment.deleteMany({ product: productId });
+
+      // Delete notifications related to the product
+      await Notification.deleteMany({ product: productId });
+
+      // Find and delete rooms related to the product
+      const rooms = await Room.find({ product: productId });
+      const roomIds = rooms.map(room => room._id);
+
+      // Delete messages in those rooms
+      await Message.deleteMany({ room: { $in: roomIds } });
+      await Room.deleteMany({ product: productId });
+
+      res.status(204).send('Product and related data deleted');
+
     } else {
       res.status(404).send('Product not found');
     }

@@ -12,7 +12,7 @@ export const createMessage = async (roomId: string, senderId: string, text: stri
       return;
     }
 
-    const newMessage = new Message({ sender, text });
+    const newMessage = new Message({ sender, room: roomId, text });
     const savedMessage = await newMessage.save();
 
     const room = await Room.findById(roomId);
@@ -23,7 +23,7 @@ export const createMessage = async (roomId: string, senderId: string, text: stri
 
     return savedMessage;
   } catch (error) {
-    console.error(`Internal Server Error ${error}`)
+    console.error(`${error} in createMessage`)
   }
 }
 
@@ -36,7 +36,7 @@ export const updateMessageReadStatus = async (userId: string) => {
       { $set: { isRead: true } }
     );
   } catch (err) {
-    console.error(err);
+    console.error(`${err} in updateMessageReadStatus`);
   }
 }
 
