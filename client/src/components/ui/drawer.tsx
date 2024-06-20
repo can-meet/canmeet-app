@@ -48,33 +48,12 @@ const DrawerContent = React.forwardRef<
 			)}
 			{...props}
 		>
-			<div className="mx-auto mt-4 h-2 w-36 rounded-full bg-secondary-gray" />
+			<div className="mx-auto mt-4 h-2 pb-2 w-36 rounded-full bg-secondary-gray" />
 			{children}
 		</DrawerPrimitive.Content>
 	</DrawerPortal>
 ));
 DrawerContent.displayName = "DrawerContent";
-
-const CommentDrawerContent = React.forwardRef<
-	React.ElementRef<typeof DrawerPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-	<DrawerPortal>
-		<DrawerOverlay />
-		<DrawerPrimitive.Content
-			ref={ref}
-			className={cn(
-				"fixed inset-x-0 bottom-0 z-50 mt-24 flex h-3/4 flex-col rounded-t-[50px] border bg-background",
-				className,
-			)}
-			{...props}
-		>
-			<div className="mx-auto mt-4 h-2 w-36 rounded-full bg-muted" />
-			{children}
-		</DrawerPrimitive.Content>
-	</DrawerPortal>
-));
-CommentDrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({
 	className,
@@ -92,7 +71,7 @@ const DrawerFooter = ({
 	...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
-		className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+		className={cn("mt-auto flex flex-col gap-2 p-0", className)}
 		{...props}
 	/>
 );
@@ -136,5 +115,4 @@ export {
 	DrawerFooter,
 	DrawerTitle,
 	DrawerDescription,
-	CommentDrawerContent,
 };

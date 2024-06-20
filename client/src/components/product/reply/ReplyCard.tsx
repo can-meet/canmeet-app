@@ -1,19 +1,13 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import type { Reply } from "@/types/reply";
-import { Loading } from "../../layout/loading/Loading";
 
 type ReplyCardProps = {
 	reply: Reply;
-	loading: boolean;
 };
 
-export const ReplyCard = ({ reply, loading }: ReplyCardProps) => {
-	if (loading) {
-		<Loading />;
-	}
-
+export const ReplyCard = ({ reply }: ReplyCardProps) => {
 	return (
-		<div className="ml-5 my-2">
+		<div className="ml-6">
 			<div className="flex items-center gap-2">
 				<Avatar>
 					<AvatarImage src={reply.user.profilePicture} />
