@@ -148,6 +148,14 @@ export const updateProductStatus = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
+    if(sale_status === '売り出し中') {
+      const room = await Room.findOne({ product: productId });
+      if (room) {
+        await Message.deleteMany({ room: room._id });
+        await Room.findByIdAndDelete(room._id);
+      }
+    }
+
     await product.updateOne({ sale_status });
     res.status(200).json(product.sale_status);
   } catch (error) {
