@@ -148,12 +148,15 @@ export const updateProductStatus = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
-    if(sale_status === '売り出し中') {
-      const room = await Room.findOne({ product: productId });
-      if (room) {
-        await Message.deleteMany({ room: room._id });
-        await Room.findByIdAndDelete(room._id);
-      }
+    // when user changes sale_status from '取引中', delete chat data and related data from user table
+    if (sale_status === "売り出し中") {
+      await Message.deleteMany({ room: { $in: await Room.find({ product: productId }).distinct('_id') } });
+      await Room.deleteMany({ product: productId });
+
+      await User.updateMany(
+        { purchasedProducts: productId },
+        { $pull: { purchasedProducts: productId } }
+      );
     }
 
     await product.updateOne({ sale_status });
