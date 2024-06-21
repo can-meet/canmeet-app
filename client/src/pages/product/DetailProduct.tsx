@@ -197,7 +197,7 @@ const DetailProduct = () => {
           
 
           <div className='mb-5'>
-            <p className="text-sm">{productData.description}</p>
+            <p className="text-sm whitespace-pre-wrap">{productData.description}</p>
           </div>
 
           <CommentView
