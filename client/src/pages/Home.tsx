@@ -56,7 +56,9 @@ export const Home = () => {
           img: `${registerImage}`,
           text: 'あなたのカナダでの生活をより良くするフリマアプリです。あなたに素敵な出会いがありますように！',
           link: '/',
-          btnText: '早速出品されている商品を見る',
+          btnText: '購入する',
+          secondLink: '/product/create',
+          secondBtnText: '出品する',
         };
       case 'editComplete':
         return {

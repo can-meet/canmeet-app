@@ -10,6 +10,8 @@ type ModalProps = {
   text?: string;
   link?: string;
   btnText?: string;
+  secondLink?: string;
+  secondBtnText?: string;
 }
 
 export const Modal = ({
@@ -20,6 +22,8 @@ export const Modal = ({
   text,
   link,
   btnText,
+  secondLink,
+  secondBtnText,
 }: ModalProps) => {
   const navigate = useNavigate();
   if(!isOpen) return null
@@ -40,12 +44,22 @@ export const Modal = ({
             <h3 className="text-lg font-semibold ">{heading}</h3>
             <img src={img} alt="modal image" className="max-w-32" />
             <p className="text-xs">{text}</p>
-            <Button 
-              variant='blue'
-              className="text-default-white text-xs rounded-full w-64"
-              onClick={() => navigate(`${link}`)}>
-                {btnText}
-            </Button>
+            <div className="flex gap-x-2 w-full">
+              <Button 
+                variant='blue'
+                className={`text-default-white text-xs rounded-full ${secondLink ? 'w-full' : 'w-64'}`}
+                onClick={() => navigate(`${link}`)}>
+                  {btnText}
+              </Button>
+              {secondLink && (
+                <Button 
+                variant='red'
+                className="text-default-white text-xs rounded-full w-full"
+                onClick={() => navigate(`${secondLink}`)}>
+                  {secondBtnText}
+                </Button>
+              )}
+            </div>
           </div>
       </div>
     </div>
