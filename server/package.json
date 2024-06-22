@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "nodemon server.ts",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "lint": "biome lint --write"
   },
   "keywords": [],
   "author": "",
