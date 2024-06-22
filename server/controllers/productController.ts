@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import Product from '../models/productModel'
 import User from '../models/userModel'
 import Comment from '../models/commentModel'
@@ -114,7 +114,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       payment_method,
       location,
     } = req.body
-    const formattedPrice = parseInt(price)
+    const formattedPrice = Number.parseInt(price)
 
     const user = await User.findById(userId)
     if (!user) {

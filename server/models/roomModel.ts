@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import type { Message } from './messageModel'
 import type { User } from './userModel'
-import { Product } from './productModel'
+import type { Product } from './productModel'
 
 export type Room = {
   _id: string

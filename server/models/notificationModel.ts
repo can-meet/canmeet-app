@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import type { User } from './userModel'
-import { Product } from './productModel'
+import type { Product } from './productModel'
 
 export type Notification = {
   _id: string

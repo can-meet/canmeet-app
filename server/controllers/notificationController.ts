@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import Notification from '../models/notificationModel'
 import Product from '../models/productModel'
 import User from '../models/userModel'
