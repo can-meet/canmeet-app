@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "format": "biome check --apply src",
+    "format": "biome check --write src",
     "preview": "vite preview"
   },
   "dependencies": {
