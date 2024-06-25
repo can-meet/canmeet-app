@@ -1,12 +1,14 @@
-import axios from 'axios';
-import { DetailProduct } from '@/types/product';
+import type { DetailProduct } from '@/types/product'
+import axios from 'axios'
 
 export const fetchProducts = async () => {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
-  return response.data;
-};
+  const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`)
+  return response.data
+}
 
 export const fetchProductById = async (id: string | undefined) => {
-  const response = await axios.get<DetailProduct>(`${import.meta.env.VITE_API_URL}/products/${id}`)
-  return response.data;
+  const response = await axios.get<DetailProduct>(
+    `${import.meta.env.VITE_API_URL}/products/${id}`,
+  )
+  return response.data
 }

@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import Product from "../models/productModel";
-import User from "../models/userModel";
-import Comment from "../models/commentModel";
-import Notification from "../models/notificationModel";
-import Reply from "../models/replyModel";
-import Room from "../models/roomModel";
-import Message from "../models/messageModel";
+import type { Request, Response } from 'express'
+import Product from '../models/productModel'
+import User from '../models/userModel'
+import Comment from '../models/commentModel'
+import Notification from '../models/notificationModel'
+import Reply from '../models/replyModel'
+import Room from '../models/roomModel'
+import Message from '../models/messageModel'
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
@@ -18,18 +18,26 @@ export const createProduct = async (req: Request, res: Response) => {
       description,
       payment_method,
       location,
-    } = req.body;
+    } = req.body
 
-    if (!userId || !images || !product_name || !price || !product_status || !description || !payment_method || !location) {
-      return res.status(400).json({ message: 'Missing required fields' });
+    if (
+      !userId ||
+      !images ||
+      !product_name ||
+      !product_status ||
+      !description ||
+      !payment_method ||
+      !location
+    ) {
+      return res.status(400).json({ message: 'Missing required fields' })
     }
 
     const user = await User.findById(userId)
     if (!user) {
-      return res.status(404).json({ message: 'User not found' }) 
+      return res.status(404).json({ message: 'User not found' })
     }
 
-    const imageUrls = Array.isArray(images) ? images : [];
+    const imageUrls = Array.isArray(images) ? images : []
 
     const newProduct = new Product({
       user: user._id,
@@ -40,10 +48,10 @@ export const createProduct = async (req: Request, res: Response) => {
       description,
       payment_method,
       location,
-      sale_status: "売り出し中",
-      comments: []
+      sale_status: '売り出し中',
+      comments: [],
     })
-  
+
     await newProduct.save()
 
     if (user) {
@@ -53,8 +61,8 @@ export const createProduct = async (req: Request, res: Response) => {
 
     res.status(201).json(newProduct)
   } catch (error) {
-    console.error("Error in product controller")
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error in product controller')
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
@@ -62,16 +70,16 @@ export const getProduct = async (req: Request, res: Response) => {
   try {
     const product = await Product.findById(req.params.productId).populate({
       path: 'user',
-      select: '_id, username profilePicture'
-    });
+      select: '_id, username profilePicture',
+    })
 
-		if (!product) {
-			return res.status(404).json({ error: "product not found" });
-		}
+    if (!product) {
+      return res.status(404).json({ error: 'product not found' })
+    }
 
-		res.status(200).json(product);
+    res.status(200).json(product)
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
@@ -79,22 +87,22 @@ export const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find({}).sort({ createdAt: -1 }).populate({
       path: 'user',
-      select: '_id, username profilePicture'
-    });
+      select: '_id, username profilePicture',
+    })
 
-		if (!products) {
-			return res.status(404).json({ error: "product not found" });
-		}
+    if (!products) {
+      return res.status(404).json({ error: 'product not found' })
+    }
 
-		res.status(200).json(products);
+    res.status(200).json(products)
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
+    const { productId } = req.params
     const {
       userId,
       images,
@@ -103,18 +111,18 @@ export const updateProduct = async (req: Request, res: Response) => {
       product_status,
       description,
       payment_method,
-      location
-    } = req.body;
-    const formattedPrice = parseInt(price);
+      location,
+    } = req.body
+    const formattedPrice = Number.parseInt(price)
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' })
     }
 
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId)
     if (!product) {
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: 'Product not found' })
     }
 
     await product.updateOne({
@@ -125,116 +133,124 @@ export const updateProduct = async (req: Request, res: Response) => {
       product_status,
       description,
       payment_method,
-      location
+      location,
     })
 
-    res.status(200).json(product);
+    res.status(200).json(product)
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
 export const updateProductStatus = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
-    const { userId, sale_status } = req.body;
+    const { productId } = req.params
+    const { userId, sale_status } = req.body
 
-    const user = await User.findById(userId);
-    if(!user) {
-      return res.status(404).json({ error: "User not found" });
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
     }
-    const product = await Product.findById(productId);
-    if(!product) {
-      return res.status(404).json({ error: "Product not found" });
+    const product = await Product.findById(productId)
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' })
     }
 
     // when user changes sale_status from '取引中', delete chat data and related data from user table
-    if (sale_status === "売り出し中") {
-      await Message.deleteMany({ room: { $in: await Room.find({ product: productId }).distinct('_id') } });
-      await Room.deleteMany({ product: productId });
+    if (sale_status === '売り出し中') {
+      await Message.deleteMany({
+        room: { $in: await Room.find({ product: productId }).distinct('_id') },
+      })
+      await Room.deleteMany({ product: productId })
 
       await User.updateMany(
         { purchasedProducts: productId },
-        { $pull: { purchasedProducts: productId } }
-      );
+        { $pull: { purchasedProducts: productId } },
+      )
     }
 
-    await product.updateOne({ sale_status });
-    res.status(200).json(product.sale_status);
+    await product.updateOne({ sale_status })
+    res.status(200).json(product.sale_status)
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
-    const product = await Product.findByIdAndDelete(productId);
+    const { productId } = req.params
+    const product = await Product.findByIdAndDelete(productId)
 
     if (product) {
-      const { user } = product;
+      const { user } = product
 
       if (user) {
         await User.findByIdAndUpdate(user, {
-          $pull: { postedProducts: productId }
-        });
+          $pull: { postedProducts: productId },
+        })
       }
 
       // Remove product from purchaseProducts of the user who bought it
       if (user) {
         await User.findByIdAndUpdate(user, {
-          $pull: { purchaseProducts: productId }
-        });
+          $pull: { purchaseProducts: productId },
+        })
       }
 
       // Delete comments related to the product
-      const comments = await Comment.find({ product: productId });
-      const commentIds = comments.map(comment => comment._id);
+      const comments = await Comment.find({ product: productId })
+      const commentIds = comments.map(comment => comment._id)
 
       // Delete replies related to each comment
-      await Reply.deleteMany({ comment: { $in: commentIds } });
-      await Comment.deleteMany({ product: productId });
+      await Reply.deleteMany({ comment: { $in: commentIds } })
+      await Comment.deleteMany({ product: productId })
 
       // Delete notifications related to the product
-      await Notification.deleteMany({ product: productId });
+      await Notification.deleteMany({ product: productId })
 
       // Find and delete rooms related to the product
-      const rooms = await Room.find({ product: productId });
-      const roomIds = rooms.map(room => room._id);
+      const rooms = await Room.find({ product: productId })
+      const roomIds = rooms.map(room => room._id)
 
       // Delete messages in those rooms
-      await Message.deleteMany({ room: { $in: roomIds } });
-      await Room.deleteMany({ product: productId });
+      await Message.deleteMany({ room: { $in: roomIds } })
+      await Room.deleteMany({ product: productId })
 
-      res.status(204).send('Product and related data deleted');
-
+      res.status(204).send('Product and related data deleted')
     } else {
-      res.status(404).send('Product not found');
+      res.status(404).send('Product not found')
     }
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
 export const purchaseProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
-    const { userId } = req.body;
-    const product = await Product.findByIdAndUpdate(productId, {
-      sale_status: '取引中'
-    }, { new: true });
+    const { productId } = req.params
+    const { userId } = req.body
+    const product = await Product.findByIdAndUpdate(
+      productId,
+      {
+        sale_status: '取引中',
+      },
+      { new: true },
+    )
 
     if (product) {
-      const user = await User.findByIdAndUpdate(userId, {
-        $push: { purchasedProducts: productId }
-      }, { new: true });
-    
-      res.json(product);
+      const user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { purchasedProducts: productId },
+        },
+        { new: true },
+      )
 
+      res.json(product)
     } else {
-      res.status(404).send('Product not found');
+      res.status(404).send('Product not found')
     }
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
