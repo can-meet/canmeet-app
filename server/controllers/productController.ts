@@ -24,7 +24,6 @@ export const createProduct = async (req: Request, res: Response) => {
       !userId ||
       !images ||
       !product_name ||
-      !price ||
       !product_status ||
       !description ||
       !payment_method ||
