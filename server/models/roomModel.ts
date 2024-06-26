@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import type { Message } from "./messageModel";
-import type { User } from "./userModel";
-import { Product } from "./productModel";
+import { MessageType } from "./messageModel";
+import { UserType } from "./userModel";
+import { ProductType } from "./productModel";
 
-export type Room = {
+export type RoomType = {
 	_id: string;
-	product: Product;
-	buyer: User;
-  seller: User;
-	messages: Message[];
+	product: ProductType;
+	buyer: UserType;
+  seller: UserType;
+	messages: MessageType[];
 };
 
 
@@ -39,9 +39,6 @@ const roomSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-const Room = mongoose.model<Room>(
-	"Room",
-	roomSchema,
-);
+const Room = mongoose.model<RoomType>("Room", roomSchema);
 
 export default Room;

@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import type { Product } from "./productModel";
-import type { Reply } from "./replyModel";
-import type { User } from "./userModel";
+import { ProductType } from "./productModel";
+import { ReplyType } from "./replyModel";
+import { UserType } from "./userModel";
 
-export type Comment = {
+export type CommentType = {
 	_id: string;
 	text: string;
-	user: User;
-	product: Product;
-	replies: Reply[];
+	user: UserType;
+	product: ProductType;
+	replies: ReplyType[];
 };
 
 const commentSchema = new mongoose.Schema(
@@ -41,6 +41,6 @@ const commentSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-const Comment = mongoose.model<Comment>("Comment", commentSchema);
+const Comment = mongoose.model<CommentType>("Comment", commentSchema);
 
 export default Comment;

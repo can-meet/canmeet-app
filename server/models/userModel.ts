@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import type { Product } from "./productModel";
+import { ProductType } from "./productModel";
 
-export type User = {
+export type UserType = {
 	_id: string;
 	username: string;
 	email: string;
 	password: string;
 	profilePicture: string;
 	isAdmin: boolean;
-	postedProducts: Product[];
-	purchasedProducts: Product[];
+	postedProducts: ProductType[];
+	purchasedProducts: ProductType[];
 };
 
 const userSchema = new mongoose.Schema(
@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema(
 		},
 		password: {
 			type: String,
-			required: true,
 		},
 		profilePicture: {
 			type: String,
@@ -53,6 +52,6 @@ const userSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-const User = mongoose.model<User>("User", userSchema);
+const User = mongoose.model<UserType>("User", userSchema);
 
 export default User;
