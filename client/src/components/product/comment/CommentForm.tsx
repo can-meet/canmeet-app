@@ -1,12 +1,12 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import type { RootState } from "@/redux/store";
 import { type CommentSchema, commentResolver } from "@/schema/comment";
+import { useAuthStore } from "@/store/authStore";
 import axios from "axios";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { VscSend } from "react-icons/vsc";
-import { useSelector } from "react-redux";
+
 
 type CommentFormProps = {
 	productId: string;
@@ -19,7 +19,7 @@ export const CommentForm = ({
 	commentsUpdated,
 	setCommentsUpdated,
 }: CommentFormProps) => {
-	const { currentUser } = useSelector((state: RootState) => state.user);
+	const { currentUser } = useAuthStore();
 
 	const {
 		register,

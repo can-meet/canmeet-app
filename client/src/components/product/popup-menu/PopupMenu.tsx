@@ -13,14 +13,14 @@ import { IoEllipsisHorizontal } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import DetailProduct from "@/pages/product/DetailProduct";
+import { DetailProductType } from "@/types/product";
 import StatusForm from "./StatusForm";
 import DeleteForm from "./DeleteForm";
+import { useAuthStore } from "@/store/authStore";
+
 
 type PopupMenuProps = {
-  product: DetailProduct;
+  product: DetailProductType;
 };
 
 const PopupMenu = ({ product }: PopupMenuProps) => {
@@ -28,8 +28,7 @@ const PopupMenu = ({ product }: PopupMenuProps) => {
   const { pid } = useParams();
   const [isOnChangeStatusStep, setIsOnChangeStatusStep] = useState<boolean>(false);
   const [isOnDeleteStep, setIsOnDeleteStep] = useState<boolean>(false);
-
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser } = useAuthStore();
 
   return (
     <div className="flex justify-between items-center m-3">

@@ -9,8 +9,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useAuthStore } from "@/store/authStore";
 
 type StatusFormProps = {
   productSaleStatus: string;
@@ -20,8 +19,7 @@ const StatusForm = ({ productSaleStatus }: StatusFormProps ) => {
   const { pid } = useParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState<string>(productSaleStatus);
-
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser } = useAuthStore();
 
   const handleSubmit = async (status: string) => {
     try {

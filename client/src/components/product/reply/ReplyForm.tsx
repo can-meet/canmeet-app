@@ -1,13 +1,12 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import type { RootState } from "@/redux/store";
 import { type ReplySchema, replyResolver } from "@/schema/reply";
+import { useAuthStore } from "@/store/authStore";
 import axios from "axios";
 import { useEffect } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { VscSend } from "react-icons/vsc";
-import { useSelector } from "react-redux";
 
 
 type ReplyFormProps = {
@@ -23,7 +22,7 @@ export const ReplyForm = ({
 	repliesUpdated,
 	setRepliesUpdated,
 }: ReplyFormProps) => {
-	const { currentUser } = useSelector((state: RootState) => state.user);
+	const { currentUser } = useAuthStore();
 
 	const {
 		register,
