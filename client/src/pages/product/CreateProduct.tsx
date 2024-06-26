@@ -29,16 +29,16 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { productImagesUpload } from "@/lib/productImagesUpload"
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { Modal } from "@/components/layout/Modal";
 import postCompleteImage from "/post-product-completed.png";
 import { useToast } from "@/components/ui/use-toast";
 import { Loading } from "@/components/layout/loading/Loading";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useAuthStore } from "@/store/authStore";
+
 
 const CreateProduct = () => {
-	const { currentUser } = useSelector((state: RootState) => state.user);
+	const { currentUser } = useAuthStore();
   const form = useForm<ProductSchema>({
     mode: "onChange",
     defaultValues: {

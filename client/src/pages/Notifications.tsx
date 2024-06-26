@@ -1,13 +1,12 @@
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
 import { Loading } from "@/components/layout/loading/Loading";
 import { NotificationList } from "@/components/notification/NotificationList";
 import { useEffect, useState } from "react";
 import { useNotificationsStore } from "@/store/notificationsStore";
+import { useAuthStore } from "@/store/authStore";
 
 
 export const Notifications = () => {
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser } = useAuthStore();
 	const { notifications, fetchNotifications } = useNotificationsStore();
   const [isLoading, setLoading] = useState<boolean>(false);
 

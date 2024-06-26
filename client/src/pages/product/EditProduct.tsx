@@ -4,8 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ProductSchema, productResolver } from "@/schema/product";
 import { productImagesUpload } from "@/lib/productImagesUpload"
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { Loading } from "@/components/layout/loading/Loading";
 import { Modal } from "@/components/layout/Modal";
 import { Button } from "@/components/ui/button"
@@ -36,9 +34,10 @@ import {
 import editCompleteImage from "/edit-product-completed.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuthStore } from "@/store/authStore";
 
 const EditProduct = () => {
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser } = useAuthStore();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const form = useForm<ProductSchema>({
     defaultValues: {

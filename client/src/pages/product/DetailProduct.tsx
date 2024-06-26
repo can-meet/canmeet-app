@@ -4,13 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById } from "@/lib/api";
 import PopupMenu from "@/components/product/popup-menu/PopupMenu";
 import { useQuery, useQueryClient } from "react-query";
-import type { DetailProduct } from "@/types/product";
+import type { DetailProductType } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loading } from "@/components/layout/loading/Loading";
 import { timeAgo } from "@/lib/timeAgo";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { Modal } from "@/components/layout/Modal";
 import purchaseCompletedImage from "/purchase-product.png";
 import editCompletedImage from "/edit-product-completed.png";
@@ -23,6 +21,7 @@ import {
 } from "@/components/ui/carousel";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { CommentView } from "@/components/product/comment/CommentView";
+import { useAuthStore } from "@/store/authStore";
 
 const DetailProduct = () => {
   const navigate = useNavigate();
@@ -33,16 +32,16 @@ const DetailProduct = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/');
 
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser } = useAuthStore();
   const userId = currentUser?._id;
 
   const queryClient = useQueryClient();
-  const products = queryClient.getQueryData<DetailProduct[]>('products') || [];
+  const products = queryClient.getQueryData<DetailProductType[]>('products') || [];
 
   const product = products?.find((p) => p._id === pid);
   const productUserId = product?.user._id;
 
-  const { data: productDetail } = useQuery<DetailProduct>(
+  const { data: productDetail } = useQuery<DetailProductType>(
     ['product', pid],
     () => fetchProductById(pid),
     {
