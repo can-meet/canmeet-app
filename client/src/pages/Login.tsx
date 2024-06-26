@@ -1,11 +1,11 @@
-import { LoginForm } from "@/components/login/LoginForm";
-import { Button } from "@/components/ui/button";
-import { FcGoogle } from "react-icons/fc";
-import { IoIosArrowBack } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import { Separator } from "@/components/ui/separator";
-import { useLogin } from "@/hooks/auth/useLogin";
-import { useGoogleAuth } from "@/hooks/auth/useGoogleAuth";
+import { LoginForm } from "@/components/login/LoginForm"
+import { Button } from "@/components/ui/button"
+import { FcGoogle } from "react-icons/fc"
+import { IoIosArrowBack } from "react-icons/io"
+import { Link, useNavigate } from "react-router-dom"
+import { Separator } from "@/components/ui/separator"
+import { useLogin } from "@/hooks/auth/useLogin"
+import { useGoogleAuth } from "@/hooks/auth/useGoogleAuth"
 
 export const Login = () => {
 	const navigate = useNavigate();
@@ -43,5 +43,5 @@ export const Login = () => {
 				</div>
 			</div>
 		</>
-	);
-};
+	)
+}

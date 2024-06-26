@@ -14,50 +14,50 @@ export type NotificationType = {
 
 const notificationSchema = new mongoose.Schema(
   {
-    receiver: { 
+    receiver: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
     },
-    sender: { 
+    sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
     },
-    type: { 
-      type: String, 
-      enum: ["purchase", "message", "comment"],
-      required: true
+    type: {
+      type: String,
+      enum: ['purchase', 'message', 'comment'],
+      required: true,
     },
     content: {
-      type: String, 
-      required: true
+      type: String,
+      required: true,
     },
     isRead: {
-      type: Boolean, 
-      default: false 
-    }, 
+      type: Boolean,
+      default: false,
+    },
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
-      required: true
+      required: true,
     },
-    message: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Message'
+    message: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Message',
     },
-    comment: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Comment' 
+    comment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
     },
-    createdAt: { 
-      type: Date, 
-      default: Date.now
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   { timestamps: true },
-);
+)
 
-const Notification = mongoose.model<NotificationType>("Notification", notificationSchema);
+const Notification = mongoose.model<NotificationType>("Notification", notificationSchema)
 
-export default Notification;
+export default Notification

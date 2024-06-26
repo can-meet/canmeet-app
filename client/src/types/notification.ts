@@ -9,4 +9,4 @@ export type NotificationType = {
   content: string;
 	isRead: boolean;
   product: ProductType;
-};
+}

@@ -12,35 +12,35 @@ export type CommentType = {
 };
 
 const commentSchema = new mongoose.Schema(
-	{
-		user: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
-		product: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Product",
-			required: true,
-		},
-		text: {
-			type: String,
-			required: true,
-		},
-		replies: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "Reply",
-			},
-		],
-		createdAt: {
-			type: Date,
-			default: Date.now,
-		},
-	},
-	{ timestamps: true },
-);
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    replies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Reply',
+      },
+    ],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { timestamps: true },
+)
 
 const Comment = mongoose.model<CommentType>("Comment", commentSchema);
 
-export default Comment;
+export default Comment

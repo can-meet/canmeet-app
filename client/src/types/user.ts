@@ -1,4 +1,4 @@
-import { ProductType } from "./product";
+import { ProductType } from "./product"
 
 export type UserType = {
 	_id: string;
@@ -9,4 +9,4 @@ export type UserType = {
 	isAdmin: boolean;
 	postedProducts: ProductType[];
 	purchasedProducts: ProductType[];
-};
+}

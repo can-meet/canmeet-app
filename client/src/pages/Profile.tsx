@@ -1,8 +1,4 @@
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
 	ProfileSelectTrigger,
 	Select,
@@ -18,7 +14,6 @@ import { useUpdateUser } from "@/hooks/user/useUpdateUser";
 import { useAuthStore } from "@/store/authStore";
 import { ProductType } from "@/types/product";
 import { ProductList } from "@/components/product/ProductList";
-
 
 
 export const Profile = () => {
@@ -80,48 +75,48 @@ export const Profile = () => {
         </h2>
       )}
 
-			<Tabs defaultValue="sale" className="max-w-96 w-80 mx-auto">
-				<TabsList className="grid w-full grid-cols-2">
-					<TabsTrigger value="sale" className="border-b-secondary-gray">
-						投稿した商品
-					</TabsTrigger>
-					<TabsTrigger value="purchase">購入した商品</TabsTrigger>
-				</TabsList>
-				<TabsContent value="sale" className="mt-6 w-full mx-auto">
-					<Select
-						onValueChange={(value) => setSelectedFilterPosts(value)}
-						value={selectedFilterPosts}
-					>
-						<ProfileSelectTrigger className="py-1 px-2 w-fit bg-dark-gray text-default-white mb-4">
-							<SelectValue placeholder="すべて" className="font-normal" />
-						</ProfileSelectTrigger>
-						<SelectContent className="w-16 z-50 bg-default-white">
-							<SelectItem value="すべて">すべて</SelectItem>
-							<SelectItem value="売り出し中">売り出し</SelectItem>
-							<SelectItem value="取引中">取引中</SelectItem>
-							<SelectItem value="売り切れ">売り切れ</SelectItem>
-						</SelectContent>
-					</Select>
-					<ProductList products={filteredPostedProducts} />
-				</TabsContent>
-				<TabsContent value="purchase" className="mt-6">
-					<Select
-						onValueChange={(value) => setSelectedFilterPurchases(value)}
-						value={selectedFilterPurchases}
-					>
-						<ProfileSelectTrigger className="py-1 px-2 w-fit bg-dark-gray text-default-white mb-4">
-							<SelectValue placeholder="すべて" className="font-normal" />
-						</ProfileSelectTrigger>
-						<SelectContent className="w-20 z-50 bg-white">
-							<SelectItem value="すべて">すべて</SelectItem>
-							<SelectItem value="売り出し中">売り出し</SelectItem>
-							<SelectItem value="取引中">取引中</SelectItem>
-							<SelectItem value="売り切れ">売り切れ</SelectItem>
-						</SelectContent>
-					</Select>
-					<ProductList products={filteredPurchasedProducts} />
-				</TabsContent>
-			</Tabs>
-		</div>
-	);
-};
+      <Tabs defaultValue='sale' className='max-w-96 w-80 mx-auto'>
+        <TabsList className='grid w-full grid-cols-2'>
+          <TabsTrigger value='sale' className='border-b-secondary-gray'>
+            投稿した商品
+          </TabsTrigger>
+          <TabsTrigger value='purchase'>購入した商品</TabsTrigger>
+        </TabsList>
+        <TabsContent value='sale' className='mt-6 w-full mx-auto'>
+          <Select
+            onValueChange={value => setSelectedFilterPosts(value)}
+            value={selectedFilterPosts}
+          >
+            <ProfileSelectTrigger className='py-1 px-2 w-fit bg-dark-gray text-default-white mb-4'>
+              <SelectValue placeholder='すべて' className='font-normal' />
+            </ProfileSelectTrigger>
+            <SelectContent className='w-16 z-50 bg-default-white'>
+              <SelectItem value='すべて'>すべて</SelectItem>
+              <SelectItem value='売り出し中'>売り出し</SelectItem>
+              <SelectItem value='取引中'>取引中</SelectItem>
+              <SelectItem value='売り切れ'>売り切れ</SelectItem>
+            </SelectContent>
+          </Select>
+          <ProductList products={filteredPostedProducts} />
+        </TabsContent>
+        <TabsContent value='purchase' className='mt-6'>
+          <Select
+            onValueChange={value => setSelectedFilterPurchases(value)}
+            value={selectedFilterPurchases}
+          >
+            <ProfileSelectTrigger className='py-1 px-2 w-fit bg-dark-gray text-default-white mb-4'>
+              <SelectValue placeholder='すべて' className='font-normal' />
+            </ProfileSelectTrigger>
+            <SelectContent className='w-20 z-50 bg-white'>
+              <SelectItem value='すべて'>すべて</SelectItem>
+              <SelectItem value='売り出し中'>売り出し</SelectItem>
+              <SelectItem value='取引中'>取引中</SelectItem>
+              <SelectItem value='売り切れ'>売り切れ</SelectItem>
+            </SelectContent>
+          </Select>
+          <ProductList products={filteredPurchasedProducts} />
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}

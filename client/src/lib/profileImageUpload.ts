@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export const profileImageUpload = async (file: File): Promise<string> => {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', 'Canmeet');
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('upload_preset', 'Canmeet')
 
   try {
     const response = await axios.post(
@@ -13,16 +13,15 @@ export const profileImageUpload = async (file: File): Promise<string> => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      }
-    );
+      },
+    )
 
     if (response.status === 200) {
-      return response.data.secure_url;
-    } else {
-      throw new Error('Error uploading file to Cloudinary');
+      return response.data.secure_url
     }
+    throw new Error('Error uploading file to Cloudinary')
   } catch (error) {
-    console.error('Error uploading file to Cloudinary:', error);
-    throw error;
+    console.error('Error uploading file to Cloudinary:', error)
+    throw error
   }
 }

@@ -11,34 +11,33 @@ export type RoomType = {
 	messages: MessageType[];
 };
 
-
 const roomSchema = new mongoose.Schema(
-	{
-		product: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Product",
-		},
-		buyer: {
+  {
+    product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
+      ref: 'Product',
+    },
+    buyer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
+      ref: 'User',
+      required: true,
     },
-		messages: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "Message",
-				default: [],
-			},
-		],
-	},
-	{ timestamps: true },
-);
+    messages: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message',
+        default: [],
+      },
+    ],
+  },
+  { timestamps: true },
+)
 
 const Room = mongoose.model<RoomType>("Room", roomSchema);
 
-export default Room;
+export default Room

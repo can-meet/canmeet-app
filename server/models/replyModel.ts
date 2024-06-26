@@ -11,29 +11,29 @@ export type ReplyType = {
 };
 
 const replySchema = new mongoose.Schema(
-	{
-		user: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
-		comment: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Comment",
-			required: true,
-		},
-		text: {
-			type: String,
-			required: true,
-		},
-		createdAt: {
-			type: Date,
-			default: Date.now,
-		},
-	},
-	{ timestamps: true },
-);
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    comment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { timestamps: true },
+)
 
 const Reply = mongoose.model<ReplyType>("Reply", replySchema);
 
-export default Reply;
+export default Reply

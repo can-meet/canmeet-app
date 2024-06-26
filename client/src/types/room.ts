@@ -8,4 +8,5 @@ export type RoomType = {
 	buyer: UserType;
   seller: UserType;
 	messages: MessageType[];
-};
+}
+

@@ -6,4 +6,4 @@ export type MessageType = {
 	text: string;
 	isRead: boolean;
 	createdAt: Date;
-};
+}

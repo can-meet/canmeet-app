@@ -1,59 +1,74 @@
-import { Stepper } from "@/components/layout/Stepper";
-import { SignUpStepOne } from "@/components/signup/SignUpStepOne";
-import { SignUpStepThree } from "@/components/signup/SignUpStepThree";
-import { SignUpStepTwo } from "@/components/signup/SignUpStepTwo";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Stepper } from '@/components/layout/Stepper'
+import { SignUpStepOne } from '@/components/signup/SignUpStepOne'
+import { SignUpStepThree } from '@/components/signup/SignUpStepThree'
+import { SignUpStepTwo } from '@/components/signup/SignUpStepTwo'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import {
 	signUpStepOneSchema,
 	signUpStepTwoSchema,
-} from "@/schema/signup";
-import { useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { useSignUp } from "@/hooks/auth/useSignUp";
+} from "@/schema/signup"
+import { useState } from "react"
+import { IoIosArrowBack } from "react-icons/io"
+import { Link, useNavigate } from "react-router-dom"
+import { FcGoogle } from "react-icons/fc"
+import { useSignUp } from "@/hooks/auth/useSignUp"
 
 export enum STEPS {
-	FORM = 0,
-	PROFILE = 1,
-	CONFIRM = 2,
+  FORM = 0,
+  PROFILE = 1,
+  CONFIRM = 2,
 }
 
 export const SignUp = () => {
+
   const [step, setStep] = useState(STEPS.FORM);
   const [complete] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
   const navigate = useNavigate();
 	const { form, onSubmit } = useSignUp();
-  
 
   const onBack = () => {
-    setStep((value) => value - 1);
+    setStep(value => value - 1)
   }
 
-	const onNext = () => {
-		const currentSchema =
-			step === STEPS.FORM ? signUpStepOneSchema : signUpStepTwoSchema;
-		const result = currentSchema.safeParse(form.getValues());
-		if (result.success) {
-			setStep((value) => value + 1);
-		}
-	};
-
+  const onNext = () => {
+    const currentSchema =
+      step === STEPS.FORM ? signUpStepOneSchema : signUpStepTwoSchema
+    const result = currentSchema.safeParse(form.getValues())
+    if (result.success) {
+      setStep(value => value + 1)
+    }
+  }
 
 	const getSectionComponent = () => {
     switch (step) {
       case STEPS.FORM:
-        return <SignUpStepOne form={form} onNext={onNext} /> ;
+        return <SignUpStepOne form={form} onNext={onNext} />
       case STEPS.PROFILE:
-        return <SignUpStepTwo form={form} onNext={onNext} onBack={onBack} imagePreview={imagePreview} setImagePreview={setImagePreview} /> ;
+        return (
+          <SignUpStepTwo
+            form={form}
+            onNext={onNext}
+            onBack={onBack}
+            imagePreview={imagePreview}
+            setImagePreview={setImagePreview}
+          />
+        )
       case STEPS.CONFIRM:
-        return <SignUpStepThree form={form} onSubmit={onSubmit} onBack={onBack} imagePreview={imagePreview} setImagePreview={setImagePreview} /> ;
+        return (
+          <SignUpStepThree
+            form={form}
+            onSubmit={onSubmit}
+            onBack={onBack}
+            imagePreview={imagePreview}
+            setImagePreview={setImagePreview}
+          />
+        )
       default:
-        return <div>Unknown step</div>;
+        return <div>Unknown step</div>
     }
-  };
+  }
 
 	return (
 		<>
@@ -91,3 +106,4 @@ export const SignUp = () => {
 		</>
 	);
 };
+

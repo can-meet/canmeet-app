@@ -4,7 +4,7 @@ import { MessageCard } from "./MessageCard"
 
 type MessageListProps = {
   messages: MessageType[]
-  messagesEndRef: React.RefObject<HTMLDivElement>;
+  messagesEndRef: React.RefObject<HTMLDivElement>
 }
 
 export const MessageList = ({ messages, messagesEndRef }: MessageListProps) => {
@@ -14,7 +14,7 @@ export const MessageList = ({ messages, messagesEndRef }: MessageListProps) => {
         <MessageCard
           key={message._id}
           message={message}
-          isLastMessage={index === messages.length - 1} 
+          isLastMessage={index === messages.length - 1}
         />
       ))}
       <div ref={messagesEndRef} />
