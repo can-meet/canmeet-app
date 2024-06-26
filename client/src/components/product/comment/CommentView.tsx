@@ -108,11 +108,13 @@ export const CommentView = ({ product }: CommentListProps) => {
             />
           )}
           {/* 返信するボタンを押したら、コメントリストの上指定されたコメントが表示される */}
-          <CommentCardForReply
-            comment={selectedComments[0]}
-            replySelected={replySelected}
-            repliesUpdated={repliesUpdated}
-          />
+          {selectedComments.length > 0 && (
+            <CommentCardForReply
+              comment={selectedComments[0]}
+              replySelected={replySelected}
+              repliesUpdated={repliesUpdated}
+            />
+          )}
         </div>
 
         <DrawerFooter>
