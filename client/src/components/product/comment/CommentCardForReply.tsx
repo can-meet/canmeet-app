@@ -1,18 +1,18 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import type { Comment } from "@/types/comment";
+import { CommentType } from "@/types/comment";
+import { ReplyType } from "@/types/reply";
 import { ReplyList } from "../reply/ReplyList";
 import { useEffect, useState } from "react";
-import { Reply } from "@/types/reply";
 import axios from "axios";
 
 type CommentCardForReplyProps = {
-	comment: Comment;
+	comment: CommentType;
   replySelected: boolean;
   repliesUpdated: boolean;
 };
 
 export const CommentCardForReply = ({ comment, replySelected, repliesUpdated }: CommentCardForReplyProps) => {
-  const [replies, setReplies] = useState<Reply[]>([]);
+  const [replies, setReplies] = useState<ReplyType[]>([]);
 	const commentId = comment._id;
 
 	useEffect(() => {

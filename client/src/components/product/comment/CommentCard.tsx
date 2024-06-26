@@ -6,20 +6,20 @@ import {
 } from "@/components/ui/accordion";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import type { Comment } from "@/types/comment";
+import { CommentType } from "@/types/comment";
+import { ReplyType } from "@/types/reply";
 import { ReplyButton } from "../reply/ReplyButton";
 import { ReplyList } from "../reply/ReplyList";
 import { useEffect, useState } from "react";
-import { Reply } from "@/types/reply";
 import axios from "axios";
 
 type CommentCardProps = {
 	toggleReplyForComment: (id: string) => void;
-	comment: Comment;
+	comment: CommentType;
 };
 
 export const CommentCard = ({ toggleReplyForComment, comment }: CommentCardProps) => {
-	const [replies, setReplies] = useState<Reply[]>([]);
+	const [replies, setReplies] = useState<ReplyType[]>([]);
 	const commentId = comment._id;
 
 	useEffect(() => {

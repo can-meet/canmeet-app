@@ -1,11 +1,11 @@
-import type { Product } from "./product";
-import type { Reply } from "./reply";
-import type { User } from "./user";
+import { ProductType } from "./product";
+import { ReplyType } from "./reply";
+import { UserType } from "./user";
 
-export type Comment = {
+export type CommentType = {
 	_id: string;
 	text: string;
-	user: User;
-	product: Product;
-	replies: Reply[];
+	user: UserType;
+	product: ProductType;
+	replies: ReplyType[];
 };

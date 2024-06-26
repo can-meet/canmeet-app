@@ -1,8 +1,8 @@
-import type { Product } from "@/types/product";
+import { ProductType } from "@/types/product";
 import { Link } from "react-router-dom";
 
 type ProductCardProps = {
-	product: Product;
+	product: ProductType;
 };
 
 export const ProductCard = ({ product }: ProductCardProps) => {

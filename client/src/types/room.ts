@@ -1,11 +1,11 @@
-import { Message } from "./message";;
-import { Product } from "./product";
-import { User } from "./user";
+import { MessageType } from "./message";;
+import { ProductType } from "./product";
+import { UserType } from "./user";
 
-export type Room = {
+export type RoomType = {
 	_id: string;
-	product: Product;
-	buyer: User;
-  seller: User;
-	messages: Message[];
+	product: ProductType;
+	buyer: UserType;
+  seller: UserType;
+	messages: MessageType[];
 };

@@ -2,7 +2,7 @@ import { Loading } from "@/components/layout/loading/Loading";
 import { SearchBar } from "@/components/layout/search/SearchBar";
 import { ProductList } from "@/components/product/ProductList";
 import { useEffect, useMemo, useState } from "react";
-import type { Product } from "@/types/product";
+import { ProductType } from "@/types/product";
 import { Modal } from "@/components/layout/Modal";
 import registerImage from "/register-account-completed.png";
 import editCompleteImage from "/edit-product-completed.png";
@@ -29,7 +29,7 @@ export const Home = () => {
 	const filteredProducts = useMemo(() => {
     if (!products) return [];
 		if (!query) return products;
-    return products.filter((product: Product) =>
+    return products.filter((product: ProductType) =>
       product.product_name.toLowerCase().includes(query.toLowerCase())
     );
   }, [products, query]);

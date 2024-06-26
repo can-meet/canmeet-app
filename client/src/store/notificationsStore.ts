@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import axios from 'axios';
-import { Notification } from '@/types/notification';
+import { NotificationType } from '@/types/notification';
 
 type NotificationState = {
-  notifications: Notification[];
+  notifications: NotificationType[];
   fetchNotifications: (userId: string) => void;
 }
 

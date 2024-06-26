@@ -1,14 +1,12 @@
-import type { Product } from "./product";
+import { ProductType } from "./product";
 
-export type User = {
+export type UserType = {
 	_id: string;
 	username: string;
 	email: string;
 	password: string;
 	profilePicture: string;
 	isAdmin: boolean;
-	postedProducts: Product[];
-	purchasedProducts: Product[];
-	// comments: Comment[];
-	// replies: Reply[];
+	postedProducts: ProductType[];
+	purchasedProducts: ProductType[];
 };

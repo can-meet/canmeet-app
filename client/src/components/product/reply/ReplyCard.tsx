@@ -1,8 +1,8 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import type { Reply } from "@/types/reply";
+import { ReplyType } from "@/types/reply";
 
 type ReplyCardProps = {
-	reply: Reply;
+	reply: ReplyType;
 };
 
 export const ReplyCard = ({ reply }: ReplyCardProps) => {

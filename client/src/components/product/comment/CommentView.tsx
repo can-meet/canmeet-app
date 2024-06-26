@@ -1,4 +1,5 @@
-import type { Comment } from "@/types/comment";
+import { CommentType } from "@/types/comment";
+import { DetailProductType } from "@/types/product";
 import axios from "axios";
 import CommentIcon from "/comment.svg"
 import {
@@ -12,7 +13,6 @@ import {
 import { IoIosArrowBack } from "react-icons/io";
 
 import { useEffect, useState } from 'react';
-import DetailProduct from '@/pages/product/DetailProduct';
 import { CommentForm } from './CommentForm';
 import { CommentList } from "./CommentList";
 import { ReplyForm } from "../reply/ReplyForm";
@@ -20,12 +20,12 @@ import { CommentCardForReply } from "./CommentCardForReply";
 
 
 type CommentListProps = {
-  product: DetailProduct;
+  product: DetailProductType;
 }
 
 export const CommentView = ({ product }: CommentListProps) => {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [selectedComments, setSelectedComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<CommentType[]>([]);
+  const [selectedComments, setSelectedComments] = useState<CommentType[]>([]);
   const [commentsUpdated, setCommentsUpdated] = useState<boolean>(false);
   const [repliesUpdated, setRepliesUpdated] = useState<boolean>(false);
   const [commentScrollDown, setCommentScrollDown] = useState<boolean>(false);

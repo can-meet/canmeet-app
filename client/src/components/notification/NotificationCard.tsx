@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Notification } from "@/types/notification";
+import { NotificationType } from "@/types/notification";
 import { useNavigate } from 'react-router-dom';
 
 type NotificationCardProps = {
-  notification: Notification;
+  notification: NotificationType;
 };
 
 

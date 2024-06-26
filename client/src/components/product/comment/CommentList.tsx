@@ -1,9 +1,9 @@
-import type { Comment } from "@/types/comment";
+import { CommentType } from "@/types/comment";
 import { CommentCard } from './CommentCard';
 
 
 type CommentListProps = {
-  comments: Comment[];
+  comments: CommentType[];
   toggleReplyForComment: (id: string) => void;
 }
 
