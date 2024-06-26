@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { type SubmitHandler, useForm, set } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { UserSchema, userResolver } from "@/schema/user";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/store/authStore";
