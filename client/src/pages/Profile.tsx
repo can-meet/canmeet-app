@@ -11,53 +11,25 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { useState } from "react";
+import { BsPencilFill } from "react-icons/bs";
+import { IoCreate } from "react-icons/io5";
+import { useUpdateUser } from "@/hooks/user/useUpdateUser";
+import { useAuthStore } from "@/store/authStore";
+import { ProductType } from "@/types/product";
 import { ProductList } from "@/components/product/ProductList";
-import type { RootState } from "@/redux/store";
-import type { Product } from "@/types/product";
-import type { User } from "@/types/user";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Loading } from "@/components/layout/loading/Loading";
+
+
 
 export const Profile = () => {
-	const [loading, setLoading] = useState<boolean>(true);
 	const [selectedFilterPosts, setSelectedFilterPosts] =
 		useState<string>("すべて");
 	const [selectedFilterPurchases, setSelectedFilterPurchases] =
 		useState<string>("すべて");
-	const [user, setUser] = useState<User>({
-		_id: "",
-		username: "",
-		email: "",
-		password: "",
-		profilePicture: "",
-		isAdmin: false,
-		postedProducts: [],
-		purchasedProducts: [],
-	});
-	const { currentUser } = useSelector((state: RootState) => state.user);
+	const { currentUser } = useAuthStore();
+	const { form, onSubmit, isEditing, setIsEditing } = useUpdateUser();
 
-	useEffect(() => {
-		const fetchUserData = async () => {
-			try {
-				if (currentUser) {
-					const response = await axios.get(
-						`${import.meta.env.VITE_API_URL}/users/${currentUser?._id}`,
-					);
-					setUser(response.data);
-				}
-			} catch (error) {
-				console.error("Error fetching products:", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchUserData();
-	}, []);
-
-	const filterProducts = (products: Product[], selectedFilter: string) => {
+	const filterProducts = (products: ProductType[], selectedFilter: string) => {
 		return products.filter((product) => {
 			if (selectedFilter === "すべて") {
 				return true;
@@ -72,29 +44,41 @@ export const Profile = () => {
 	};
 
 	const filteredPostedProducts = filterProducts(
-		user.postedProducts,
+		currentUser?.postedProducts ?? [],
 		selectedFilterPosts,
 	);
 	const filteredPurchasedProducts = filterProducts(
-		user.purchasedProducts,
+		currentUser?.purchasedProducts ?? [],
 		selectedFilterPurchases,
 	);
-
-	if (loading) {
-		return <Loading />;
-	}
 
   return (
     <div className='mt-20 mb-12 flex flex-col items-center justify-center'>
       
       <div className="relative">
 				<Avatar className="object-cover w-20 h-20" >
-					<AvatarImage src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
+					<AvatarImage src={currentUser?.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
 					<AvatarFallback>PROFILE IMAGE</AvatarFallback>
 				</Avatar>
 			</div>
-      
-			<h2 className="my-4">{user.username}</h2>
+
+			{isEditing ? (
+				<form className='my-4 flex gap-2 relative' onSubmit={form.handleSubmit(onSubmit)}>
+					<input 
+						type="text" 
+						{...form.register('username', { required: true })}
+						className="border px-2 py-1 rounded-md bg-default-white focus:border-2 focus:outline-none focus:border-secondary-gray"
+					/>
+					<button type="submit" className="absolute top-1 right-0 z-10 px-1.5 py-0.5 rounded">
+						<IoCreate onClick={() => setIsEditing(true)} className="text-xl cursor-pointer" />
+					</button>
+				</form>
+      ) : (
+        <h2 className="my-4 flex items-center gap-1">
+          {currentUser?.username}
+          <BsPencilFill onClick={() => setIsEditing(true)} className="cursor-pointer" />
+        </h2>
+      )}
 
 			<Tabs defaultValue="sale" className="max-w-96 w-80 mx-auto">
 				<TabsList className="grid w-full grid-cols-2">
