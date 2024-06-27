@@ -6,7 +6,6 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import type DetailProduct from '@/pages/product/DetailProduct'
 import type { RootState } from '@/redux/store'
 import { useState } from 'react'
 import { GoPencil } from 'react-icons/go'
@@ -18,9 +17,10 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import DeleteForm from './DeleteForm'
 import StatusForm from './StatusForm'
+import { DetailProductType } from '@/types/product'
 
 type PopupMenuProps = {
-  product: DetailProduct
+  product: DetailProductType
 }
 
 const PopupMenu = ({ product }: PopupMenuProps) => {
