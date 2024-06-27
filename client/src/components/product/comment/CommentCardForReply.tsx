@@ -19,8 +19,6 @@ export const CommentCardForReply = ({
   const [replies, setReplies] = useState<ReplyType[]>([])
 	const commentId = comment?._id
 
-	console.log(comment)
-
   useEffect(() => {
     const getReplies = async () => {
       try {
