@@ -1,7 +1,7 @@
-import type { Comment } from './comment'
-import type { User } from './user'
+import type { CommentType } from './comment'
+import type { UserType } from './user'
 
-export type Product = {
+export type ProductType = {
   _id: string
   product_name: string
   price: number
@@ -11,8 +11,8 @@ export type Product = {
   payment_method: string
   location: string
   sale_status: string
-  user: User
-  comments: Comment[]
+  user: UserType
+  comments: CommentType[]
 }
 
 export type DetailProductType = {
@@ -30,6 +30,6 @@ export type DetailProductType = {
     username: string
     profilePicture: string
   }
-  comments: Comment[]
+  comments: CommentType[]
   createdAt: string
 }

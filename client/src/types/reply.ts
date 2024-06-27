@@ -1,10 +1,10 @@
-import type { Comment } from './comment'
-import type { User } from './user'
+import type { CommentType } from './comment'
+import type { UserType } from './user'
 
-export type Reply = {
+export type ReplyType = {
   _id: string
   text: string
   createdAt: string
-  user: User
-  comment: Comment
+  user: UserType
+  comment: CommentType
 }

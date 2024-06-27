@@ -6,18 +6,17 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import type { RootState } from '@/redux/store'
+import { useAuthStore } from '@/store/authStore'
+import type { DetailProductType } from '@/types/product'
 import { useState } from 'react'
 import { GoPencil } from 'react-icons/go'
 import { IoIosArrowBack } from 'react-icons/io'
 import { IoMenuOutline } from 'react-icons/io5'
 import { IoEllipsisHorizontal } from 'react-icons/io5'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import DeleteForm from './DeleteForm'
 import StatusForm from './StatusForm'
-import { DetailProductType } from '@/types/product'
 
 type PopupMenuProps = {
   product: DetailProductType
@@ -29,8 +28,7 @@ const PopupMenu = ({ product }: PopupMenuProps) => {
   const [isOnChangeStatusStep, setIsOnChangeStatusStep] =
     useState<boolean>(false)
   const [isOnDeleteStep, setIsOnDeleteStep] = useState<boolean>(false)
-
-  const { currentUser } = useSelector((state: RootState) => state.user)
+  const { currentUser } = useAuthStore()
 
   return (
     <div className='flex justify-between items-center m-3'>

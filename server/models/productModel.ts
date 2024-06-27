@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
-import type { Comment } from './commentModel'
-import type { User } from './userModel'
+import { CommentType } from './commentModel'
+import { UserType } from './userModel'
 
-export type Product = {
+export type ProductType = {
   _id: string
   product_name: string
   price: number
@@ -12,8 +12,8 @@ export type Product = {
   payment_method: string
   location: string
   sale_status: string
-  user: User
-  comments: Comment[]
+  user: UserType
+  comments: CommentType[]
 }
 
 const productSchema = new mongoose.Schema(
@@ -79,6 +79,6 @@ const productSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-const Product = mongoose.model<Product>('Product', productSchema)
+const Product = mongoose.model<ProductType>('Product', productSchema)
 
 export default Product

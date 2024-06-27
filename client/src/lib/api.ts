@@ -1,4 +1,4 @@
-import { DetailProductType } from '@/types/product'
+import type { DetailProductType } from '@/types/product'
 import axios from 'axios'
 
 export const fetchProducts = async () => {

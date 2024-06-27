@@ -1,11 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { DrawerClose, DrawerFooter, DrawerHeader } from '@/components/ui/drawer'
-import type { RootState } from '@/redux/store'
+import { useAuthStore } from '@/store/authStore'
 import axios from 'axios'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { IoMdCheckmark } from 'react-icons/io'
-import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
 type StatusFormProps = {
@@ -16,8 +15,7 @@ const StatusForm = ({ productSaleStatus }: StatusFormProps) => {
   const { pid } = useParams()
   const navigate = useNavigate()
   const [status, setStatus] = useState<string>(productSaleStatus)
-
-  const { currentUser } = useSelector((state: RootState) => state.user)
+  const { currentUser } = useAuthStore()
 
   const handleSubmit = async (status: string) => {
     try {

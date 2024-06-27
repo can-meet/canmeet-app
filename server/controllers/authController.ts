@@ -54,3 +54,24 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 }
+
+export const googleLogin = async (req: Request, res: Response) => {
+  const { username, email, profilePicture } = req.body
+
+  try {
+    let user = await User.findOne({ email })
+    if (!user) {
+      user = new User({
+        username,
+        email,
+        profilePicture,
+      })
+      await user.save()
+    }
+
+    generateTokenAndSetCookie(user._id, res)
+    res.status(user ? 200 : 201).json(user)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+}

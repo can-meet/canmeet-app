@@ -27,18 +27,18 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { productImagesUpload } from '@/lib/productImagesUpload'
-import type { RootState } from '@/redux/store'
 import { type ProductSchema, productResolver } from '@/schema/product'
+import { useAuthStore } from '@/store/authStore'
 import axios from 'axios'
 import { type ChangeEvent, useState } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import postCompleteImage from '/post-product-completed.png'
 
 const CreateProduct = () => {
-  const { currentUser } = useSelector((state: RootState) => state.user)
+  const { currentUser } = useAuthStore()
+
   const form = useForm<ProductSchema>({
     mode: 'onChange',
     defaultValues: {

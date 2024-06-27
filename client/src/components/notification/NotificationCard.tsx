@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import type { Notification } from '@/types/notification'
+import type { NotificationType } from '@/types/notification'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 type NotificationCardProps = {
-  notification: Notification
+  notification: NotificationType
 }
 
 export const NotificationCard = ({ notification }: NotificationCardProps) => {

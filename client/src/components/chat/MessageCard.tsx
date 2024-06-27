@@ -1,16 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { formatTime } from '@/lib/formatTime'
-import type { RootState } from '@/redux/store'
-import type { Message } from '@/types/message'
-import { useSelector } from 'react-redux'
+import { useAuthStore } from '@/store/authStore'
+import type { MessageType } from '@/types/message'
 
 type MessageCardProps = {
-  message: Message
+  message: MessageType
   isLastMessage: boolean
 }
 
 export const MessageCard = ({ message, isLastMessage }: MessageCardProps) => {
-  const { currentUser } = useSelector((state: RootState) => state.user)
+  const { currentUser } = useAuthStore()
 
   return (
     <>

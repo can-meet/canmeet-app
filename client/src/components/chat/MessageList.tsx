@@ -1,8 +1,8 @@
-import type { Message } from '@/types/message'
+import type { MessageType } from '@/types/message'
 import { MessageCard } from './MessageCard'
 
 type MessageListProps = {
-  messages: Message[]
+  messages: MessageType[]
   messagesEndRef: React.RefObject<HTMLDivElement>
 }
 

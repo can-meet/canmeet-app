@@ -1,15 +1,15 @@
 import mongoose from 'mongoose'
-import type { User } from './userModel'
-import type { Product } from './productModel'
+import { UserType } from './userModel'
+import { ProductType } from './productModel'
 
-export type Notification = {
+export type NotificationType = {
   _id: string
-  receiver: User // 通知を受け取るユーザー
-  sender: User // 通知を送るユーザー
-  type: string // 通知の種類（purchase, message, comment)
-  content: string // 通知の内容
-  isRead: boolean // 未読か既読か
-  product: Product // 関連する商品
+  receiver: UserType
+  sender: UserType
+  type: string
+  content: string
+  isRead: boolean
+  product: ProductType
 }
 
 const notificationSchema = new mongoose.Schema(
@@ -58,7 +58,7 @@ const notificationSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-const Notification = mongoose.model<Notification>(
+const Notification = mongoose.model<NotificationType>(
   'Notification',
   notificationSchema,
 )

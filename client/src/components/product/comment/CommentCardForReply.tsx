@@ -1,12 +1,12 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import type { Comment } from '@/types/comment'
-import type { Reply } from '@/types/reply'
+import type { CommentType } from '@/types/comment'
+import type { ReplyType } from '@/types/reply'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { ReplyList } from '../reply/ReplyList'
 
 type CommentCardForReplyProps = {
-  comment: Comment
+  comment: CommentType
   replySelected: boolean
   repliesUpdated: boolean
 }
@@ -16,8 +16,8 @@ export const CommentCardForReply = ({
   replySelected,
   repliesUpdated,
 }: CommentCardForReplyProps) => {
-  const [replies, setReplies] = useState<Reply[]>([])
-  const commentId = comment._id
+  const [replies, setReplies] = useState<ReplyType[]>([])
+  const commentId = comment?._id
 
   useEffect(() => {
     const getReplies = async () => {

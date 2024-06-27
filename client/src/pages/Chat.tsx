@@ -2,17 +2,16 @@ import { MessageList } from '@/components/chat/MessageList'
 import { Loading } from '@/components/layout/loading/Loading'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Input } from '@/components/ui/input'
-import type { RootState } from '@/redux/store'
 import { type MessageSchema, messageResolver } from '@/schema/message'
-import type { Message } from '@/types/message'
-import type { Room } from '@/types/room'
+import { useAuthStore } from '@/store/authStore'
+import type { MessageType } from '@/types/message'
+import type { RoomType } from '@/types/room'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { VscSend } from 'react-icons/vsc'
-import { useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import io from 'socket.io-client'
 
@@ -23,10 +22,10 @@ export const Chat = () => {
   const { rid } = useParams()
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [room, setRoom] = useState<Room>()
-  const [messages, setMessages] = useState<Message[]>([])
+  const [room, setRoom] = useState<RoomType>()
+  const [messages, setMessages] = useState<MessageType[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const { currentUser } = useSelector((state: RootState) => state.user)
+  const { currentUser } = useAuthStore()
 
   const form = useForm<MessageSchema>({
     defaultValues: {
@@ -38,7 +37,7 @@ export const Chat = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
 
-    const getMessages = (message: Message) => {
+    const getMessages = (message: MessageType) => {
       setMessages(prev => [...prev, message])
     }
 
