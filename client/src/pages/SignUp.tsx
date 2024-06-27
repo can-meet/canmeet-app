@@ -4,6 +4,7 @@ import { SignUpStepThree } from '@/components/signup/SignUpStepThree'
 import { SignUpStepTwo } from '@/components/signup/SignUpStepTwo'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useGoogleAuth } from '@/hooks/auth/useGoogleAuth'
 import { useSignUp } from '@/hooks/auth/useSignUp'
 import { signUpStepOneSchema, signUpStepTwoSchema } from '@/schema/signup'
 import { useState } from 'react'
@@ -23,6 +24,7 @@ export const SignUp = () => {
   const [imagePreview, setImagePreview] = useState<string>('')
   const navigate = useNavigate()
   const { form, onSubmit } = useSignUp()
+  const { signInWithGoogle } = useGoogleAuth()
 
   const onBack = () => {
     setStep(value => value - 1)
@@ -87,7 +89,7 @@ export const SignUp = () => {
           <Button
             variant='link'
             className='flex items-center gap-4 my-4 mb-5 bg-gray-100 hover:no-underline hover:bg-gray-200'
-            // onClick={() => navigate("/signup")}
+            onClick={signInWithGoogle}
           >
             <FcGoogle className='h-4 w-4' />
             Googleでログインする
