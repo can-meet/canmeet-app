@@ -1,20 +1,22 @@
-import { create } from 'zustand';
-import axios from 'axios';
-import { Notification } from '@/types/notification';
+import type { Notification } from '@/types/notification'
+import axios from 'axios'
+import { create } from 'zustand'
 
 type NotificationState = {
-  notifications: Notification[];
-  fetchNotifications: (userId: string) => void;
+  notifications: Notification[]
+  fetchNotifications: (userId: string) => void
 }
 
-export const useNotificationsStore = create<NotificationState>((set) => ({
+export const useNotificationsStore = create<NotificationState>(set => ({
   notifications: [],
   fetchNotifications: async (userId: string) => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/notifications/users/${userId}`);
-      set({ notifications: data });
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/notifications/users/${userId}`,
+      )
+      set({ notifications: data })
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   },
-}));
+}))

@@ -1,16 +1,16 @@
-import type { Reply } from "@/types/reply";
-import { ReplyCard } from "./ReplyCard";
+import type { Reply } from '@/types/reply'
+import { ReplyCard } from './ReplyCard'
 
 type ReplyListProps = {
-	replies: Reply[];
-};
+  replies: Reply[]
+}
 
 export const ReplyList = ({ replies }: ReplyListProps) => {
-	return (
-		<div className='flex flex-col gap-2'>
-			{replies.map((reply) => (
-				<ReplyCard key={reply._id} reply={reply} />
-			))}
-		</div>
-	);
-};
+  return (
+    <div className='flex flex-col gap-2'>
+      {replies.map(reply => (
+        <ReplyCard key={reply._id} reply={reply} />
+      ))}
+    </div>
+  )
+}

@@ -1,15 +1,17 @@
-import { IoMdClose } from "react-icons/io";
-import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { IoMdClose } from 'react-icons/io'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '../ui/button'
 
 type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  heading?: string;
-  img?: string;
-  text?: string;
-  link?: string;
-  btnText?: string;
+  isOpen: boolean
+  onClose: () => void
+  heading?: string
+  img?: string
+  text?: string
+  link?: string
+  btnText?: string
+  secondLink?: string
+  secondBtnText?: string
 }
 
 export const Modal = ({
@@ -20,33 +22,52 @@ export const Modal = ({
   text,
   link,
   btnText,
+  secondLink,
+  secondBtnText,
 }: ModalProps) => {
-  const navigate = useNavigate();
-  if(!isOpen) return null
+  const navigate = useNavigate()
+  if (!isOpen) return null
+
   return (
     <div
       onClick={onClose}
-      className="bg-slate-800/50 w-full h-screen mx-auto fixed top-0 left-0 z-50"
+      className='bg-slate-800/50 w-full h-screen mx-auto fixed top-0 left-0 z-50'
     >
       <div
-        onClick={(event) => event.stopPropagation()}
-        className="bg-default-white rounded-xl w-80 h-fit-content mx-auto relative top-1/4">
-          <button
-            onClick={onClose}
-            className="absolute top-4 left-4">
-            <IoMdClose />
-          </button>
-          <div className="flex flex-col items-center py-8 gap-3 w-64 mx-auto max-w-72">
-            <h3 className="text-lg font-semibold ">{heading}</h3>
-            <img src={img} alt="modal image" className="max-w-32" />
-            <p className="text-xs">{text}</p>
-            <Button 
+        onClick={event => event.stopPropagation()}
+        className='bg-default-white rounded-xl w-80 h-fit-content mx-auto relative top-1/4'
+      >
+        <button
+          onClick={onClose}
+          type='button'
+          className='absolute top-4 left-4'
+        >
+          <IoMdClose />
+        </button>
+        <div className='flex flex-col items-center py-8 gap-3 w-64 mx-auto max-w-72'>
+          <h3 className='text-lg font-semibold '>{heading}</h3>
+          <img src={img} alt='modal' className='max-w-32' />
+          <p className='text-xs'>{text}</p>
+          <div className='flex gap-x-2 w-full'>
+            <Button
               variant='blue'
-              className="text-default-white text-xs rounded-full w-64"
-              onClick={() => navigate(`${link}`)}>
-                {btnText}
+              className={`text-default-white text-xs rounded-full ${secondLink ? 'w-full' : 'w-64'}`}
+              onClick={() => navigate(`${link}`)}
+              type='button'
+            >
+              {btnText}
             </Button>
+            {secondLink && (
+              <Button
+                variant='red'
+                className='text-default-white text-xs rounded-full w-full'
+                onClick={() => navigate(`${secondLink}`)}
+              >
+                {secondBtnText}
+              </Button>
+            )}
           </div>
+        </div>
       </div>
     </div>
   )

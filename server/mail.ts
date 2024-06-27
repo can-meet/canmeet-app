@@ -1,17 +1,20 @@
-import nodemailer from 'nodemailer';
+import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD
-  }
-});
+    pass: process.env.EMAIL_PASSWORD,
+  },
+})
 
-const sendPurchaseNotification = (receiverEmail: string, productName: string) => {
+const sendPurchaseNotification = (
+  receiverEmail: string,
+  productName: string,
+) => {
   const mailOptions = {
     from: process.env.EMAIL,
     to: receiverEmail,
@@ -22,16 +25,16 @@ const sendPurchaseNotification = (receiverEmail: string, productName: string) =>
       <p>サイトを確認して、チャットを始めましょう。</p>
 
       <p>※このメールに返信をしても購入者とは連絡できません。</p>
-    `
-  };
+    `,
+  }
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('Error sending email: ', error);
+      console.log('Error sending email: ', error)
     } else {
-      console.log('Email sent: ', info.response);
+      console.log('Email sent: ', info.response)
     }
-  });
-};
+  })
+}
 
-export { sendPurchaseNotification };
+export { sendPurchaseNotification }
