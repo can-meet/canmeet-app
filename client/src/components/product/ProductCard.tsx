@@ -20,22 +20,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </p>
         </div>
 
-        {product.sale_status === '売り出し中' ? (
+        {product.sale_status === '取引中' ? (
           <div>
-            <p className='absolute top-2 right-1 z-10 text-xs'>売り出し</p>
-            <div className='absolute rounded-tr top-0 right-0 border-sale w-20 h-20 bg-sale opacity-95 clip-path' />
+            <div className='absolute inset-0 bg-slate-800/50 rounded' />
+            <span className='absolute inset-0 flex items-center justify-center z-10 text-xs text-white'>取引中</span>
           </div>
-        ) : product.sale_status === '取引中' ? (
+        ) : product.sale_status === '売り切れ' ? (
           <div>
-            <p className='absolute top-2 right-1 z-10 text-xs'>取引中</p>
-            <div className='absolute rounded-tr top-0 right-0 border-in-trade w-20 h-20 bg-in-trade opacity-95 clip-path' />
+            <div className='absolute inset-0 bg-slate-800/50 rounded' />
+            <span className='absolute inset-0 flex items-center justify-center z-10 text-xs text-white'>売り切れ</span>
           </div>
-        ) : (
-          <div>
-            <p className='absolute top-2 right-1 z-10 text-xs'>売り切れ</p>
-            <div className='absolute rounded-tr top-0 right-0 border-sold-out w-20 h-20 bg-sold-out opacity-95 clip-path' />
-          </div>
-        )}
+        ) : null}
       </div>
     </Link>
   )
