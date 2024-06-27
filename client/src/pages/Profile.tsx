@@ -14,6 +14,8 @@ import { useUpdateUser } from "@/hooks/user/useUpdateUser";
 import { useAuthStore } from "@/store/authStore";
 import { ProductType } from "@/types/product";
 import { ProductList } from "@/components/product/ProductList";
+import { useGetUser } from '@/hooks/user/useGetUser';
+import { Loading } from '@/components/layout/loading/Loading';
 
 
 export const Profile = () => {
@@ -23,6 +25,8 @@ export const Profile = () => {
 		useState<string>("すべて");
 	const { currentUser } = useAuthStore();
 	const { form, onSubmit, isEditing, setIsEditing } = useUpdateUser();
+  const { user, loading } = useGetUser();
+
 
 	const filterProducts = (products: ProductType[], selectedFilter: string) => {
 		return products.filter((product) => {
@@ -39,13 +43,17 @@ export const Profile = () => {
 	};
 
 	const filteredPostedProducts = filterProducts(
-		currentUser?.postedProducts ?? [],
+		user?.postedProducts ?? [],
 		selectedFilterPosts,
 	);
 	const filteredPurchasedProducts = filterProducts(
-		currentUser?.purchasedProducts ?? [],
+		user?.purchasedProducts ?? [],
 		selectedFilterPurchases,
 	);
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <div className='mt-20 mb-12 flex flex-col items-center justify-center'>
