@@ -6,13 +6,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import type { Comment } from '@/types/comment'
+import type { CommentType } from '@/types/comment'
+import type { DetailProductType } from '@/types/product'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import CommentIcon from '/comment.svg'
-
-import type { DetailProductType } from '@/types/product'
-import { useEffect, useState } from 'react'
 import { ReplyForm } from '../reply/ReplyForm'
 import { CommentCardForReply } from './CommentCardForReply'
 import { CommentForm } from './CommentForm'
@@ -23,8 +22,8 @@ type CommentListProps = {
 }
 
 export const CommentView = ({ product }: CommentListProps) => {
-  const [comments, setComments] = useState<Comment[]>([])
-  const [selectedComments, setSelectedComments] = useState<Comment[]>([])
+  const [comments, setComments] = useState<CommentType[]>([])
+  const [selectedComments, setSelectedComments] = useState<CommentType[]>([])
   const [commentsUpdated, setCommentsUpdated] = useState<boolean>(false)
   const [repliesUpdated, setRepliesUpdated] = useState<boolean>(false)
   const [commentScrollDown, setCommentScrollDown] = useState<boolean>(false)
@@ -108,11 +107,13 @@ export const CommentView = ({ product }: CommentListProps) => {
             />
           )}
           {/* 返信するボタンを押したら、コメントリストの上指定されたコメントが表示される */}
-          <CommentCardForReply
-            comment={selectedComments[0]}
-            replySelected={replySelected}
-            repliesUpdated={repliesUpdated}
-          />
+          {selectedComments.length > 0 && (
+            <CommentCardForReply
+              comment={selectedComments[0]}
+              replySelected={replySelected}
+              repliesUpdated={repliesUpdated}
+            />
+          )}
         </div>
 
         <DrawerFooter>

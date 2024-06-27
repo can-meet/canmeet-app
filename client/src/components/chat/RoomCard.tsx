@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { timeAgo } from '@/lib/timeAgo'
-import type { Room } from '@/types/room'
+import type { RoomType } from '@/types/room'
 import { Link } from 'react-router-dom'
 
 type RoomCardProps = {
-  room: Room
+  room: RoomType
   recipientName: string
   recipientImage: string
 }

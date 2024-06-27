@@ -1,8 +1,8 @@
-import type { User } from './user'
+import type { UserType } from './user'
 
-export type Message = {
+export type MessageType = {
   _id: string
-  sender: User
+  sender: UserType
   text: string
   isRead: boolean
   createdAt: Date

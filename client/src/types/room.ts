@@ -1,11 +1,11 @@
-import type { Message } from './message'
-import type { Product } from './product'
-import type { User } from './user'
+import type { MessageType } from './message'
+import type { ProductType } from './product'
+import type { UserType } from './user'
 
-export type Room = {
+export type RoomType = {
   _id: string
-  product: Product
-  buyer: User
-  seller: User
-  messages: Message[]
+  product: ProductType
+  buyer: UserType
+  seller: UserType
+  messages: MessageType[]
 }

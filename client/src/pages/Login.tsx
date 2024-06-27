@@ -1,49 +1,16 @@
 import { LoginForm } from '@/components/login/LoginForm'
 import { Button } from '@/components/ui/button'
-import { useToast } from '@/components/ui/use-toast'
-import { type LoginSchema, loginResolver } from '@/schema/login'
-import axios from 'axios'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Separator } from '@/components/ui/separator'
+import { useGoogleAuth } from '@/hooks/auth/useGoogleAuth'
+import { useLogin } from '@/hooks/auth/useLogin'
+import { FcGoogle } from 'react-icons/fc'
 import { IoIosArrowBack } from 'react-icons/io'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { loginError, loginStart, loginSuccess } from '../redux/userSlice'
 
 export const Login = () => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { toast } = useToast()
-
-  const form = useForm<LoginSchema>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    mode: 'onBlur',
-    resolver: loginResolver,
-  })
-
-  const onSubmit: SubmitHandler<LoginSchema> = data => {
-    dispatch(loginStart())
-
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/auth/login`, data)
-      .then(res => {
-        dispatch(loginSuccess(res.data))
-        toast({
-          title: 'Successfully logged in!',
-        })
-        navigate('/')
-      })
-      .catch(err => {
-        dispatch(loginError(err.response.data.error))
-        toast({
-          variant: 'destructive',
-          title: `${err.response.data.message}`,
-          description: 'Please check your entry and try again.',
-        })
-      })
-  }
+  const { form, onSubmit } = useLogin()
+  const { signInWithGoogle } = useGoogleAuth()
 
   return (
     <>
@@ -56,6 +23,16 @@ export const Login = () => {
         <div className='flex flex-col items-center mt-4'>
           <h3 className='text-lg font-semibold text-center mb-6'>ログイン</h3>
           <LoginForm form={form} onSubmit={onSubmit} />
+          <Separator className='mt-4 w-72 bg-secondary-gray' />
+          <Button
+            variant='link'
+            type='button'
+            className='flex items-center gap-4 my-4 mb-5 text- bg-gray-100 hover:no-underline hover:bg-gray-200'
+            onClick={signInWithGoogle}
+          >
+            <FcGoogle className='h-4 w-4' />
+            Googleでログインする
+          </Button>
           <Button
             variant='link'
             className='text-blue-500 text-xs'

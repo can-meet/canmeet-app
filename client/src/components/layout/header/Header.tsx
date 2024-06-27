@@ -1,11 +1,9 @@
 import { Button } from '@/components/ui/button'
-import type { RootState } from '@/redux/store'
-import { logoutSuccess } from '@/redux/userSlice'
-import type { Notification } from '@/types/notification'
+import { useAuthStore } from '@/store/authStore'
+import type { NotificationType } from '@/types/notification'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { FaChevronLeft, FaRegBell } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Logo from '/logo.png'
 import SideMenu from './SideMenu'
@@ -13,12 +11,11 @@ import SideMenu from './SideMenu'
 export const Header = () => {
   const { pid } = useParams()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { currentUser } = useSelector((state: RootState) => state.user)
+  const { currentUser, clearCurrentUser } = useAuthStore()
   const location = useLocation()
   const isLoggedIn = currentUser !== null
   const [unreadNotifications, setUnreadNotifications] = useState<
-    Notification[]
+    NotificationType[]
   >([])
 
   useEffect(() => {
@@ -35,7 +32,7 @@ export const Header = () => {
   }, [currentUser, currentUser?._id])
 
   const handleLogout = async () => {
-    dispatch(logoutSuccess())
+    clearCurrentUser()
   }
 
   return (

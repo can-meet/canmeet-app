@@ -1,8 +1,8 @@
-import type { Notification } from '@/types/notification'
+import type { NotificationType } from '@/types/notification'
 import { NotificationCard } from './NotificationCard'
 
 type NotificationListProps = {
-  notifications: Notification[]
+  notifications: NotificationType[]
 }
 
 export const NotificationList = ({ notifications }: NotificationListProps) => {

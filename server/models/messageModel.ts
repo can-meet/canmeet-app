@@ -1,13 +1,11 @@
 import mongoose from 'mongoose'
-import type { User } from './userModel'
-import type { Room } from './roomModel'
+import { UserType } from './userModel'
 
-export type Message = {
+export type MessageType = {
   _id: string
-  sender: User
+  sender: UserType
   text: string
   isRead: boolean
-  room: Room
 }
 
 const messageSchema = new mongoose.Schema(
@@ -39,6 +37,6 @@ const messageSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-const Message = mongoose.model<Message>('Message', messageSchema)
+const Message = mongoose.model<MessageType>('Message', messageSchema)
 
 export default Message

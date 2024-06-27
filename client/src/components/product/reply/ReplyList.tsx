@@ -1,8 +1,8 @@
-import type { Reply } from '@/types/reply'
+import type { ReplyType } from '@/types/reply'
 import { ReplyCard } from './ReplyCard'
 
 type ReplyListProps = {
-  replies: Reply[]
+  replies: ReplyType[]
 }
 
 export const ReplyList = ({ replies }: ReplyListProps) => {

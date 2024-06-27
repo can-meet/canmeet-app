@@ -4,7 +4,8 @@ import { SearchBar } from '@/components/layout/search/SearchBar'
 import { ProductList } from '@/components/product/ProductList'
 import { Button } from '@/components/ui/button'
 import { fetchProducts } from '@/lib/api'
-import type { Product } from '@/types/product'
+import type { ProductType } from '@/types/product'
+
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
@@ -28,7 +29,7 @@ export const Home = () => {
   const filteredProducts = useMemo(() => {
     if (!products) return []
     if (!query) return products
-    return products.filter((product: Product) =>
+    return products.filter((product: ProductType) =>
       product.product_name.toLowerCase().includes(query.toLowerCase()),
     )
   }, [products, query])
