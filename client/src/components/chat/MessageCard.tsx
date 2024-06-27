@@ -1,7 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { formatTime } from "@/lib/formatTime"
-import { useAuthStore } from "@/store/authStore"
-import { MessageType } from "@/types/message"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { formatTime } from '@/lib/formatTime'
+import { useAuthStore } from '@/store/authStore'
+import type { MessageType } from '@/types/message'
 
 type MessageCardProps = {
   message: MessageType
@@ -9,7 +9,7 @@ type MessageCardProps = {
 }
 
 export const MessageCard = ({ message, isLastMessage }: MessageCardProps) => {
-  const { currentUser } = useAuthStore();
+  const { currentUser } = useAuthStore()
 
   return (
     <>

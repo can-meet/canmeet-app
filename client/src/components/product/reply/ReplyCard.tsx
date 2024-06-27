@@ -1,9 +1,9 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { ReplyType } from "@/types/reply";
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import type { ReplyType } from '@/types/reply'
 
 type ReplyCardProps = {
-	reply: ReplyType;
-};
+  reply: ReplyType
+}
 
 export const ReplyCard = ({ reply }: ReplyCardProps) => {
   return (

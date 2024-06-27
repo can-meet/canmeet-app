@@ -1,55 +1,56 @@
+import { Loading } from '@/components/layout/loading/Loading'
+import { ProductList } from '@/components/product/ProductList'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
-	ProfileSelectTrigger,
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
-import { BsPencilFill } from "react-icons/bs";
-import { IoCreate } from "react-icons/io5";
-import { useUpdateUser } from "@/hooks/user/useUpdateUser";
-import { useAuthStore } from "@/store/authStore";
-import { ProductType } from "@/types/product";
-import { ProductList } from "@/components/product/ProductList";
-import { useGetUser } from '@/hooks/user/useGetUser';
-import { Loading } from '@/components/layout/loading/Loading';
-
+  ProfileSelectTrigger,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useGetUser } from '@/hooks/user/useGetUser'
+import { useUpdateUser } from '@/hooks/user/useUpdateUser'
+import { useAuthStore } from '@/store/authStore'
+import type { ProductType } from '@/types/product'
+import { useState } from 'react'
+import { FiEdit3 } from "react-icons/fi";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 export const Profile = () => {
-	const [selectedFilterPosts, setSelectedFilterPosts] =
-		useState<string>("すべて");
-	const [selectedFilterPurchases, setSelectedFilterPurchases] =
-		useState<string>("すべて");
-	const { currentUser } = useAuthStore();
-	const { form, onSubmit, isEditing, setIsEditing } = useUpdateUser();
-  const { user, loading } = useGetUser();
+  const [selectedFilterPosts, setSelectedFilterPosts] =
+    useState<string>('すべて')
+  const [selectedFilterPurchases, setSelectedFilterPurchases] =
+    useState<string>('すべて')
+  const { currentUser } = useAuthStore()
+  const { form, onSubmit, isEditing, setIsEditing } = useUpdateUser()
+  const { user, loading } = useGetUser()
 
+  const filterProducts = (products: ProductType[], selectedFilter: string) => {
+    return products.filter(product => {
+      if (selectedFilter === 'すべて') {
+        return true
+      }
+      if (selectedFilter === '売り出し中') {
+        return product.sale_status === '売り出し中'
+      }
+      if (selectedFilter === '取引中') {
+        return product.sale_status === '取引中'
+      }
+      if (selectedFilter === '売り切れ') {
+        return product.sale_status === '売り切れ'
+      }
+    })
+  }
 
-	const filterProducts = (products: ProductType[], selectedFilter: string) => {
-		return products.filter((product) => {
-			if (selectedFilter === "すべて") {
-				return true;
-			} else if (selectedFilter === "売り出し中") {
-				return product.sale_status === "売り出し中";
-			} else if (selectedFilter === "取引中") {
-				return product.sale_status === "取引中";
-			} else if (selectedFilter === "売り切れ") {
-				return product.sale_status === "売り切れ";
-			}
-		});
-	};
-
-	const filteredPostedProducts = filterProducts(
-		user?.postedProducts ?? [],
-		selectedFilterPosts,
-	);
-	const filteredPurchasedProducts = filterProducts(
-		user?.purchasedProducts ?? [],
-		selectedFilterPurchases,
-	);
+  const filteredPostedProducts = filterProducts(
+    user?.postedProducts ?? [],
+    selectedFilterPosts,
+  )
+  const filteredPurchasedProducts = filterProducts(
+    user?.purchasedProducts ?? [],
+    selectedFilterPurchases,
+  )
 
   if (loading) {
     return <Loading />
@@ -57,29 +58,45 @@ export const Profile = () => {
 
   return (
     <div className='mt-20 mb-12 flex flex-col items-center justify-center'>
-      
-      <div className="relative">
-				<Avatar className="object-cover w-20 h-20" >
-					<AvatarImage src={currentUser?.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
-					<AvatarFallback>PROFILE IMAGE</AvatarFallback>
-				</Avatar>
-			</div>
+      <div className='relative'>
+        <Avatar className='object-cover w-20 h-20'>
+          <AvatarImage
+            src={
+              currentUser?.profilePicture ||
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+            }
+          />
+          <AvatarFallback>PROFILE IMAGE</AvatarFallback>
+        </Avatar>
+      </div>
 
-			{isEditing ? (
-				<form className='my-4 flex gap-2 relative' onSubmit={form.handleSubmit(onSubmit)}>
-					<input 
-						type="text" 
-						{...form.register('username', { required: true })}
-						className="border px-2 py-1 rounded-md bg-default-white focus:border-2 focus:outline-none focus:border-secondary-gray"
-					/>
-					<button type="submit" className="absolute top-1 right-0 z-10 px-1.5 py-0.5 rounded">
-						<IoCreate onClick={() => setIsEditing(true)} className="text-xl cursor-pointer" />
-					</button>
-				</form>
+      {isEditing ? (
+        <form
+          className='my-4 flex gap-2 relative'
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <input
+            type='text'
+            {...form.register('username', { required: true })}
+            className='border px-2 py-1 rounded-md bg-default-white focus:border-2 focus:outline-none focus:border-secondary-gray'
+          />
+          <button
+            type='submit'
+            className='absolute top-1 right-0 z-10 px-1.5 py-0.5 rounded'
+          >
+            <IoCheckmarkCircleOutline
+              onClick={() => setIsEditing(true)}
+              className='text-xl cursor-pointer'
+            />
+          </button>
+        </form>
       ) : (
-        <h2 className="my-4 flex items-center gap-1">
+        <h2 className='my-4 flex items-center gap-1.5'>
           {currentUser?.username}
-          <BsPencilFill onClick={() => setIsEditing(true)} className="cursor-pointer" />
+          <FiEdit3
+            onClick={() => setIsEditing(true)}
+            className='cursor-pointer'
+          />
         </h2>
       )}
 

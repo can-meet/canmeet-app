@@ -1,29 +1,29 @@
 import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
-import { CommentType } from "@/types/comment"
-import { ReplyType } from "@/types/reply"
-import { ReplyButton } from "../reply/ReplyButton"
-import { ReplyList } from "../reply/ReplyList"
-import { useEffect, useState } from "react"
-import axios from "axios";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
+import type { CommentType } from '@/types/comment'
+import type { ReplyType } from '@/types/reply'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { ReplyButton } from '../reply/ReplyButton'
+import { ReplyList } from '../reply/ReplyList'
 
 type CommentCardProps = {
-	toggleReplyForComment: (id: string) => void
-	comment: CommentType
-};
+  toggleReplyForComment: (id: string) => void
+  comment: CommentType
+}
 
-export const CommentCard = ({ 
-	toggleReplyForComment, 
-	comment 
+export const CommentCard = ({
+  toggleReplyForComment,
+  comment,
 }: CommentCardProps) => {
-	const [replies, setReplies] = useState<ReplyType[]>([])
-	const commentId = comment._id
+  const [replies, setReplies] = useState<ReplyType[]>([])
+  const commentId = comment._id
 
   useEffect(() => {
     const getReplies = async () => {

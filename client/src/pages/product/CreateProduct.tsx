@@ -15,7 +15,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -25,17 +25,16 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { useToast } from "@/components/ui/use-toast"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { RiDeleteBin6Line } from "react-icons/ri"
-import { useAuthStore } from "@/store/authStore"
-import axios from "axios"
-import { productImagesUpload } from "@/lib/productImagesUpload"
+import { useToast } from '@/components/ui/use-toast'
+import { productImagesUpload } from '@/lib/productImagesUpload'
 import { type ProductSchema, productResolver } from '@/schema/product'
+import { useAuthStore } from '@/store/authStore'
+import axios from 'axios'
 import { type ChangeEvent, useState } from 'react'
-import { useNavigate } from "react-router-dom"
-import postCompleteImage from "/post-product-completed.png"
-
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { useNavigate } from 'react-router-dom'
+import postCompleteImage from '/post-product-completed.png'
 
 const CreateProduct = () => {
   const { currentUser } = useAuthStore()

@@ -1,5 +1,5 @@
-import { NotificationType } from "@/types/notification"
-import { NotificationCard } from "./NotificationCard"
+import type { NotificationType } from '@/types/notification'
+import { NotificationCard } from './NotificationCard'
 
 type NotificationListProps = {
   notifications: NotificationType[]

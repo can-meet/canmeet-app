@@ -1,28 +1,27 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { useQuery, useQueryClient } from "react-query"
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useQuery, useQueryClient } from 'react-query'
+import { useNavigate, useParams } from 'react-router-dom'
 
-
-import { fetchProductById } from "@/lib/api"
-import { timeAgo } from "@/lib/timeAgo"
-import PopupMenu from "@/components/product/popup-menu/PopupMenu"
 import { CommentView } from '@/components/product/comment/CommentView'
-import type { DetailProductType } from "@/types/product"
-import { useAuthStore } from "@/store/authStore"
+import PopupMenu from '@/components/product/popup-menu/PopupMenu'
+import { fetchProductById } from '@/lib/api'
+import { timeAgo } from '@/lib/timeAgo'
+import { useAuthStore } from '@/store/authStore'
+import type { DetailProductType } from '@/types/product'
 
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { AspectRatio } from '@radix-ui/react-aspect-ratio'
+import { Modal } from '@/components/layout/Modal'
+import { Loading } from '@/components/layout/loading/Loading'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Modal } from '@/components/layout/Modal'
-import { Loading } from '@/components/layout/loading/Loading'
+} from '@/components/ui/carousel'
+import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import editCompletedImage from '/edit-product-completed.png'
 import purchaseCompletedImage from '/purchase-product.png'
 
@@ -36,7 +35,8 @@ const DetailProduct = () => {
   const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/')
   const { currentUser } = useAuthStore()
   const queryClient = useQueryClient()
-  const products = queryClient.getQueryData<DetailProductType[]>('products') || []
+  const products =
+    queryClient.getQueryData<DetailProductType[]>('products') || []
   const userId = currentUser?._id
 
   const product = products?.find(p => p._id === pid)
@@ -165,16 +165,20 @@ const DetailProduct = () => {
               </Carousel>
             </div>
             {saleStatus === '取引中' ? (
-                <div>
-                  <div className='absolute inset-0 bg-slate-800/50 rounded' />
-                  <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>{saleStatus}</span>
-                </div>
-              ) : saleStatus === '売り切れ' ? (
-                <div>
-                  <div className='absolute inset-0 bg-slate-800/50 rounded' />
-                  <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>{saleStatus}</span>
-                </div>
-              ) : null}
+              <div>
+                <div className='absolute inset-0 bg-slate-800/50 rounded' />
+                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>
+                  {saleStatus}
+                </span>
+              </div>
+            ) : saleStatus === '売り切れ' ? (
+              <div>
+                <div className='absolute inset-0 bg-slate-800/50 rounded' />
+                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>
+                  {saleStatus}
+                </span>
+              </div>
+            ) : null}
           </div>
         </div>
 

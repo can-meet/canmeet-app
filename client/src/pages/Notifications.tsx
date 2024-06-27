@@ -1,14 +1,13 @@
-import { Loading } from "@/components/layout/loading/Loading"
-import { NotificationList } from "@/components/notification/NotificationList"
-import { useEffect, useState } from "react"
-import { useNotificationsStore } from "@/store/notificationsStore"
-import { useAuthStore } from "@/store/authStore"
-
+import { Loading } from '@/components/layout/loading/Loading'
+import { NotificationList } from '@/components/notification/NotificationList'
+import { useAuthStore } from '@/store/authStore'
+import { useNotificationsStore } from '@/store/notificationsStore'
+import { useEffect, useState } from 'react'
 
 export const Notifications = () => {
-  const { currentUser } = useAuthStore();
-	const { notifications, fetchNotifications } = useNotificationsStore();
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const { currentUser } = useAuthStore()
+  const { notifications, fetchNotifications } = useNotificationsStore()
+  const [isLoading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (currentUser) {

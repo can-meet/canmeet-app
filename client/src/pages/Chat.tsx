@@ -1,20 +1,19 @@
-import { useEffect, useRef, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { useForm } from 'react-hook-form'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
-import { VscSend } from "react-icons/vsc"
-import { AiFillPlusCircle } from "react-icons/ai"
-import axios from "axios"
-import { Loading } from "@/components/layout/loading/Loading";
-import { MessageType } from "@/types/message"
-import { RoomType } from "@/types/room"
-import { MessageList } from "@/components/chat/MessageList"
-import io from "socket.io-client"
+import { MessageList } from '@/components/chat/MessageList'
+import { Loading } from '@/components/layout/loading/Loading'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Input } from '@/components/ui/input'
 import { type MessageSchema, messageResolver } from '@/schema/message'
-import { useAuthStore } from "@/store/authStore"
-
+import { useAuthStore } from '@/store/authStore'
+import type { MessageType } from '@/types/message'
+import type { RoomType } from '@/types/room'
+import axios from 'axios'
+import { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { AiFillPlusCircle } from 'react-icons/ai'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { VscSend } from 'react-icons/vsc'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import io from 'socket.io-client'
 
 const socket = io(import.meta.env.VITE_BASE_URL as string)
 
@@ -39,8 +38,8 @@ export const Chat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
 
     const getMessages = (message: MessageType) => {
-      setMessages((prev) => [...prev, message])
-    };
+      setMessages(prev => [...prev, message])
+    }
 
     socket.on('addNewMessage', getMessages)
 

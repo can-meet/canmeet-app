@@ -1,18 +1,17 @@
-import { RoomCard } from "@/components/chat/RoomCard"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RoomType } from "@/types/room"
-import { useEffect, useState } from "react"
-import { useAuthStore } from "@/store/authStore"
+import { RoomCard } from '@/components/chat/RoomCard'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useAuthStore } from '@/store/authStore'
+import type { RoomType } from '@/types/room'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 
 const socket = io(import.meta.env.VITE_BASE_URL as string)
 
 export const Rooms = () => {
-  const { currentUser } = useAuthStore();
-  const [saleRooms, setSaleRooms] = useState<RoomType[]>([]);
-  const [purchaseRooms, setPurchaseRooms] = useState<RoomType[]>([]);
-
+  const { currentUser } = useAuthStore()
+  const [saleRooms, setSaleRooms] = useState<RoomType[]>([])
+  const [purchaseRooms, setPurchaseRooms] = useState<RoomType[]>([])
 
   useEffect(() => {
     if (!currentUser) return

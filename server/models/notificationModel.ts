@@ -1,16 +1,16 @@
-import mongoose from "mongoose";
-import { UserType } from "./userModel";
-import { ProductType } from "./productModel";
+import mongoose from 'mongoose'
+import { UserType } from './userModel'
+import { ProductType } from './productModel'
 
 export type NotificationType = {
-	_id: string;
-  receiver: UserType;
-	sender: UserType;
-  type: string;
-  content: string;
-	isRead: boolean; 
-  product: ProductType;
-};
+  _id: string
+  receiver: UserType
+  sender: UserType
+  type: string
+  content: string
+  isRead: boolean
+  product: ProductType
+}
 
 const notificationSchema = new mongoose.Schema(
   {
@@ -58,6 +58,9 @@ const notificationSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-const Notification = mongoose.model<NotificationType>("Notification", notificationSchema)
+const Notification = mongoose.model<NotificationType>(
+  'Notification',
+  notificationSchema,
+)
 
 export default Notification

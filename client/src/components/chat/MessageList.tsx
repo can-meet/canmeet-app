@@ -1,6 +1,5 @@
-import { MessageType } from "@/types/message"
-import { MessageCard } from "./MessageCard"
-
+import type { MessageType } from '@/types/message'
+import { MessageCard } from './MessageCard'
 
 type MessageListProps = {
   messages: MessageType[]

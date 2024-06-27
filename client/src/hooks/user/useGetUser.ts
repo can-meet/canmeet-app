@@ -1,15 +1,15 @@
-import { useQuery } from 'react-query';
-import { useAuthStore } from "@/store/authStore";
-import { UserType } from '@/types/user';
-import { getUserApi } from '@/api/user/getUser';
+import { getUserApi } from '@/api/user/getUser'
+import { useAuthStore } from '@/store/authStore'
+import type { UserType } from '@/types/user'
+import { useQuery } from 'react-query'
 
 const fetchUserData = async (userId: string) => {
-  const res = await getUserApi({ userId });
-  return res.data;
-};
+  const res = await getUserApi({ userId })
+  return res.data
+}
 
 export const useGetUser = () => {
-  const { currentUser } = useAuthStore();
+  const { currentUser } = useAuthStore()
 
   const { data: user, isLoading } = useQuery<UserType>(
     ['user', currentUser?._id],
@@ -17,17 +17,17 @@ export const useGetUser = () => {
     {
       enabled: !!currentUser,
       initialData: {
-        _id: "",
-        username: "",
-        email: "",
-        password: "",
-        profilePicture: "",
+        _id: '',
+        username: '',
+        email: '',
+        password: '',
+        profilePicture: '',
         isAdmin: false,
         postedProducts: [],
         purchasedProducts: [],
       },
-    }
-  );
+    },
+  )
 
-  return { user, loading: isLoading };
-};
+  return { user, loading: isLoading }
+}

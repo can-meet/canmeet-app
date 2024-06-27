@@ -1,6 +1,5 @@
-import { CommentType } from "@/types/comment"
+import type { CommentType } from '@/types/comment'
 import { CommentCard } from './CommentCard'
-
 
 type CommentListProps = {
   comments: CommentType[]

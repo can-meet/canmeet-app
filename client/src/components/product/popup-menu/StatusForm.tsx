@@ -1,24 +1,20 @@
-import {
-	DrawerClose,
-  DrawerFooter,
-  DrawerHeader,
-} from "@/components/ui/drawer"
-import { Button } from "@/components/ui/button"
-import { IoMdCheckmark } from "react-icons/io"
-import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import axios from "axios"
-import toast from "react-hot-toast"
-import { useAuthStore } from "@/store/authStore"
+import { Button } from '@/components/ui/button'
+import { DrawerClose, DrawerFooter, DrawerHeader } from '@/components/ui/drawer'
+import { useAuthStore } from '@/store/authStore'
+import axios from 'axios'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { IoMdCheckmark } from 'react-icons/io'
+import { useNavigate, useParams } from 'react-router-dom'
 
 type StatusFormProps = {
   productSaleStatus: string
 }
 
-const StatusForm = ({ productSaleStatus }: StatusFormProps ) => {
+const StatusForm = ({ productSaleStatus }: StatusFormProps) => {
   const { pid } = useParams()
   const navigate = useNavigate()
-  const [status, setStatus] = useState<string>(productSaleStatus);
+  const [status, setStatus] = useState<string>(productSaleStatus)
   const { currentUser } = useAuthStore()
 
   const handleSubmit = async (status: string) => {

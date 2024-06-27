@@ -1,10 +1,10 @@
-import { ProductType } from "@/types/product"
 import { Modal } from '@/components/layout/Modal'
 import { Loading } from '@/components/layout/loading/Loading'
 import { SearchBar } from '@/components/layout/search/SearchBar'
 import { ProductList } from '@/components/product/ProductList'
 import { Button } from '@/components/ui/button'
 import { fetchProducts } from '@/lib/api'
+import type { ProductType } from '@/types/product'
 
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -12,7 +12,6 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import deleteCompleteImage from '/delete-product-post.png'
 import editCompleteImage from '/edit-product-completed.png'
 import registerImage from '/register-account-completed.png'
-
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -31,7 +30,7 @@ export const Home = () => {
     if (!products) return []
     if (!query) return products
     return products.filter((product: ProductType) =>
-      product.product_name.toLowerCase().includes(query.toLowerCase())
+      product.product_name.toLowerCase().includes(query.toLowerCase()),
     )
   }, [products, query])
 

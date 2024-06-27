@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-import { CommentType } from "./commentModel";
-import { UserType } from "./userModel";
+import mongoose from 'mongoose'
+import { CommentType } from './commentModel'
+import { UserType } from './userModel'
 
 export type ReplyType = {
-	_id: string;
-	text: string;
-	createdAt: string;
-	user: UserType;
-	comment: CommentType;
-};
+  _id: string
+  text: string
+  createdAt: string
+  user: UserType
+  comment: CommentType
+}
 
 const replySchema = new mongoose.Schema(
   {
@@ -34,6 +34,6 @@ const replySchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-const Reply = mongoose.model<ReplyType>("Reply", replySchema);
+const Reply = mongoose.model<ReplyType>('Reply', replySchema)
 
 export default Reply

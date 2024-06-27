@@ -1,11 +1,11 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
-import { type CommentSchema, commentResolver } from "@/schema/comment"
-import { useAuthStore } from "@/store/authStore"
-import axios from "axios"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { toast } from "react-hot-toast"
-import { VscSend } from "react-icons/vsc"
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Input } from '@/components/ui/input'
+import { type CommentSchema, commentResolver } from '@/schema/comment'
+import { useAuthStore } from '@/store/authStore'
+import axios from 'axios'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { VscSend } from 'react-icons/vsc'
 
 type CommentFormProps = {
   productId: string
@@ -18,8 +18,7 @@ export const CommentForm = ({
   commentsUpdated,
   setCommentsUpdated,
 }: CommentFormProps) => {
-	
-	const { currentUser } = useAuthStore()
+  const { currentUser } = useAuthStore()
   const {
     register,
     handleSubmit,

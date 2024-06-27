@@ -1,13 +1,12 @@
-import { Button } from "@/components/ui/button"
-import { NotificationType } from "@/types/notification"
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { FaChevronLeft, FaRegBell } from "react-icons/fa"
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
-import Logo from "/logo.png"
-import SideMenu from "./SideMenu"
-import { useAuthStore } from "@/store/authStore"
-
+import { Button } from '@/components/ui/button'
+import { useAuthStore } from '@/store/authStore'
+import type { NotificationType } from '@/types/notification'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { FaChevronLeft, FaRegBell } from 'react-icons/fa'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import Logo from '/logo.png'
+import SideMenu from './SideMenu'
 
 export const Header = () => {
   const { pid } = useParams()
@@ -33,7 +32,7 @@ export const Header = () => {
   }, [currentUser, currentUser?._id])
 
   const handleLogout = async () => {
-    clearCurrentUser();
+    clearCurrentUser()
   }
 
   return (

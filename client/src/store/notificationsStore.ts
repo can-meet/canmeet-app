@@ -1,4 +1,4 @@
-import { NotificationType } from '@/types/notification'
+import type { NotificationType } from '@/types/notification'
 import axios from 'axios'
 import { create } from 'zustand'
 

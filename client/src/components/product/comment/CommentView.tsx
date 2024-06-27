@@ -1,7 +1,3 @@
-import { CommentType } from "@/types/comment"
-import { DetailProductType } from "@/types/product"
-import axios from "axios";
-import CommentIcon from "/comment.svg"
 import {
   Drawer,
   DrawerContent,
@@ -9,14 +5,17 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
-import { IoIosArrowBack } from "react-icons/io"
+} from '@/components/ui/drawer'
+import type { CommentType } from '@/types/comment'
+import type { DetailProductType } from '@/types/product'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { IoIosArrowBack } from 'react-icons/io'
+import CommentIcon from '/comment.svg'
+import { ReplyForm } from '../reply/ReplyForm'
+import { CommentCardForReply } from './CommentCardForReply'
 import { CommentForm } from './CommentForm'
-import { CommentList } from "./CommentList"
-import { ReplyForm } from "../reply/ReplyForm"
-import { CommentCardForReply } from "./CommentCardForReply"
-
+import { CommentList } from './CommentList'
 
 type CommentListProps = {
   product: DetailProductType
@@ -30,7 +29,7 @@ export const CommentView = ({ product }: CommentListProps) => {
   const [commentScrollDown, setCommentScrollDown] = useState<boolean>(false)
   const [isInitialMount, setIsInitialMount] = useState(true)
   const [replySelected, setReplySelected] = useState<boolean>(false)
-  const productId = product._id;
+  const productId = product._id
 
   const toggleReplyForComment = (id?: string) => {
     setReplySelected(!replySelected)

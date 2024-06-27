@@ -1,4 +1,5 @@
-import { Modal } from "@/components/layout/Modal"
+import { Modal } from '@/components/layout/Modal'
+import { Loading } from '@/components/layout/loading/Loading'
 import { Button } from '@/components/ui/button'
 import {
   Carousel,
@@ -23,23 +24,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useToast } from "@/components/ui/use-toast"
 import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/components/ui/use-toast'
 import { productImagesUpload } from '@/lib/productImagesUpload'
-import { Loading } from '@/components/layout/loading/Loading'
 import { type ProductSchema, productResolver } from '@/schema/product'
+import { useAuthStore } from '@/store/authStore'
 import axios from 'axios'
 import { type ChangeEvent, useEffect, useState } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useNavigate, useParams } from 'react-router-dom'
 import editCompleteImage from '/edit-product-completed.png'
-import { RiDeleteBin6Line } from "react-icons/ri"
-import { useAuthStore } from "@/store/authStore"
-
 
 const EditProduct = () => {
-  const { currentUser } = useAuthStore();
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const { currentUser } = useAuthStore()
+  const [previewImages, setPreviewImages] = useState<string[]>([])
 
   const form = useForm<ProductSchema>({
     defaultValues: {

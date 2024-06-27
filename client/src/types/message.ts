@@ -1,9 +1,9 @@
-import { UserType } from "./user";
+import type { UserType } from './user'
 
 export type MessageType = {
-	_id: string;
-	sender: UserType;
-	text: string;
-	isRead: boolean;
-	createdAt: Date;
+  _id: string
+  sender: UserType
+  text: string
+  isRead: boolean
+  createdAt: Date
 }
