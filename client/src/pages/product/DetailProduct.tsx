@@ -165,28 +165,17 @@ const DetailProduct = () => {
                 ) : null}
               </Carousel>
             </div>
-            {saleStatus === '売り出し中' ? (
-              <div>
-                <p className='absolute top-1.5 right-2 z-10 text-lg'>
-                  {saleStatus}
-                </p>
-                <div className='absolute rounded-tr top-0 right-0 border-sale w-28 h-36 bg-sale opacity-95 clip-path' />
-              </div>
-            ) : saleStatus === '取引中' ? (
-              <div>
-                <p className='absolute top-1.5 right-2 z-10 text-lg'>
-                  {saleStatus}
-                </p>
-                <div className='absolute rounded-tr top-0 right-0 border-in-trade w-28 h-36 bg-in-trade opacity-95 clip-path' />
-              </div>
-            ) : (
-              <div>
-                <p className='absolute top-1.5 right-2 z-10 text-lg'>
-                  {saleStatus}
-                </p>
-                <div className='absolute rounded-tr top-0 right-0 border-sold-out w-28 h-36 bg-sold-out opacity-95 clip-path' />
-              </div>
-            )}
+            {saleStatus === '取引中' ? (
+                <div>
+                  <div className='absolute inset-0 bg-slate-800/50 rounded' />
+                  <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>{saleStatus}</span>
+                </div>
+              ) : saleStatus === '売り切れ' ? (
+                <div>
+                  <div className='absolute inset-0 bg-slate-800/50 rounded' />
+                  <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>{saleStatus}</span>
+                </div>
+              ) : null}
           </div>
         </div>
 
