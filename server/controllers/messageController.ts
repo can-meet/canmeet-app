@@ -20,9 +20,12 @@ export const createMessage = async (
 
     const room = await Room.findById(roomId)
     if (room) {
+      console.log('Room found')
       room.messages.push(savedMessage)
       await room.save()
     }
+
+    console.log('Room not found')
 
     return savedMessage
   } catch (error) {

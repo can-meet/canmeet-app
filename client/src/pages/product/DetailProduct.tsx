@@ -24,6 +24,7 @@ import {
 import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import editCompletedImage from '/edit-product-completed.png'
 import purchaseCompletedImage from '/purchase-product.png'
+import purchaseConfirmImage from '/purchase-confirm.png'
 
 const DetailProduct = () => {
   const navigate = useNavigate()
@@ -31,6 +32,7 @@ const DetailProduct = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [saleStatus, setSaleStatus] = useState<string>('')
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState<boolean>(false)
+  const [isConfirmPurchaseModalOpen, setIsConfirmPurchaseModalOpen] = useState<boolean>(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
   const [dynamicRoomRoute, setDynamicRoomRoute] = useState('/')
   const { currentUser } = useAuthStore()
@@ -133,6 +135,7 @@ const DetailProduct = () => {
   if (loading) {
     return <Loading />
   }
+
 
   return (
     <>
@@ -244,7 +247,8 @@ const DetailProduct = () => {
               {productData.sale_status === '売り出し中' ? (
                 <Button
                   variant='red'
-                  onClick={handlePurchaseProductAndCreateRoom}
+                  // onClick={handlePurchaseProductAndCreateRoom}
+                  onClick={() => setIsConfirmPurchaseModalOpen(true)}
                 >
                   購入手続きに進む
                 </Button>
@@ -257,6 +261,21 @@ const DetailProduct = () => {
       </div>
 
       <Modal
+        isOpen={isConfirmPurchaseModalOpen}
+        onClose={() => setIsConfirmPurchaseModalOpen(false)}
+        heading={'購入手続き確認画面'}
+        img={purchaseConfirmImage}
+        text={
+          'この先DMで出品者と直接取引を行います。本当によろしいですか？'
+        }
+        link={'/'}
+        btnText={'キャンセル'}
+        secondLink={'/'}
+        secondBtnText={'購入手続きを進める'}
+        onSecondButtonClick={handlePurchaseProductAndCreateRoom}
+      />
+
+      <Modal
         isOpen={isPurchaseModalOpen}
         onClose={() => setIsPurchaseModalOpen(false)}
         heading={'購入手続きを申し込みました'}
@@ -267,6 +286,7 @@ const DetailProduct = () => {
         link={dynamicRoomRoute}
         btnText={'DMへあいさつしに行く'}
       />
+
       <Modal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
