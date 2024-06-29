@@ -12,6 +12,7 @@ type ModalProps = {
   btnText?: string
   secondLink?: string
   secondBtnText?: string
+  onSecondButtonClick?: () => void
 }
 
 export const Modal = ({
@@ -24,6 +25,7 @@ export const Modal = ({
   btnText,
   secondLink,
   secondBtnText,
+  onSecondButtonClick,
 }: ModalProps) => {
   const navigate = useNavigate()
   if (!isOpen) return null
@@ -47,12 +49,12 @@ export const Modal = ({
         <div className='flex flex-col items-center py-8 gap-3 w-64 mx-auto max-w-72'>
           <h3 className='text-lg font-semibold '>{heading}</h3>
           <img src={img} alt='modal' className='max-w-32' />
-          <p className='text-xs'>{text}</p>
+          <p className='text-sm'>{text}</p>
           <div className='flex gap-x-2 w-full'>
             <Button
               variant='blue'
-              className={`text-default-white text-xs rounded-full ${secondLink ? 'w-full' : 'w-64'}`}
-              onClick={() => navigate(`${link}`)}
+              className={`text-default-white text-sm rounded-full ${secondLink ? 'w-full' : 'w-64'} ${btnText === 'キャンセル' && 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}
+              onClick={btnText === 'キャンセル' ? onClose : () => navigate(`${link}`)}
               type='button'
             >
               {btnText}
@@ -60,8 +62,8 @@ export const Modal = ({
             {secondLink && (
               <Button
                 variant='red'
-                className='text-default-white text-xs rounded-full w-full'
-                onClick={() => navigate(`${secondLink}`)}
+                className='text-default-white text-sm rounded-full w-full'
+                onClick={onSecondButtonClick ? onSecondButtonClick : () => navigate(`${secondLink}`)}
               >
                 {secondBtnText}
               </Button>

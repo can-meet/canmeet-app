@@ -26,14 +26,14 @@ export const createRoom = async (req: Request, res: Response) => {
       seller: sellerId,
     })
 
+    await newRoom.save()
+
     // 商品の投稿者が最初のメッセージを送信
     await createMessage(
-      newRoom._id,
+      newRoom._id.toString(),
       sellerId,
       '商品購入申請して頂きありがとうございます！',
     )
-
-    await newRoom.save()
 
     res.status(201).json(newRoom)
   } catch (error) {
