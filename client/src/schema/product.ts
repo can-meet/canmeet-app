@@ -21,7 +21,11 @@ export const productSchema = z.object({
     .min(1, {
       message: '商品名を入力してください。',
     }),
-  price: z.number().nonnegative().max(5, {
+  price: z.number({
+    invalid_type_error: '価格を入力してください。',
+  }).nonnegative({
+    message: '0以上の価格を入力してください。',
+  }).max(99999, {
     message: '価格は5桁までです。',
   }),
   description: z
