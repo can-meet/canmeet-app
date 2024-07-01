@@ -61,7 +61,7 @@ export const Rooms = () => {
   }, [currentUser])
 
   return (
-    <div className='mt-14 mb-28 flex flex-col items-center justify-center'>
+    <div className='mt-14 mb-28'>
       <Tabs defaultValue='sale' className='px-8 max-w-96 mx-auto'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='sale'>売る</TabsTrigger>
