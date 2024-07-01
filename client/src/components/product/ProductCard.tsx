@@ -8,7 +8,7 @@ type ProductCardProps = {
 export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Link to={`/products/${product._id}`}>
-      <div className='relative'>
+      <div className='relative pointer-events-none'>
         <img
           src={product.images[0]}
           alt='product'
