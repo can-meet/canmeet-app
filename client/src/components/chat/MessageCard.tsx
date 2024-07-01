@@ -20,7 +20,7 @@ export const MessageCard = ({ message, isLastMessage }: MessageCardProps) => {
               <span className='text-xs text-gray-400 mb-0.5'>
                 {formatTime(message.createdAt)}
               </span>
-              <span className='text-start max-w-72 rounded-xl bg-gradient-to-r from-chat-blue to-chat-purple py-1 px-3'>
+              <span className='text-start max-w-64 rounded-xl bg-gradient-to-r from-chat-blue to-chat-purple py-1 px-3'>
                 {message.text}
               </span>
             </div>
@@ -36,7 +36,7 @@ export const MessageCard = ({ message, isLastMessage }: MessageCardProps) => {
             <AvatarFallback>PROFILE IMAGE</AvatarFallback>
           </Avatar>
           <div className='flex items-end gap-x-2'>
-            <span className='text-start max-w-72 rounded-xl bg-chat-gray py-1 px-3'>
+            <span className='text-start max-w-64 rounded-xl bg-chat-gray py-1 px-3'>
               {message.text}
             </span>
             <span className='text-xs text-gray-400 mb-0.5'>

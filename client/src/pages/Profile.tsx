@@ -100,7 +100,7 @@ export const Profile = () => {
         </h2>
       )}
 
-      <Tabs defaultValue='sale' className='max-w-96 w-80 mx-auto'>
+      <Tabs defaultValue='sale' className='max-w-96 w-11/12 mx-auto'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='sale' className='border-b-secondary-gray'>
             投稿した商品
@@ -115,7 +115,7 @@ export const Profile = () => {
             <ProfileSelectTrigger className='py-1 px-2 w-fit bg-dark-gray text-default-white mb-4'>
               <SelectValue placeholder='すべて' className='font-normal' />
             </ProfileSelectTrigger>
-            <SelectContent className='w-16 z-50 bg-default-white'>
+            <SelectContent className='w-16 z-50 bg-default-white pointer-events-auto'>
               <SelectItem value='すべて'>すべて</SelectItem>
               <SelectItem value='売り出し中'>売り出し</SelectItem>
               <SelectItem value='取引中'>取引中</SelectItem>
@@ -132,7 +132,7 @@ export const Profile = () => {
             <ProfileSelectTrigger className='py-1 px-2 w-fit bg-dark-gray text-default-white mb-4'>
               <SelectValue placeholder='すべて' className='font-normal' />
             </ProfileSelectTrigger>
-            <SelectContent className='w-20 z-50 bg-white'>
+            <SelectContent className='w-20 z-50 bg-white pointer-events-auto'>
               <SelectItem value='すべて'>すべて</SelectItem>
               <SelectItem value='売り出し中'>売り出し</SelectItem>
               <SelectItem value='取引中'>取引中</SelectItem>

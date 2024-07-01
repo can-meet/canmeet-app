@@ -96,7 +96,7 @@ export const sendCommentNotification = async (req: Request, res: Response) => {
 // 商品を購入したら商品の投稿者に通知を送る
 export const purchaseNotification = async (req: Request, res: Response) => {
   try {
-    const { receiverId, senderId } = req.body
+    const { receiverId, senderId, roomId } = req.body
     const { productId } = req.params
 
     const [product, receiver, sender] = await Promise.all([
@@ -129,7 +129,7 @@ export const purchaseNotification = async (req: Request, res: Response) => {
 
     const sellerEmail = receiver.email
     const productName = product.product_name
-    sendPurchaseNotification(sellerEmail, productName)
+    sendPurchaseNotification(sellerEmail, productName, roomId)
 
     res.status(200).json(notification)
   } catch (err) {

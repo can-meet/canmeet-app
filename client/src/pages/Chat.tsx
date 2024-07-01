@@ -14,6 +14,14 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { VscSend } from 'react-icons/vsc'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import io from 'socket.io-client'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { IoIosArrowDown } from "react-icons/io"
+import { IoEllipsisHorizontal } from 'react-icons/io5'
+
 
 const socket = io(import.meta.env.VITE_BASE_URL as string)
 
@@ -91,64 +99,71 @@ export const Chat = () => {
   return (
     <div className='flex flex-col'>
       {/* message room fixed header */}
-      <div className='fixed bg-default-white z-20 top-0 right-0 w-full border-b-[0.5px] border-primary-gray pt-4 pb-6 h-52'>
-        <div className='max-w-96 min-w-80 mx-auto'>
-          {/* header top (back arrow & user info) */}
-          <div className='flex items-center gap-x-5 pl-4'>
-            <button onClick={() => navigate('/rooms')} type='button'>
-              <IoIosArrowBack className='text-xl' />
-            </button>
+      <div className='fixed bg-default-white z-20 top-0 right-0 w-full py-1 px-4'>
+        <div className='flex items-center justify-between w-full'>
+          <button onClick={() => navigate('/rooms')} type='button'>
+            <IoIosArrowBack className='text-xl' />
+          </button>
 
-            {currentUser?._id === room?.seller._id ? (
-              <div className='flex items-center gap-x-4'>
-                <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
-                  <AvatarImage src={room?.buyer.profilePicture} />
-                  <AvatarFallback>PROFILE IMAGE</AvatarFallback>
-                </Avatar>
-                <h3 className='text-lg'>{room?.buyer.username}</h3>
-              </div>
-            ) : (
-              <div className='flex items-center gap-x-2'>
-                <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
-                  <AvatarImage src={room?.seller.profilePicture} />
-                  <AvatarFallback>PROFILE IMAGE</AvatarFallback>
-                </Avatar>
-                <h3 className='text-lg'>{room?.seller.username}</h3>
-              </div>
-            )}
-          </div>
-
-          {/* header bottom (product info) */}
-          <div className='flex justify-center mt-7 max-w-96 mx-auto px-4 '>
-            {room?.product && (
-              <>
-                <img
-                  src={room.product.images[0]}
-                  alt='product'
-                  className='h-24 w-24 object-cover mx-8'
-                />
-                <div className='relative w-full'>
-                  <div className='text-lg font-semibold space-y-1'>
-                    <h2>{room.product.product_name}</h2>
-                    <h2>${room.product.price}</h2>
+          <Popover>
+            {/* header top (back arrow & user info) */}
+            <PopoverTrigger>
+                {currentUser?._id === room?.seller._id ? (
+                  <div className='flex items-center gap-x-2 hover:bg-price-gray rounded-lg py-1.5 p-2.5'>
+                    <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
+                      <AvatarImage src={room?.buyer.profilePicture} />
+                      <AvatarFallback>PROFILE IMAGE</AvatarFallback>
+                    </Avatar>
+                    <h3 className='text-lg'>{room?.buyer.username}</h3>
+                    <IoIosArrowDown />
                   </div>
-                  <Link to={`/products/${room.product._id}`}>
-                    <div className='flex items-center gap-x-1 absolute right-0 bottom-1'>
-                      <h3 className='text-xs hover:underline hover:underline-offset-4'>
-                        商品詳細を確認
-                      </h3>
-                      <IoIosArrowForward />
+                ) : (
+                  <div className='flex items-center gap-x-2 hover:bg-price-gray rounded-lg py-1.5 p-2.5'>
+                    <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
+                      <AvatarImage src={room?.seller.profilePicture} />
+                      <AvatarFallback>PROFILE IMAGE</AvatarFallback>
+                    </Avatar>
+                    <h3 className='text-lg'>{room?.seller.username}</h3>
+                    <IoIosArrowDown />
+                  </div>
+                )}
+              {/* </div> */}
+            </PopoverTrigger>
+
+            {/* header popup (product info) */}
+            <PopoverContent className='bg-default-white flex  px-4 py-8'>
+                {room?.product && (
+                  <>
+                    <img
+                      src={room.product.images[0]}
+                      alt='product'
+                      className='h-24 w-24 rounded-md object-cover mx-8'
+                    />
+                    <div className='relative w-full'>
+                      <div className='text-lg font-medium space-y-1'>
+                        <h2>{room.product.product_name}</h2>
+                        <h2>${room.product.price}</h2>
+                      </div>
+                      <Link to={`/products/${room.product._id}`}>
+                        <div className='flex items-center gap-x-1 absolute bottom-0'>
+                          <h3 className='text-xs hover:underline hover:underline-offset-4'>
+                            商品詳細を確認
+                          </h3>
+                          <IoIosArrowForward />
+                        </div>
+                      </Link>
                     </div>
-                  </Link>
-                </div>
-              </>
-            )}
-          </div>
+                  </>
+                )}
+              {/* </div> */}
+            </PopoverContent>
+          </Popover>
+          <IoEllipsisHorizontal className='text-xl' />
         </div>
       </div>
 
       <div className='flex flex-col overscroll-hidden h-screen'>
-        <div className='mt-52 mb-16 space-y-2 w-11/12 max-w-96 mx-auto px-4 first:py-2 flex-grow overflow-y-auto'>
+        <div className='mt-16 mb-16 space-y-2 px-4 first:py-2 flex-grow overflow-y-auto'>
           <MessageList messages={messages} messagesEndRef={messagesEndRef} />
         </div>
       </div>
@@ -170,7 +185,7 @@ export const Chat = () => {
               onClick={() => fileInputRef.current?.click()}
             />
             <Input
-              placeholder='コメントする'
+              placeholder='メッセージする'
               type='text'
               className='rounded-xl pl-10 pr-12 w-full placeholder:text-sm'
               {...form.register('text', { required: true })}

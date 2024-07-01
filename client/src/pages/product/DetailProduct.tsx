@@ -85,20 +85,11 @@ const DetailProduct = () => {
       return
     }
     try {
-      await Promise.all([
-        axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, {
-          userId,
-        }),
-        // 商品を購入した際の通知
-        axios.post(
-          `${import.meta.env.VITE_API_URL}/notifications/purchase/${pid}`,
-          {
-            receiverId: productUserId,
-            senderId: userId,
-          },
-        ),
-      ])
+      await axios.put(`${import.meta.env.VITE_API_URL}/products/purchase/${pid}`, {
+        userId,
+      });
 
+      // チャットルームの作成リクエスト
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/rooms`,
         {
@@ -106,9 +97,21 @@ const DetailProduct = () => {
           buyerId: userId,
           sellerId: productUserId,
         },
-      )
+      );
 
-      const roomId = response.data._id
+      const roomId = response.data._id;
+
+      // 商品を購入した際の通知
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/notifications/purchase/${pid}`,
+        {
+          receiverId: productUserId,
+          senderId: userId,
+          roomId: roomId,
+        },
+      );
+
+      
       setDynamicRoomRoute(`/rooms/${roomId}`)
       setSaleStatus('取引中')
       setIsPurchaseModalOpen(true)

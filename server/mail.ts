@@ -14,6 +14,7 @@ const transporter = nodemailer.createTransport({
 const sendPurchaseNotification = (
   receiverEmail: string,
   productName: string,
+  roomId: string,
 ) => {
   const mailOptions = {
     from: process.env.EMAIL,
@@ -23,6 +24,7 @@ const sendPurchaseNotification = (
     html: `
       <h3>商品名：${productName}</h3>
       <p>サイトを確認して、チャットを始めましょう。</p>
+      <a href="https://canmeet.app/rooms/${roomId}">チャットを開始する</a>
 
       <p>※このメールに返信をしても購入者とは連絡できません。</p>
     `,
