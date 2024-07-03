@@ -25,6 +25,7 @@ import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import editCompletedImage from '/edit-product-completed.png'
 import purchaseCompletedImage from '/purchase-product.png'
 import purchaseConfirmImage from '/purchase-confirm.png'
+import NotFoundComponent from '@/components/layout/NotFound'
 
 const DetailProduct = () => {
   const navigate = useNavigate()
@@ -44,7 +45,7 @@ const DetailProduct = () => {
   const product = products?.find(p => p._id === pid)
   const productUserId = product?.user._id
 
-  const { data: productDetail } = useQuery<DetailProductType>(
+  const { data: productDetail, isLoading } = useQuery<DetailProductType>(
     ['product', pid],
     () => fetchProductById(pid),
     {
@@ -139,10 +140,13 @@ const DetailProduct = () => {
     return <Loading />
   }
 
-
   return (
     <>
-      <div className='mt-16 mb-24'>
+      {isLoading ? (
+        <Loading />
+      ) : productDetail ? (
+        <>
+          <div className='mt-16 mb-24'>
         <div className='max-w-96 my-0 mx-auto'>
           <PopupMenu product={productData} />
 
@@ -301,6 +305,15 @@ const DetailProduct = () => {
         link={`/products/${pid}`}
         btnText={'たった今ステータスを変更した商品を見る'}
       />
+        </>
+      ) : (
+        <div className='flex flex-col items-center gap-4 mt-32'>
+          <NotFoundComponent
+            text='商品が見つかりませんでした。'
+            className='text-semibold'
+          />
+        </div>
+      )}
     </>
   )
 }
