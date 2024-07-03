@@ -11,7 +11,7 @@ export const CommentList = ({
   toggleReplyForComment,
 }: CommentListProps) => {
   return (
-    <div className='mt-4 flex flex-col gap-4'>
+    <div className='flex-1 overflow-y-auto mt-4 space-y-4'>
       {comments.map(comment => (
         <CommentCard
           key={comment._id}
