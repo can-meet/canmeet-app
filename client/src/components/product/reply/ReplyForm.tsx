@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { type ReplySchema, replyResolver } from '@/schema/reply'
 import { useAuthStore } from '@/store/authStore'
 import axios from 'axios'
@@ -72,12 +72,11 @@ export const ReplyForm = ({
             </Avatar>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className='relative max-w-96 mx-auto'
+              className='relative w-full h-full'
             >
-              <Input
+              <Textarea
                 placeholder='返信する'
-                type='text'
-                className='rounded-xl'
+                className='rounded-xl placeholder:text-secondary-gray border border-secondary-gray pr-10 resize-none'
                 {...register('text')}
               />
               {errors.text?.message && (

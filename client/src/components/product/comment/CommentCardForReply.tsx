@@ -38,9 +38,9 @@ export const CommentCardForReply = ({
 
   return (
     <div
-      className={`absolute top-0 bottom-0 w-full overflow-hidden bg-white transform ${replySelected ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500`}
+      className={`absolute top-0 bottom-0 w-full overflow-hidden overflow-y-auto bg-white transform ${replySelected ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500`}
     >
-      <div className='overflow-y-auto bg-white h-full z-20'>
+      <div className='bg-white h-full z-20'>
         <div className='w-80 my-4 mx-auto'>
           <div className='flex items-center gap-2'>
             <Avatar>

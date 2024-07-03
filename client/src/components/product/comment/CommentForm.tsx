@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { type CommentSchema, commentResolver } from '@/schema/comment'
 import { useAuthStore } from '@/store/authStore'
 import axios from 'axios'
@@ -60,39 +60,42 @@ export const CommentForm = ({
   }
 
   return (
-    <div className='flex items-center gap-2 w-80 py-4 mx-auto'>
-      {currentUser && (
-        <>
-          <Avatar>
-            <AvatarImage
-              src={
-                currentUser.profilePicture ||
-                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-              }
-            />
-          </Avatar>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className='relative max-w-96 mx-auto'
-          >
-            <Input
-              placeholder='コメントする'
-              type='text'
-              className='rounded-xl'
-              {...register('text')}
-            />
-            {errors.text?.message && (
-              <p className='error-message'>{errors.text.message}</p>
-            )}
-            <button
-              type='submit'
-              className='absolute top-2 right-4 cursor-pointer'
+    <div 
+      className='py-4 absolute bottom-0 left-0 w-full bg-white overflow-y-auto'
+    >
+      <div className='flex items-center gap-2 w-80 my-0 mx-auto'>
+        {currentUser && (
+          <>
+            <Avatar>
+              <AvatarImage
+                src={
+                  currentUser.profilePicture ||
+                  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                }
+              />
+            </Avatar>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className='relative w-full h-full'
             >
-              <VscSend className='text-2xl' />
-            </button>
-          </form>
-        </>
-      )}
+              <Textarea
+                placeholder='コメントする'
+                className='rounded-xl placeholder:text-secondary-gray border border-secondary-gray pr-10 resize-none'
+                {...register('text')}
+              />
+              {errors.text?.message && (
+                <p className='error-message'>{errors.text.message}</p>
+              )}
+              <button
+                type='submit'
+                className='absolute top-2 right-4 cursor-pointer'
+              >
+                <VscSend className='text-2xl' />
+              </button>
+            </form>
+          </>
+        )}
+      </div>
     </div>
   )
 }
