@@ -222,48 +222,53 @@ const DetailProduct = () => {
                 </p>
               </div>
 
-          <CommentView product={productData} />
-
-          <div className='grid grid-cols-2 mt-4 mb-8'>
-            <div className='col-span-1  w-80'>
-              <div className='flex mb-4'>
-                <span className='text-sm text-start w-24 py-2'>商品の状態</span>
-                <span className='text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm'>
-                  {productData.product_status}
-                </span>
-              </div>
-              <div className='flex mb-4'>
-                <p className='text-sm w-24 py-2'>受け渡し場所</p>
-                <p className='text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm'>
-                  {productData.location}
-                </p>
-              </div>
-              <div className='flex mb-4'>
-                <div className='text-sm w-24 py-2'>支払い方法</div>
-                <div className='text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm'>
-                  {productData.payment_method}
+              <div className='grid grid-cols-2 mt-8 mb-4'>
+                <div className='col-span-1  w-80'>
+                  <div className='flex mb-4'>
+                    <span className='text-sm text-start w-24 py-2'>商品の状態</span>
+                    <span className='text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm'>
+                      {productData.product_status}
+                    </span>
+                  </div>
+                  <div className='flex mb-4'>
+                    <p className='text-sm w-24 py-2'>受け渡し場所</p>
+                    <p className='text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm'>
+                      {productData.location}
+                    </p>
+                  </div>
+                  <div className='flex mb-4'>
+                    <div className='text-sm w-24 py-2'>支払い方法</div>
+                    <div className='text-xs font-medium bg-search-history-gray text-center px-3 py-2 rounded-sm'>
+                      {productData.payment_method}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {productData.user._id !== currentUser?._id && (
-            <div className='my-2 mx-auto w-button'>
-              {productData.sale_status === '売り出し中' ? (
-                <Button
-                  variant='red'
-                  // onClick={handlePurchaseProductAndCreateRoom}
-                  onClick={() => setIsConfirmPurchaseModalOpen(true)}
-                >
-                  購入手続きに進む
-                </Button>
-              ) : (
-                <Button variant='disabled'>取引中</Button>
+              <CommentView product={productData} />
+
+              {productData.user._id !== currentUser?._id && (
+                <div className='my-2 w-full'>
+                  {productData.sale_status === '売り出し中' ? (
+                    <Button
+                      variant='red'
+                      onClick={() => setIsConfirmPurchaseModalOpen(true)}
+                      className='w-full'
+                    >
+                      購入手続きに進む
+                    </Button>
+                  ) : (
+                    <Button 
+                      variant='disabled'
+                      className='w-full'
+                    >
+                      取引中
+                    </Button>
+                  )}
+                </div>
               )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
           <Modal
             isOpen={isConfirmPurchaseModalOpen}

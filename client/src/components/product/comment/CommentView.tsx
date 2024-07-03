@@ -68,7 +68,7 @@ export const CommentView = ({ product }: CommentListProps) => {
   return (
     <Drawer onClose={() => setReplySelected(false)}>
 
-      <div className='w-full mb-12'>
+      <div className='w-full mb-10'>
         <div className='space-y-4'>
           <div className='flex items-center justify-between'>
             <h2 className='text-lg font-semibold'>
