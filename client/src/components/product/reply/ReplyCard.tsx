@@ -15,7 +15,7 @@ export const ReplyCard = ({ reply }: ReplyCardProps) => {
         <p>{reply.user.username}</p>
       </div>
       <div className='mt-2'>
-        <p className='text-sm'>{reply.text}</p>
+        <p className='text-sm break-all'>{reply.text}</p>
       </div>
     </div>
   )
