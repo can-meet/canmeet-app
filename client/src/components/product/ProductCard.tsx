@@ -23,14 +23,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         {product.sale_status === '取引中' ? (
           <div>
             <div className='absolute inset-0 bg-slate-800/50 rounded' />
-            <span className='absolute inset-0 flex items-center justify-center z-10 text-xs text-white'>
+            <span className='absolute inset-0 flex items-center justify-center z-10 text-xs text-white font-medium'>
               取引中
             </span>
           </div>
         ) : product.sale_status === '売り切れ' ? (
           <div>
             <div className='absolute inset-0 bg-slate-800/50 rounded' />
-            <span className='absolute inset-0 flex items-center justify-center z-10 text-xs text-white'>
+            <span className='absolute inset-0 flex items-center justify-center z-10 text-xs text-white font-medium'>
               売り切れ
             </span>
           </div>

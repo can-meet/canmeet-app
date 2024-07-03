@@ -111,7 +111,13 @@ export const Chat = () => {
                 {currentUser?._id === room?.seller._id ? (
                   <div className='flex items-center gap-x-2 hover:bg-price-gray rounded-lg py-1.5 p-2.5'>
                     <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
-                      <AvatarImage src={room?.buyer.profilePicture} />
+                      <AvatarImage
+                        src={
+                          room?.buyer.profilePicture ||
+                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                        }
+                        className='h-10'
+                      />
                       <AvatarFallback>PROFILE IMAGE</AvatarFallback>
                     </Avatar>
                     <h3 className='text-lg'>{room?.buyer.username}</h3>
@@ -120,42 +126,46 @@ export const Chat = () => {
                 ) : (
                   <div className='flex items-center gap-x-2 hover:bg-price-gray rounded-lg py-1.5 p-2.5'>
                     <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
-                      <AvatarImage src={room?.seller.profilePicture} />
+                      <AvatarImage
+                        src={
+                          room?.seller.profilePicture ||
+                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                        }
+                        className='h-10'
+                      />
                       <AvatarFallback>PROFILE IMAGE</AvatarFallback>
                     </Avatar>
                     <h3 className='text-lg'>{room?.seller.username}</h3>
                     <IoIosArrowDown />
                   </div>
                 )}
-              {/* </div> */}
             </PopoverTrigger>
 
             {/* header popup (product info) */}
-            <PopoverContent className='bg-default-white flex  px-4 py-8'>
-                {room?.product && (
-                  <>
-                    <img
-                      src={room.product.images[0]}
-                      alt='product'
-                      className='h-24 w-24 rounded-md object-cover mx-8'
-                    />
-                    <div className='relative w-full'>
-                      <div className='text-lg font-medium space-y-1'>
-                        <h2>{room.product.product_name}</h2>
-                        <h2>${room.product.price}</h2>
-                      </div>
-                      <Link to={`/products/${room.product._id}`}>
-                        <div className='flex items-center gap-x-1 absolute bottom-0'>
-                          <h3 className='text-xs hover:underline hover:underline-offset-4'>
-                            商品詳細を確認
-                          </h3>
-                          <IoIosArrowForward />
-                        </div>
-                      </Link>
+            <PopoverContent className='bg-default-white flex px-4 py-8'>
+              {room?.product && (
+                <>
+                  <img
+                    src={room.product.images[0]}
+                    alt='product'
+                    className='h-24 w-24 rounded-md object-cover mx-6'
+                  />
+                  <div className='relative'>
+                    <div className='font-medium space-y-0.5 w-28'>
+                      <h2 className='text-md line-clamp-2'>{room.product.product_name}</h2>
+                      <h2 className='text-sm mb-4'>${room.product.price}</h2>
                     </div>
-                  </>
-                )}
-              {/* </div> */}
+                    <Link to={`/products/${room.product._id}`}>
+                      <div className='flex items-center gap-x-1 absolute bottom-0'>
+                        <h3 className='text-xs hover:underline hover:underline-offset-4'>
+                          商品詳細を確認
+                        </h3>
+                        <IoIosArrowForward />
+                      </div>
+                    </Link>
+                  </div>
+                </>
+              )}
             </PopoverContent>
           </Popover>
           <IoEllipsisHorizontal className='text-xl' />

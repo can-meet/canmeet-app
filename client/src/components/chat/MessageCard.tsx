@@ -20,7 +20,7 @@ export const MessageCard = ({ message, isLastMessage }: MessageCardProps) => {
               <span className='text-xs text-gray-400 mb-0.5'>
                 {formatTime(message.createdAt)}
               </span>
-              <span className='text-start max-w-64 rounded-xl bg-gradient-to-r from-chat-blue to-chat-purple py-1 px-3'>
+              <span className='text-start break-all max-w-64 rounded-xl bg-gradient-to-r from-chat-blue to-chat-purple py-1 px-3'>
                 {message.text}
               </span>
             </div>
@@ -32,11 +32,17 @@ export const MessageCard = ({ message, isLastMessage }: MessageCardProps) => {
       ) : (
         <div className='flex gap-x-2'>
           <Avatar className='rounded-full h-10 w-10 object-cover cursor-pointer self-center'>
-            <AvatarImage src={message.sender.profilePicture} />
+            <AvatarImage
+              src={
+                message.sender.profilePicture ||
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+              }
+              className='h-10'
+            />
             <AvatarFallback>PROFILE IMAGE</AvatarFallback>
           </Avatar>
           <div className='flex items-end gap-x-2'>
-            <span className='text-start max-w-64 rounded-xl bg-chat-gray py-1 px-3'>
+            <span className='text-start break-all max-w-64 rounded-xl bg-chat-gray py-1 px-3'>
               {message.text}
             </span>
             <span className='text-xs text-gray-400 mb-0.5'>
