@@ -65,8 +65,6 @@ export const CommentView = ({ product }: CommentListProps) => {
     getComments()
   }, [commentsUpdated, productId])
 
-  console.log(comments[comments.length - 1])
-
   return (
     <Drawer onClose={() => setReplySelected(false)}>
 
