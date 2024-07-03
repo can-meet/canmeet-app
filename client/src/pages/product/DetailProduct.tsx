@@ -25,6 +25,7 @@ import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import editCompletedImage from '/edit-product-completed.png'
 import purchaseCompletedImage from '/purchase-product.png'
 import purchaseConfirmImage from '/purchase-confirm.png'
+import NotFoundComponent from '@/components/layout/NotFound'
 
 const DetailProduct = () => {
   const navigate = useNavigate()
@@ -44,7 +45,7 @@ const DetailProduct = () => {
   const product = products?.find(p => p._id === pid)
   const productUserId = product?.user._id
 
-  const { data: productDetail } = useQuery<DetailProductType>(
+  const { data: productDetail, isLoading } = useQuery<DetailProductType>(
     ['product', pid],
     () => fetchProductById(pid),
     {
@@ -135,92 +136,95 @@ const DetailProduct = () => {
     setLoading(false)
   }, [])
 
-  if (loading) {
+  if (loading || isLoading) {
     return <Loading />
   }
 
-
   return (
     <>
-      <div className='mt-16 mb-24'>
-        <div className='max-w-96 my-0 mx-auto'>
-          <PopupMenu product={productData} />
+      {productDetail ? (
+        <>
+          <div className='mt-16 mb-24'>
+            <div className='max-w-96 my-0 mx-auto'>
+              <PopupMenu product={productData} />
 
-          <div className='relative'>
-            <div>
-              <Carousel className='relative'>
-                <CarouselContent>
-                  {productData.images.map((image: string) => (
-                    <CarouselItem key={image} className=''>
-                      <AspectRatio ratio={9 / 9}>
-                        <img
-                          src={image}
-                          alt='product'
-                          className='object-cover w-96 h-96 rounded-md'
-                        />
-                      </AspectRatio>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                {productData.images.length > 1 ? (
-                  <>
-                    <CarouselPrevious className='absolute top-1/2 left-2 text-default-white' />
-                    <CarouselNext className='absolute top-1/2 right-2 text-default-white' />
-                  </>
+              <div className='relative'>
+                <div>
+                  <Carousel className='relative'>
+                    <CarouselContent>
+                      {productData.images.map((image: string) => (
+                        <CarouselItem key={image} className=''>
+                          <AspectRatio ratio={9 / 9}>
+                            <img
+                              src={image}
+                              alt='product'
+                              className='object-cover w-96 h-96 rounded-md'
+                            />
+                          </AspectRatio>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    {productData.images.length > 1 ? (
+                      <>
+                        <CarouselPrevious className='absolute top-1/2 left-2 text-default-white' />
+                        <CarouselNext className='absolute top-1/2 right-2 text-default-white' />
+                      </>
+                    ) : null}
+                  </Carousel>
+                </div>
+                {saleStatus === '取引中' ? (
+                  <div>
+                    <div className='absolute inset-0 bg-slate-800/50 rounded' />
+                    <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white font-medium'>
+                      {saleStatus}
+                    </span>
+                  </div>
+                ) : saleStatus === '売り切れ' ? (
+                  <div>
+                    <div className='absolute inset-0 bg-slate-800/50 rounded' />
+                    <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white font-medium'>
+                      {saleStatus}
+                    </span>
+                  </div>
                 ) : null}
-              </Carousel>
-            </div>
-            {saleStatus === '取引中' ? (
-              <div>
-                <div className='absolute inset-0 bg-slate-800/50 rounded' />
-                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>
-                  {saleStatus}
-                </span>
               </div>
-            ) : saleStatus === '売り切れ' ? (
+            </div>
+
+            <div className='w-11/12 max-w-96 mt-3 mx-auto'>
               <div>
-                <div className='absolute inset-0 bg-slate-800/50 rounded' />
-                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>
-                  {saleStatus}
-                </span>
+                <p className='text-lg font-semibold'>{productData.product_name}</p>
               </div>
-            ) : null}
-          </div>
-        </div>
+              <div>
+                <p className=' text-lg font-semibold'>${productData.price}</p>
+              </div>
 
-        <div className='w-11/12 max-w-96 mt-3 mx-auto'>
-          <div>
-            <p className='text-lg font-semibold'>{productData.product_name}</p>
-          </div>
-          <div>
-            <p className=' text-lg font-semibold'>${productData.price}</p>
-          </div>
+              <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-x-2'>
+                  <Avatar className='mt-2 mb-3 rounded-full object-cover cursor-pointer self-center'>
+                    <AvatarImage
+                      src={
+                        productData.user.profilePicture ||
+                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                      }
+                    />
+                    <AvatarFallback>USER IMAGE</AvatarFallback>
+                  </Avatar>
+                  <div>{productData.user.username}</div>
+                </div>
+                <div className='text-sm text-secondary-gray'>
+                  投稿日 : {timeAgo(productData.createdAt)}
+                </div>
+              </div>
 
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-x-2'>
-              <Avatar className='mt-2 mb-3 rounded-full object-cover cursor-pointer self-center'>
-                <AvatarImage
-                  src={
-                    productData.user.profilePicture ||
-                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                  }
-                />
-                <AvatarFallback>USER IMAGE</AvatarFallback>
-              </Avatar>
-              <div>{productData.user.username}</div>
-            </div>
-            <div className='text-sm text-secondary-gray'>
-              投稿日 : {timeAgo(productData.createdAt)}
-            </div>
-          </div>
+              <div className='mb-5'>
+                <p className='text-sm whitespace-pre-wrap'>
+                  {productData.description}
+                </p>
+              </div>
 
-          <div className='mb-5'>
-            <p className='text-sm whitespace-pre-wrap'>
-              {productData.description}
-            </p>
-          </div>
+          <CommentView product={productData} />
 
-          <div className='grid grid-cols-2 my-4'>
+          <div className='grid grid-cols-2 mt-4 mb-8'>
             <div className='col-span-1  w-80'>
               <div className='flex mb-4'>
                 <span className='text-sm text-start w-24 py-2'>商品の状態</span>
@@ -243,69 +247,71 @@ const DetailProduct = () => {
             </div>
           </div>
 
-          <CommentView product={productData} />
-
           {productData.user._id !== currentUser?._id && (
-            <div className='my-8'>
+            <div className='my-2 mx-auto w-button'>
               {productData.sale_status === '売り出し中' ? (
                 <Button
                   variant='red'
-                  className='w-full'
+                  // onClick={handlePurchaseProductAndCreateRoom}
                   onClick={() => setIsConfirmPurchaseModalOpen(true)}
                 >
                   購入手続きに進む
                 </Button>
               ) : (
-                <Button 
-                  variant='disabled'
-                  className='w-full'
-                >
-                  取引中
-                </Button>
+                <Button variant='disabled'>取引中</Button>
               )}
             </div>
           )}
         </div>
       </div>
 
-      <Modal
-        isOpen={isConfirmPurchaseModalOpen}
-        onClose={() => setIsConfirmPurchaseModalOpen(false)}
-        heading={'購入手続き確認画面'}
-        img={purchaseConfirmImage}
-        text={
-          'この先DMで出品者と直接取引を行います。本当によろしいですか？'
-        }
-        link={'/'}
-        btnText={'キャンセル'}
-        secondLink={'/'}
-        secondBtnText={'購入手続きを進める'}
-        onSecondButtonClick={handlePurchaseProductAndCreateRoom}
-      />
+          <Modal
+            isOpen={isConfirmPurchaseModalOpen}
+            onClose={() => setIsConfirmPurchaseModalOpen(false)}
+            heading={'購入手続き確認画面'}
+            img={purchaseConfirmImage}
+            text={
+              'この先DMで出品者と直接取引を行います。本当によろしいですか？'
+            }
+            link={'/'}
+            btnText={'キャンセル'}
+            secondLink={'/'}
+            secondBtnText={'購入手続きを進める'}
+            onSecondButtonClick={handlePurchaseProductAndCreateRoom}
+          />
 
-      <Modal
-        isOpen={isPurchaseModalOpen}
-        onClose={() => setIsPurchaseModalOpen(false)}
-        heading={'購入手続きを申し込みました'}
-        img={purchaseCompletedImage}
-        text={
-          '投稿者に購入の申し込みを知らせるメッセージが送られました！ひとこと挨拶をしてみましょう。'
-        }
-        link={dynamicRoomRoute}
-        btnText={'DMへあいさつしに行く'}
-      />
+          <Modal
+            isOpen={isPurchaseModalOpen}
+            onClose={() => setIsPurchaseModalOpen(false)}
+            heading={'購入手続きを申し込みました'}
+            img={purchaseCompletedImage}
+            text={
+              '投稿者に購入の申し込みを知らせるメッセージが送られました！ひとこと挨拶をしてみましょう。'
+            }
+            link={dynamicRoomRoute}
+            btnText={'DMへあいさつしに行く'}
+          />
 
-      <Modal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        heading={'販売ステータスの変更が完了しました！'}
-        img={editCompletedImage}
-        text={
-          '販売ステータスの変更が完了しました！自分の編集した商品を見てみましょう。'
-        }
-        link={`/products/${pid}`}
-        btnText={'たった今ステータスを変更した商品を見る'}
-      />
+          <Modal
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            heading={'販売ステータスの変更が完了しました！'}
+            img={editCompletedImage}
+            text={
+              '販売ステータスの変更が完了しました！自分の編集した商品を見てみましょう。'
+            }
+            link={`/products/${pid}`}
+            btnText={'たった今ステータスを変更した商品を見る'}
+          />
+        </>
+      ) : (
+        <div className='flex flex-col items-center gap-4 mt-32'>
+          <NotFoundComponent
+            text='商品が見つかりませんでした。'
+            className='text-semibold'
+          />
+        </div>
+      )}
     </>
   )
 }
