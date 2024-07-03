@@ -12,6 +12,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import deleteCompleteImage from '/delete-product-post.png'
 import editCompleteImage from '/edit-product-completed.png'
 import registerImage from '/register-account-completed.png'
+import NotFoundComponent from '@/components/layout/NotFound'
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -99,9 +100,12 @@ export const Home = () => {
               <ProductList products={filteredProducts} />
             </div>
           ) : (
-            <div className='flex flex-col gap-2 items-center pt-16'>
-              <p className='font-bold'>お探しの商品は見つかりませんでした</p>
-              <p>再度条件を設定するか、下のボタンでホームへ戻ってください。</p>
+            <div className='flex flex-col gap-2 items-center pt-16 max-w-72'>
+              <NotFoundComponent
+                text='お探しの商品が見つかりませんでした。'
+                className='text-base'
+              />
+              <p className='text-center'>再度条件を設定するか、<br />下のボタンでホームへ戻ってください。</p>
               <Button
                 type='button'
                 className='w-28 font-semibold text-default-white bg-secondary-blue hover:bg-primary-blue'
