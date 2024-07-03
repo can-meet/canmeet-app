@@ -11,11 +11,14 @@ import type { DetailProductType } from '@/types/product'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
-import CommentIcon from '/comment.svg'
+import { IoIosArrowDown } from "react-icons/io";
 import { ReplyForm } from '../reply/ReplyForm'
 import { CommentCardForReply } from './CommentCardForReply'
 import { CommentForm } from './CommentForm'
 import { CommentList } from './CommentList'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { timeAgo } from '@/lib/timeAgo'
 
 type CommentListProps = {
   product: DetailProductType
@@ -64,16 +67,53 @@ export const CommentView = ({ product }: CommentListProps) => {
 
   return (
     <Drawer onClose={() => setReplySelected(false)}>
-      <DrawerTrigger>
-        <div className='flex gap-1 text-dark-gray'>
-          <img src={CommentIcon} alt='icon' />
-          <span className='text-xs hover:underline hover:underline-offset-1'>
-            {isInitialMount
-              ? `${product.comments.length}件のコメント`
-              : `${comments.length}件のコメント`}
-          </span>
+
+      <div className='w-full mb-12'>
+        <div className='space-y-4'>
+          <div className='flex items-center justify-between'>
+            <h2 className='text-lg font-semibold'>
+              {isInitialMount
+                ? `コメント (${product.comments.length})`
+                : `コメント (${comments.length})`
+              }
+            </h2>
+            {comments.length > 0 && (
+              <DrawerTrigger className='mt-0 text-sm flex gap-1 items-center hover:text-slate-800'>
+                もっと見る
+                <IoIosArrowDown />
+              </DrawerTrigger>
+            )}
+          </div>
+
+          {comments.length > 0 && (
+            <div className='flex items-center justify-between'>
+              <div className='flex gap-4 mb-2 flex-grow'>
+                <Avatar className='mt-1 rounded-full object-cover cursor-pointer self-start'>
+                  <AvatarImage
+                    src={
+                      comments[comments.length - 1]?.user.profilePicture ||
+                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                    }
+                  />
+                  <AvatarFallback>USER IMAGE</AvatarFallback>
+                </Avatar>
+                <div className='space-y-1 w-full'>
+                  <p className='text-sm'>{comments[comments.length - 1]?.user.username}</p>
+                  <div className='w-full bg-search-history-gray p-2 rounded-md space-y-1'>
+                    <p className='text-sm break-all'>{comments[comments.length - 1]?.text}</p>
+                    <p className='text-sm'>{timeAgo(comments[comments.length - 1]?.createdAt)}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <DrawerTrigger className='w-full'>
+            <Button className='w-full border border-primary-red text-primary-red bg-primary-white hover:bg-slate-100'>コメントする</Button>
+          </DrawerTrigger>
         </div>
-      </DrawerTrigger>
+      </div>
+      
 
       <DrawerContent className='bg-white'>
         <DrawerHeader className='border-primary-gray border-b relative'>
@@ -98,7 +138,7 @@ export const CommentView = ({ product }: CommentListProps) => {
         </DrawerHeader>
 
         <div
-          className={`relative h-full overflow-x-hidden ${replySelected ? '' : 'overflow-scroll'}`}
+          className={`relative h-full mb-20 overflow-x-hidden flex flex-col ${replySelected ? '' : 'overflow-scroll'}`}
         >
           {!replySelected && (
             <CommentList
@@ -115,6 +155,7 @@ export const CommentView = ({ product }: CommentListProps) => {
             />
           )}
         </div>
+
 
         <DrawerFooter>
           <CommentForm

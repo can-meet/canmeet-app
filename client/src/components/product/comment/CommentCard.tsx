@@ -57,7 +57,7 @@ export const CommentCard = ({
         <p className='text-sm font-medium'>{comment.user.username}</p>
       </div>
       <div className='mt-2'>
-        <p className='text-sm'>{comment.text}</p>
+        <p className='text-sm break-all'>{comment.text}</p>
         <ReplyButton
           toggleReplyForComment={toggleReplyForComment}
           commentId={comment._id}
