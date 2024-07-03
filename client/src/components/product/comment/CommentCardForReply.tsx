@@ -54,7 +54,7 @@ export const CommentCardForReply = ({
             </Avatar>
             <p className='text-sm font-medium'>{comment.user.username}</p>
           </div>
-          <p className='text-sm mt-2 mb-4'>{comment.text}</p>
+          <p className='text-sm mt-2 mb-4 break-all'>{comment.text}</p>
           <ReplyList replies={replies} />
         </div>
       </div>
