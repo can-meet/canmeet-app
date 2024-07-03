@@ -19,10 +19,16 @@ export const RoomCard = ({
       <div className='flex items-center justify-between'>
         <div className='flex gap-x-3'>
           <Avatar className='rounded-full h-9 w-9 object-cover cursor-pointer self-center'>
-            <AvatarImage src={recipientImage} />
+            <AvatarImage
+              src={
+                recipientImage ||
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+              }
+              className='h-10'
+            />
             <AvatarFallback>PROFILE IMAGE</AvatarFallback>
           </Avatar>
-          <div>
+          <div className='mr-1.5'>
             <div className='flex gap-x-2 items-center mb-0.5'>
               <h3 className='text-sm'>{recipientName}</h3>
               <h3 className='text-xs text-gray-400 mt-0.5'>
@@ -30,7 +36,7 @@ export const RoomCard = ({
                   timeAgo(room.messages[0].createdAt.toString())}
               </h3>
             </div>
-            <p className='text-xs break-all'>{room.messages[0]?.text}</p>
+            <p className='text-xs break-all line-clamp-2'>{room.messages[0]?.text}</p>
           </div>
         </div>
         {room.product?.images && (
