@@ -173,14 +173,14 @@ const DetailProduct = () => {
             {saleStatus === '取引中' ? (
               <div>
                 <div className='absolute inset-0 bg-slate-800/50 rounded' />
-                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>
+                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white font-medium'>
                   {saleStatus}
                 </span>
               </div>
             ) : saleStatus === '売り切れ' ? (
               <div>
                 <div className='absolute inset-0 bg-slate-800/50 rounded' />
-                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white'>
+                <span className='absolute inset-0 flex items-center justify-center z-10 text-xl text-white font-medium'>
                   {saleStatus}
                 </span>
               </div>
