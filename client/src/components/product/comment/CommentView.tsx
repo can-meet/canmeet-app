@@ -85,24 +85,23 @@ export const CommentView = ({ product }: CommentListProps) => {
             )}
           </div>
 
-
           {comments.length > 0 && (
             <div className='flex items-center justify-between'>
               <div className='flex gap-4 mb-2 flex-grow'>
                 <Avatar className='mt-1 rounded-full object-cover cursor-pointer self-start'>
                   <AvatarImage
                     src={
-                      comments[0]?.user.profilePicture ||
+                      comments[comments.length - 1]?.user.profilePicture ||
                       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
                     }
                   />
                   <AvatarFallback>USER IMAGE</AvatarFallback>
                 </Avatar>
                 <div className='space-y-1 w-full'>
-                  <p className='text-sm'>{comments[0]?.user.username}</p>
+                  <p className='text-sm'>{comments[comments.length - 1]?.user.username}</p>
                   <div className='w-full bg-search-history-gray p-2 rounded-md space-y-1'>
-                    <p className='text-sm break-all'>{comments[0]?.text}</p>
-                    <p className='text-sm'>{timeAgo(comments[0]?.createdAt)}</p>
+                    <p className='text-sm break-all'>{comments[comments.length - 1]?.text}</p>
+                    <p className='text-sm'>{timeAgo(comments[comments.length - 1]?.createdAt)}</p>
                   </div>
                 </div>
               </div>
