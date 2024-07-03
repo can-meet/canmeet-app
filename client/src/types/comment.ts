@@ -8,4 +8,5 @@ export type CommentType = {
   user: UserType
   product: ProductType
   replies: ReplyType[]
+  createdAt: string
 }

@@ -220,9 +220,7 @@ const DetailProduct = () => {
             </p>
           </div>
 
-          <CommentView product={productData} />
-
-          <div className='grid grid-cols-2 mt-4 mb-8'>
+          <div className='grid grid-cols-2 my-4'>
             <div className='col-span-1  w-80'>
               <div className='flex mb-4'>
                 <span className='text-sm text-start w-24 py-2'>商品の状態</span>
@@ -245,18 +243,25 @@ const DetailProduct = () => {
             </div>
           </div>
 
+          <CommentView product={productData} />
+
           {productData.user._id !== currentUser?._id && (
-            <div className='my-2 mx-auto w-button'>
+            <div className='my-8'>
               {productData.sale_status === '売り出し中' ? (
                 <Button
                   variant='red'
-                  // onClick={handlePurchaseProductAndCreateRoom}
+                  className='w-full'
                   onClick={() => setIsConfirmPurchaseModalOpen(true)}
                 >
                   購入手続きに進む
                 </Button>
               ) : (
-                <Button variant='disabled'>取引中</Button>
+                <Button 
+                  variant='disabled'
+                  className='w-full'
+                >
+                  取引中
+                </Button>
               )}
             </div>
           )}
