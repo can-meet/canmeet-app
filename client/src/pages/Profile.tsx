@@ -24,7 +24,7 @@ export const Profile = () => {
     useState<string>('すべて')
   const { currentUser } = useAuthStore()
   const { form, onSubmit, isEditing, setIsEditing } = useUpdateUser()
-  const { user, loading } = useGetUser()
+  const { user, isLoading } = useGetUser()
 
   const filterProducts = (products: ProductType[], selectedFilter: string) => {
     return products.filter(product => {
@@ -52,7 +52,7 @@ export const Profile = () => {
     selectedFilterPurchases,
   )
 
-  if (loading) {
+  if (isLoading) {
     return <Loading />
   }
 
