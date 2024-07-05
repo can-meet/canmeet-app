@@ -25,33 +25,32 @@ export const Header = () => {
 
 
   const controlHeader = () => {
-    const scrollY = window.scrollY;
-    const scrollDifference = scrollY - lastScrollY;
+    const scrollY = window.scrollY
     
     if (scrollY > lastScrollY) {
       // 下にスクロール
-      setHeaderOpacity(Math.max(0, headerOpacity - 0.1));
-      setHeaderPosition(Math.min(50, headerPosition + 5)); // ヘッダーを上に移動（最大50px）
+      setHeaderOpacity(Math.max(0, headerOpacity - 0.1))
+      setHeaderPosition(Math.min(50, headerPosition + 5))
       if (headerOpacity <= 0) {
         setIsHeaderVisible(false);
       }
     } else {
       // 上にスクロール
-      setIsHeaderVisible(true);
-      setHeaderOpacity(Math.min(1, headerOpacity + 0.1));
-      setHeaderPosition(Math.max(0, headerPosition - 5)); // ヘッダーを元の位置に戻す
+      setIsHeaderVisible(true)
+      setHeaderOpacity(Math.min(1, headerOpacity + 0.1))
+      setHeaderPosition(Math.max(0, headerPosition - 5))
     }
     
-    setLastScrollY(scrollY);
+    setLastScrollY(scrollY)
   };
 
 
   useEffect(() => {
-    window.addEventListener('scroll', controlHeader);
+    window.addEventListener('scroll', controlHeader)
     return () => {
-      window.removeEventListener('scroll', controlHeader);
+      window.removeEventListener('scroll', controlHeader)
     };
-  }, [lastScrollY, headerOpacity, headerPosition]);
+  }, [lastScrollY, headerOpacity, headerPosition])
 
 
   useEffect(() => {
