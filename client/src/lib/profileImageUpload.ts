@@ -3,7 +3,11 @@ import axios from 'axios'
 export const profileImageUpload = async (file: File): Promise<string> => {
   const formData = new FormData()
   formData.append('file', file)
-  formData.append('upload_preset', 'Canmeet')
+  formData.append(
+    'upload_preset',
+    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET_PROFILE,
+  )
+  formData.append('folder', 'profile-images')
 
   try {
     const response = await axios.post(

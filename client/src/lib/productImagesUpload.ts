@@ -8,8 +8,9 @@ export const productImagesUpload = async (files: any): Promise<string[]> => {
     formData.append('file', files[i])
     formData.append(
       'upload_preset',
-      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET_PRODUCT,
     )
+    formData.append('folder', 'product-images')
 
     try {
       const response = await axios.post(
