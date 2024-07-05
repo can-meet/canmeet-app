@@ -90,7 +90,7 @@ export const Header = () => {
 
   return (
     <header 
-      className={`sticky top-0 left-0 right-0 bg-default-white w-full z-50 shadow-sm border-b transition-all duration-300 ease-in-out`}
+      className={`fixed top-0 left-0 right-0 bg-default-white w-full z-50 shadow-sm border-b transition-all duration-300 ease-in-out`}
       style={{ 
         opacity: headerOpacity,
         transform: `translateY(${-headerPosition}px)`,
