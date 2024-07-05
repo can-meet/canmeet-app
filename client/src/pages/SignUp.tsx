@@ -71,17 +71,16 @@ export const SignUp = () => {
   return (
     <>
       <div className='my-24 max-w-96 mx-auto'>
-        {step === STEPS.FORM ? (
-          <div className='w-72 mx-auto'>
-            <Link to='/'>
-              <IoIosArrowBack className='text-2xl' />
-            </Link>
+        <div className='flex flex-col items-center mt-10'>
+          <div className='flex items-center justify-between w-72 mb-8'>
+            {step === STEPS.FORM ? (
+              <Link to='/'>
+                <IoIosArrowBack className='text-2xl' />
+              </Link>
+            ) : null}
+            <h3 className='text-lg font-semibold text-center'>新規登録</h3>
+            <div className='w-[24px]'></div>
           </div>
-        ) : null}
-        <h3 className='text-lg font-semibold text-center mt-4 mb-10'>
-          新規登録
-        </h3>
-        <div className='flex flex-col items-center'>
           <Stepper currentStep={step} complete={complete} />
           <Separator className='mt-4 w-64 bg-secondary-gray' />
           {getSectionComponent()}
