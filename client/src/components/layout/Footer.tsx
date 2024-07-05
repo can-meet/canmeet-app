@@ -10,7 +10,7 @@ export const Footer = () => {
   return (
     <>
       {location.pathname === `/rooms/${rid}` ? null : (
-        <footer className='fixed bottom-0 w-full bg-white z-10 border-t'>
+        <footer className='sticky bottom-0 w-full bg-white z-10 border-t'>
           <div className='flex justify-between items-center px-11 pt-4 pb-5 max-w-96 mx-auto'>
             <Link to='/'>
               {location.pathname === '/' ? (
