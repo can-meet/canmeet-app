@@ -84,7 +84,7 @@ export const Home = () => {
 
   return (
     <>
-      <div className='min-h-screen pt-8 pb-4'>
+      <div className='mt-20 mb-16'>
         <div className='flex flex-col items-center gap-1 px-4'>
           <SearchBar />
           {filteredProducts.length !== 0 ? (
