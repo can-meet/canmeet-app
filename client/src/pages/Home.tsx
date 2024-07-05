@@ -3,16 +3,15 @@ import { Loading } from '@/components/layout/loading/Loading'
 import { SearchBar } from '@/components/layout/search/SearchBar'
 import { ProductList } from '@/components/product/ProductList'
 import { Button } from '@/components/ui/button'
-import { fetchProducts } from '@/lib/api'
 import type { ProductType } from '@/types/product'
 
 import { useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import deleteCompleteImage from '/delete-product-post.png'
 import editCompleteImage from '/edit-product-completed.png'
 import registerImage from '/register-account-completed.png'
 import NotFoundComponent from '@/components/layout/NotFound'
+import { useGetProducts } from '@/hooks/product/useGetProducts'
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -21,11 +20,7 @@ export const Home = () => {
   const [modalType, setModalType] = useState<string | null>(null)
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q') || ''
-
-  const { data: products, isLoading } = useQuery(['products'], fetchProducts, {
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
-  })
+  const { products, isLoading } = useGetProducts()
 
   const filteredProducts = useMemo(() => {
     if (!products) return []

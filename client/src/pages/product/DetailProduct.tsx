@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { CommentView } from '@/components/product/comment/CommentView'
 import PopupMenu from '@/components/product/popup-menu/PopupMenu'
-import { fetchProductById } from '@/lib/api'
 import { timeAgo } from '@/lib/timeAgo'
 import { useAuthStore } from '@/store/authStore'
 import type { DetailProductType } from '@/types/product'
@@ -26,6 +25,7 @@ import editCompletedImage from '/edit-product-completed.png'
 import purchaseCompletedImage from '/purchase-product.png'
 import purchaseConfirmImage from '/purchase-confirm.png'
 import NotFoundComponent from '@/components/layout/NotFound'
+import { useGetProductById } from '@/hooks/product/useGetProductById'
 
 const DetailProduct = () => {
   const navigate = useNavigate()
@@ -39,20 +39,12 @@ const DetailProduct = () => {
   const { currentUser } = useAuthStore()
   const queryClient = useQueryClient()
   const products =
-    queryClient.getQueryData<DetailProductType[]>('products') || []
+    queryClient.getQueryData<DetailProductType[]>(['products']) || []
   const userId = currentUser?._id
-
   const product = products?.find(p => p._id === pid)
   const productUserId = product?.user._id
 
-  const { data: productDetail, isLoading } = useQuery<DetailProductType>(
-    ['product', pid],
-    () => fetchProductById(pid),
-    {
-      enabled: !product,
-      initialData: product,
-    },
-  )
+  const { productDetail, isLoading } = useGetProductById(pid, product)
 
   const productData = productDetail ||
     product || {

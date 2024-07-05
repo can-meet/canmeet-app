@@ -15,13 +15,14 @@ export const Login = () => {
   return (
     <>
       <div className='my-24 max-w-96 mx-auto'>
-        <div className='w-72 mx-auto'>
-          <Link to='/'>
-            <IoIosArrowBack className='text-2xl' />
-          </Link>
-        </div>
-        <div className='flex flex-col items-center mt-4'>
-          <h3 className='text-lg font-semibold text-center mb-6'>ログイン</h3>
+        <div className='flex flex-col items-center mt-10'>
+          <div className='flex items-center justify-between w-72 mb-6'>
+            <Link to='/'>
+              <IoIosArrowBack className='text-2xl' />
+            </Link>
+            <h3 className='text-lg font-semibold text-center'>ログイン</h3>
+            <div className='w-[24px]'></div>
+          </div>
           <LoginForm form={form} onSubmit={onSubmit} />
           <Separator className='mt-4 w-72 bg-secondary-gray' />
           <Button

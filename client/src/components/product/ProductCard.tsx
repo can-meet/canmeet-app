@@ -12,6 +12,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <img
           src={product.images[0]}
           alt='product'
+          loading='lazy'
           className='w-28 h-28 object-cover rounded'
         />
         <div>
