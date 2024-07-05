@@ -18,6 +18,42 @@ export const Header = () => {
     NotificationType[]
   >([])
 
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [headerOpacity, setHeaderOpacity] = useState(1)
+  const [headerPosition, setHeaderPosition] = useState(0)
+
+
+  const controlHeader = () => {
+    const scrollY = window.scrollY;
+    const scrollDifference = scrollY - lastScrollY;
+    
+    if (scrollY > lastScrollY) {
+      // 下にスクロール
+      setHeaderOpacity(Math.max(0, headerOpacity - 0.1));
+      setHeaderPosition(Math.min(50, headerPosition + 5)); // ヘッダーを上に移動（最大50px）
+      if (headerOpacity <= 0) {
+        setIsHeaderVisible(false);
+      }
+    } else {
+      // 上にスクロール
+      setIsHeaderVisible(true);
+      setHeaderOpacity(Math.min(1, headerOpacity + 0.1));
+      setHeaderPosition(Math.max(0, headerPosition - 5)); // ヘッダーを元の位置に戻す
+    }
+    
+    setLastScrollY(scrollY);
+  };
+
+
+  useEffect(() => {
+    window.addEventListener('scroll', controlHeader);
+    return () => {
+      window.removeEventListener('scroll', controlHeader);
+    };
+  }, [lastScrollY, headerOpacity, headerPosition]);
+
+
   useEffect(() => {
     if (currentUser) {
       const fetchUnreadNotifications = async () => {
@@ -36,7 +72,13 @@ export const Header = () => {
   }
 
   return (
-    <div className='fixed top-0 left-0 right-0 bg-default-white w-full z-50 shadow-sm border-b'>
+    <div 
+      className={`fixed top-0 left-0 right-0 bg-default-white w-full z-50 shadow-sm border-b transition-all duration-300 ease-in-out`}
+      style={{ 
+        opacity: headerOpacity,
+        transform: `translateY(${isHeaderVisible ? -headerPosition : -100}px)`
+      }}
+    >
       <div className='max-w-96 mx-auto px-1'>
         {isLoggedIn && location.pathname === '/rooms' ? (
           <div className='flex justify-between items-center py-2 mx-4'>
