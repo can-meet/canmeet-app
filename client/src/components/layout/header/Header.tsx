@@ -22,28 +22,46 @@ export const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0)
   const [headerOpacity, setHeaderOpacity] = useState(1)
   const [headerPosition, setHeaderPosition] = useState(0)
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
 
+  const checkScreenSize = () => {
+    setIsSmallScreen(window.innerWidth < 640)
+  }
+
+  useEffect(() => {
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   const controlHeader = () => {
+    if (!isSmallScreen) {
+      setIsHeaderVisible(true)
+      setHeaderOpacity(1)
+      setHeaderPosition(0)
+      return
+    }
+
     const scrollY = window.scrollY
-    
+    const scrollThreshold = 50 // スクロールしきい値
+  
     if (scrollY > lastScrollY) {
       // 下にスクロール
-      setHeaderOpacity(Math.max(0, headerOpacity - 0.1))
-      setHeaderPosition(Math.min(50, headerPosition + 5))
-      if (headerOpacity <= 0) {
-        setIsHeaderVisible(false);
+      if (scrollY > scrollThreshold) {
+        setHeaderOpacity(Math.max(0, headerOpacity - 0.1))
+        setHeaderPosition(Math.min(50, headerPosition + 5))
       }
     } else {
       // 上にスクロール
-      setIsHeaderVisible(true)
       setHeaderOpacity(Math.min(1, headerOpacity + 0.1))
       setHeaderPosition(Math.max(0, headerPosition - 5))
     }
+  
+    // 不透明度に基づいてヘッダーの表示/非表示を制御
+    setIsHeaderVisible(headerOpacity > 0)
     
     setLastScrollY(scrollY)
-  };
-
+  }
 
   useEffect(() => {
     window.addEventListener('scroll', controlHeader)
@@ -75,7 +93,8 @@ export const Header = () => {
       className={`fixed top-0 left-0 right-0 bg-default-white w-full z-50 shadow-sm border-b transition-all duration-300 ease-in-out`}
       style={{ 
         opacity: headerOpacity,
-        transform: `translateY(${isHeaderVisible ? -headerPosition : -100}px)`
+        transform: `translateY(${-headerPosition}px)`,
+        visibility: isHeaderVisible ? 'visible' : 'hidden'
       }}
     >
       <div className='max-w-96 mx-auto px-1'>
