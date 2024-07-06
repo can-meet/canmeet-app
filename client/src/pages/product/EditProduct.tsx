@@ -58,6 +58,7 @@ const EditProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(false)
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
 
   useEffect(() => {
     const getProduct = async () => {
@@ -339,7 +340,11 @@ const EditProduct = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select 
+                      onValueChange={field.onChange} 
+                      value={field.value}
+                      onOpenChange={(open) => setIsSelectOpen(open)}
+                    >
                       <SelectTrigger className='bg-select-gray border-none'>
                         <SelectValue placeholder='支払い方法' />
                         <span className='text-primary-red'>*</span>
@@ -356,7 +361,7 @@ const EditProduct = () => {
             />
           </div>
           <div className='w-72 mx-auto pt-6'>
-            <Button variant='blue' type='submit'>
+            <Button variant='blue' type='submit' className={isSelectOpen ? 'pointer-events-none' : ''}>
               編集を完了する
             </Button>
           </div>

@@ -25,6 +25,7 @@ export const Profile = () => {
   const { currentUser } = useAuthStore()
   const { form, onSubmit, isEditing, setIsEditing } = useUpdateUser()
   const { user, isLoading } = useGetUser()
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
 
   const filterProducts = (products: ProductType[], selectedFilter: string) => {
     return products.filter(product => {
@@ -111,35 +112,41 @@ export const Profile = () => {
           <Select
             onValueChange={value => setSelectedFilterPosts(value)}
             value={selectedFilterPosts}
+            onOpenChange={(open) => setIsSelectOpen(open)}
           >
             <ProfileSelectTrigger className='py-1 px-2 w-fit bg-dark-gray text-default-white mb-4'>
               <SelectValue placeholder='すべて' className='font-normal' />
             </ProfileSelectTrigger>
-            <SelectContent className='w-16 z-50 bg-default-white pointer-events-auto'>
+            <SelectContent className='w-16 z-50 bg-default-white'>
               <SelectItem value='すべて'>すべて</SelectItem>
               <SelectItem value='売り出し中'>売り出し</SelectItem>
               <SelectItem value='取引中'>取引中</SelectItem>
               <SelectItem value='売り切れ'>売り切れ</SelectItem>
             </SelectContent>
           </Select>
-          <ProductList products={filteredPostedProducts} />
+          <div className={isSelectOpen ? 'pointer-events-none' : ''}>
+            <ProductList products={filteredPostedProducts} />
+          </div>
         </TabsContent>
         <TabsContent value='purchase' className='mt-6'>
           <Select
             onValueChange={value => setSelectedFilterPurchases(value)}
             value={selectedFilterPurchases}
+            onOpenChange={(open) => setIsSelectOpen(open)}
           >
             <ProfileSelectTrigger className='py-1 px-2 w-fit bg-dark-gray text-default-white mb-4'>
               <SelectValue placeholder='すべて' className='font-normal' />
             </ProfileSelectTrigger>
-            <SelectContent className='w-20 z-50 bg-white pointer-events-auto'>
+            <SelectContent className='w-20 z-50 bg-white'>
               <SelectItem value='すべて'>すべて</SelectItem>
               <SelectItem value='売り出し中'>売り出し</SelectItem>
               <SelectItem value='取引中'>取引中</SelectItem>
               <SelectItem value='売り切れ'>売り切れ</SelectItem>
             </SelectContent>
           </Select>
-          <ProductList products={filteredPurchasedProducts} />
+          <div className={isSelectOpen ? 'pointer-events-none' : ''}>
+            <ProductList products={filteredPurchasedProducts} />
+          </div>
         </TabsContent>
       </Tabs>
     </div>

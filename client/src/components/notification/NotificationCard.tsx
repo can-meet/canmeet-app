@@ -31,7 +31,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
           <AvatarFallback>PROFILE IMAGE</AvatarFallback>
         </Avatar>
         <div className='pr-4'>
-          <p className='text-xs break-all'>{notification.content}</p>
+          <p className='text-xs text-start break-all'>{notification.content}</p>
         </div>
       </div>
       <img
