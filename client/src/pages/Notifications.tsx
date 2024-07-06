@@ -21,7 +21,7 @@ export const Notifications = () => {
     return <Loading />
   }
 
-  if (notifications.length === 0) {
+  if (isLoading && notifications.length === 0) {
     return (
       <div className='my-20 flex justify-center gap-y-6'>
         <p className='text-center text-lg font-semibold px-4'>
