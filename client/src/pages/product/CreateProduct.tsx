@@ -59,6 +59,7 @@ const CreateProduct = () => {
   const { toast } = useToast()
   const [pid, setPid] = useState<string>('')
   const [previewImages, setPreviewImages] = useState<string[]>([])
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
 
   const onSubmit: SubmitHandler<ProductSchema> = async value => {
     setLoading(true)
@@ -338,7 +339,10 @@ const CreateProduct = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Select onValueChange={field.onChange}>
+                    <Select 
+                      onValueChange={field.onChange}
+                      onOpenChange={(open) => setIsSelectOpen(open)}
+                    >
                       <SelectTrigger className='bg-select-gray border-none'>
                         <SelectValue placeholder='支払い方法' />
                         <span className='text-primary-red'>*</span>
@@ -355,7 +359,7 @@ const CreateProduct = () => {
             />
           </div>
           <div className='w-72 mx-auto pt-6'>
-            <Button variant='blue' type='submit'>
+            <Button variant='blue' type='submit' className={isSelectOpen ? 'pointer-events-none' : ''}>
               投稿する
             </Button>
           </div>
